@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    xmlns:tns="http://webengines.iris.silverglobe.com">
+
+    <xs:element name="Iris">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="WebEngines"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="WebEngines">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="WebEngine"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="WebEngine">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="PhoenixPath" type="xs:string"/>
+                <xs:element name="PhoenixApplicationCode" type="xs:string" minOccurs="0"/>
+                <xs:element name="Endpoint" type="xs:string"/>
+                <xs:element name="PreferredResponse" type="xs:string"/>
+                <xs:element name="AliasForbidden" type="xs:boolean"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="PhoenixProperties"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Compression"/>
+            </xs:sequence>
+
+            <xs:attributeGroup ref="WebEngineAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PhoenixProperties">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Property"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="AdditionalData"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Property">
+        <xs:complexType>
+            <xs:attributeGroup ref="PropertyAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AdditionalData">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Field"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Field">
+        <xs:complexType>
+            <xs:attributeGroup ref="FieldAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Compression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="MinimumSize" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:attributeGroup name="WebEngineAttribute">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+        <xs:attribute name="Type" type="xs:string" use="required"/>
+        <xs:attribute name="SubType" type="xs:string" use="required"/>
+        <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="PropertyAttribute">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+        <xs:attribute name="Value" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="FieldAttribute">
+        <xs:attribute name="Id" type="xs:string" use="required"/>
+        <xs:attribute name="Value" type="xs:string" use="optional"/>
+        <xs:attribute name="Source" type="xs:string" use="optional"/>
+    </xs:attributeGroup>
+
+</xs:schema>

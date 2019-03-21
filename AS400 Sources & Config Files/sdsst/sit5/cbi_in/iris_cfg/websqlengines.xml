@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Web JDBC Configuration -->
+<Iris>
+
+	<!-- Parameters relating to database configurations -->
+	<WebSQLEngines>
+
+		<!-- AS/400 configuration -->
+		<WebSQLEngine Name="DB2" Type="REST" Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/sql</PhoenixPath>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			
+			<!-- Database connection URL -->
+			<URL>jdbc:db2://B20A0D5V;naming=system;translate binary=true;libraries=CBSDATDPC5</URL>
+			<!-- Database driver class -->
+			<Driver>com.ibm.db2.jdbc.app.DB2Driver</Driver>
+			<!-- Path where JAR file can be found -->
+			<JarFilePath>"/QIBM/ProdData/Java400/jt400ntv.jar"</JarFilePath>
+			<!-- User name used for connection -->
+			<User></User>
+			<!-- Password used for connection -->
+			<Password></Password>
+			<!-- Maximum number of connections -->
+			<Connections>1</Connections>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>4096</MinimumSize>
+			</Compression>
+		</WebSQLEngine>
+
+	</WebSQLEngines>
+
+</Iris>

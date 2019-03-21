@@ -1,0 +1,6348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Composite Webservice configuration -->
+
+<!-- ======================== Note ====================== -->
+<!-- All Host Trx will use I13DID HTLMON Includes OCB Trx -->
+<!--  Except OCB CC Trx use I13DID HTLRTE                 -->
+<!-- All Channel Are Request to Enter I13DID              -->
+<!-- All Channel Transparent Trx Need to use IRIS Default -->
+<!--  values, Eg. DD21215 for AFS Trx                     -->
+<!-- ======================= End Note =================== -->
+
+<!-- ===================== History ====================== -->
+<!-- Version      PIC        Description				  -->
+<!-- SDS280916    KBHOH      Add map clear card number    -->
+<!-- 		                 in response field for AFS    -->
+<!-- SDS081116	  KBHOH      Add Instant Payment for      -->
+<!-- 				         4PM File				      -->
+<!-- SDS180117	  KBHOH      Change EBS response to from  -->
+<!-- 				         O to R	due to EBS response	  -->
+<!-- 				         body						  -->
+<!-- SDS220317	  KBHOH      Mantis log 7727, Stamp AFS   -->
+<!-- 				         reference number(T11TXREF)   -->
+<!-- 				         that pass in from channel    -->
+<!-- 				         to HT field TLBGLFNO         -->
+<!-- SDS270317	  KBHOH      Need to map CC internal 	  -->
+<!-- 				         number to TLBRFN_ourRef for  -->
+<!-- 				         Bill payment by CC and       -->
+<!-- 				         not clear card	web service   -->
+<!-- ==================== End History =================== -->
+
+<Iris>
+
+	<!-- Parameters relating to composite webservice configurations -->
+	<Workflows>
+
+		<!-- ============================ AFS ============================ -->
+		<!-- ========== AF0150_BillPymtFndTrfService ===================== -->
+		<!-- Flow 1.InternalAccNo 2.AFS 3.HTL 4.BPG -->
+		<Workflow Enabled="true" Name="AF0150_BillPymtFndTrfService">
+
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<!-- Map -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+
+				<!-- Action -->
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				<!-- End of Node 1 Inquiry Internal Acc Number -->
+
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs0150i" 
+					TransposeTo="message/body" />
+					
+				<Map Target="Input.2.message/body/T8CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+					
+				<Rest Id="2"
+					URI="/AFREST/AF0150_BillPymtFndTrfSingleService"
+					Timeout="5000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />					
+					
+					<Map Target="Output.Final.message/body/afs0150o"
+						Source="Output.2.message/body" />
+					
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs0150o/T8CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />
+					<Leave />
+				</OnReject>
+				<!-- End of Node 2 to AFS -->
+
+				<!-- Node 3 HT -->
+				<Map Target="Input.3"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsbill"
+					TransposeTo="message/body" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.3.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs0150i/T8TXNREF_transactionReference" />
+
+				<!-- SDS270317 -->
+				<Map Target="Input.3.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+
+				<Rest Id="3"
+					URI="/HTREST/HT_TmqdsBillGenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />
+					
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.3" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.3.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.3.message/body/abcs42" />
+					
+					<Map Target="Output.Final.message/body/afs0150o"
+						Source="Output.2.message/body" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs0150o/T8CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />
+					<Leave />
+				</OnReject>
+				<!-- End of Node 3 HT -->
+
+				<!-- Node 4 BPG -->
+				<Map Target="Input.4"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsbill"
+					TransposeTo="message/body" />
+
+				<Rest Id="4"
+					URI="/ZXREST/ZX_BPGOnOfflineBillPaymentService"
+					Timeout="3000"
+					AcceptTimeout = "true"/>
+				
+				<OnTimeout>
+				</OnTimeout>
+				
+				<OnReject>
+					
+					<Reverse Id="2" />
+					<Reverse Id="3" />
+	
+				</OnReject>
+				<!-- End of Node 4 BPG -->
+
+				<Map Target="Output.Final"
+					Source="Output.2" />
+
+				<Map Target="Output.Final.message/body/afs0150o"
+					Source="Output.2.message/body" />
+
+				<Map Target="Output.Final"
+					Source="Output.3"
+					Transpose="subBodyToBody" />
+				
+				<Map Target="Output.Final.message/body/bpgo"
+					Source="Output.4.message/body" />
+
+				<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+					Source="Output.4.message/header/I13MSTA_messageStatus" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs0150o/T8CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />				
+			</Flow>				
+			
+			<!-- WSDL Message Format-->
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsbill"
+					MessageMapName="abcsrequest-tmqdsbill"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0150i"
+					MessageMapName="AFS0150I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs0150o"
+					MessageMapName="AFS0150O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/bpgo"
+					MessageMapName="ZXBPGOnOffBillPaymentO"
+					MessageMapPath="phoenix_cfg/thirdpartywb/"
+					Recurring="false" />				
+			</Out>
+			<!-- End of WSDL Message Format-->
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF0150_BillPymtFndTrfService ============== -->
+
+		<!-- ========== AF0150_BillPymtFndTrfNotClearCardCompService ===================== -->
+		<!-- Flow 1.AFS 2.HTL 3.BPG -->
+		<Workflow Enabled="true" Name="AF0150_BillPymtFndTrfNotClearCardCompService">
+
+			<Flow>				
+				<!-- Node 1 to AFS -->
+				<Map Target="Input.1"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs0150i"
+					TransposeTo="message/body" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/AFREST/AF0150_BillPymtFndTrfSingleService"
+					Timeout="5000" />
+				
+				<OnTimeout>
+					
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.1.message/header/I13MSTA_messageStatus" />						
+					
+					<Map Target="Output.Final.message/body/afs0150o"
+						Source="Output.1.message/body" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 HT -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsbill"
+					TransposeTo="message/body" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.2.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs0150i/T8TXNREF_transactionReference" />
+
+				<!-- SDS270317 -->
+				<Map Target="Input.2.message/body/TLBRFN_ourRef"
+					Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />
+
+				<Rest Id="2"
+					URI="/HTREST/HT_TmqdsBillGenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					
+					<Reverse Id="1" />
+					
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />						
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					
+					<Reverse Id="1" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 BPG -->
+				<Map Target="Input.3"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsbill"
+					TransposeTo="message/body" />
+				
+				<Rest Id="3"
+					URI="/ZXREST/ZX_BPGOnOfflineBillPaymentService"
+					Timeout="3000"
+					AcceptTimeout = "true"/>
+				
+				<OnTimeout>
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />
+
+				</OnTimeout>
+				
+				<OnReject>
+					
+					<Reverse Id="1" />
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />
+					<!-- Reversal -->
+				</OnReject>
+				
+				<Map Target="Output.Final.message/body/afs0150o"
+					Source="Output.1.message/body" />
+				
+				<Map Target="Output.Final"
+					Source="Output.2"
+					Transpose="subBodyToBody" />
+				
+				<Map Target="Output.Final.message/body/bpgo"
+					Source="Output.3.message/body" />					
+			</Flow>				
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsbill"
+					MessageMapName="abcsrequest-tmqdsbill"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0150i"
+					MessageMapName="AFS0150I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs0150o"
+					MessageMapName="AFS0150O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/bpgo"
+					MessageMapName="ZXBPGOnOffBillPaymentO"
+					MessageMapPath="phoenix_cfg/thirdpartywb/"
+					Recurring="false" />				
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF0150_BillPymtFndTrfNotClearCardCompService ============== -->
+
+		<!-- ========== AF0150_DDABillPymtFndTrfService ===================== -->
+		<!-- Flow 1.InternalAccNo 2.AFS 3.HTL -->		
+		<Workflow Enabled="true" Name="AF0150_DDABillPymtFndTrfService">
+
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />
+				
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+					
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs0150i"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/body/T8CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+				
+				<Rest Id="2"
+					URI="/AFREST/AF0150_BillPymtFndTrfSingleService"
+					Timeout="5000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/body/afs0150o"
+						Source="Output.2.message/body" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs0150o/T8CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 HT -->
+				<Map Target="Input.3"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsbill"
+					TransposeTo="message/body" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.3.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs0150i/T8TXNREF_transactionReference" />
+
+				<!-- SDS270317 -->
+				<Map Target="Input.3.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+
+				<Rest Id="3"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.3" />
+	
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.3.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.3.message/body/abcs42" />
+
+					<Map Target="Output.Final.message/body/afs0150o"
+						Source="Output.2.message/body" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs0150o/T8CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+					
+				<Map Target="Output.Final.message/body/afs0150o"
+					Source="Output.2.message/body" />
+				
+				<Map Target="Output.Final"
+					Source="Output.3"
+					Transpose="subBodyToBody" />
+
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs0150o/T8CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />		
+			</Flow>				
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsbill"
+					MessageMapName="abcsrequest-tmqdsbill"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0150i"
+					MessageMapName="AFS0150I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs0150o"
+					MessageMapName="AFS0150O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF0150_DDABillPymtFndTrfService ============== -->
+
+		<!-- ========== AF0150_DDABillPymtFndTrfNotClearCardCompService ===================== -->
+		<!-- Flow 1.AFS 2.HTL -->		
+		<Workflow Enabled="true" Name="AF0150_DDABillPymtFndTrfNotClearCardCompService">
+
+			<Flow>				
+				<!-- Node 1 to AFS -->
+				<Map Target="Input.1"
+					Source="Input.Init"
+					TransposeFrom="message/body/afs0150i"
+					TransposeTo="message/body" />  
+				
+				<Rest Id="1"
+					URI="/AFREST/AF0150_BillPymtFndTrfSingleService"
+					Timeout="5000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.1.message/header/I13MSTA_messageStatus" />						
+					
+					<Map Target="Output.Final.message/body/afs0150o"
+						Source="Output.1.message/body" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 HT -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsbill"
+					TransposeTo="message/body" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.2.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs0150i/T8TXNREF_transactionReference" />
+
+				<!-- SDS270317 -->
+				<Map Target="Input.2.message/body/TLBRFN_ourRef"
+					Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />
+
+				<Rest Id="2"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					
+					<Reverse Id="1" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final.message/body/afs0150o"
+					Source="Output.1.message/body" />
+				
+				<Map Target="Output.Final"
+					Source="Output.2"
+					Transpose="subBodyToBody" />
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsbill"
+					MessageMapName="abcsrequest-tmqdsbill"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0150i"
+					MessageMapName="AFS0150I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs0150o"
+					MessageMapName="AFS0150O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF0150_DDABillPymtFndTrfNotClearCardCompService ============== -->
+
+		<!-- ========== AF0150_ICCSChqbyCCService ===================== -->
+		<!-- Flow 1.InternalAccNo 2.AFS 3.HTL -->
+		<Workflow Enabled="true"
+   			Timeout="50000"
+   			Name="AF0150_ICCSChqbyCCService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />
+				
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs0150i" 
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/body/T8CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+				
+				<Rest Id="2"
+					URI="/AFREST/AF0150_BillPymtFndTrfSingleService"
+					Timeout="5000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />						
+					
+					<Map Target="Output.Final.message/body/afs0150o"
+						Source="Output.2.message/body" />
+					
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs0150o/T8CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 HT -->
+				<Map Target="Input.3"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.3.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs0150i/T8TXNREF_transactionReference" />
+
+				<!-- SDS270317 -->
+				<Map Target="Input.3.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+
+				<Rest Id="3"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.3" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.3.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.3.message/body/abcs42" />
+
+					<Map Target="Output.Final.message/body/afs0150o"
+						Source="Output.2.message/body" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs0150o/T8CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+					
+				<Map Target="Output.Final.message/body/afs0150o"
+					Source="Output.2.message/body" />
+				
+				<Map Target="Output.Final"
+					Source="Output.3"
+					Transpose="subBodyToBody" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs0150o/T8CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs0150i/T8CRDNO_cardNumber" />		
+			</Flow>				
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0150i"
+					MessageMapName="AFS0150I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs0150o"
+					MessageMapName="AFS0150O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />	
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF0150_ICCSChqbyCCService ============== -->
+
+		<!-- ========== AF0200_InstantPaymentService ===================== -->
+		<!-- Flow 1.InternalAccNo 2.HTL 3.AFS -->			
+		<Workflow Enabled="true"
+			Timeout="30000"
+			Name="AF0200_InstantPaymentService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+    			<Map Target="Input.1"
+     				Source="Input.Init" />
+
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs0200i/T11CRDNO_cardNumber" />
+				
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 HT -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.2.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs0200i/T11TXREF_transactionRef" />
+
+				<Rest Id="2"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 to AFS -->
+				<Map Target="Input.3"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs0200i"
+					TransposeTo="message/body" />
+					
+				<Map Target="Input.3.message/body/T11CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+					
+				<Rest Id="3"
+					URI="/AFREST/AF0200_InstantPaymentSingleService"
+					Timeout="3000"/>
+					
+				<OnTimeout>
+					<Reverse Id="2" />					
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />					
+
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+
+					<Map Target="Output.Final.message/body/afs0200o"
+						Source="Output.3.message/body" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs0200o/T11CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs0200i/T11CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+					
+				<Map Target="Output.Final"
+					Source="Output.2"
+					Transpose="subBodyToBody" />
+
+				<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+					Source="Output.3.message/header/I13MSTA_messageStatus" />	
+
+				<Map Target="Output.Final.message/body/abcsf1"
+					Source="Output.2.message/body/abcsf1" />	
+
+				<Map Target="Output.Final.message/body/afs0200o"
+					Source="Output.3.message/body" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs0200o/T11CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs0200i/T11CRDNO_cardNumber" />					
+			</Flow>
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0200i"
+					MessageMapName="AFS0200I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs0200o"
+					MessageMapName="AFS0200O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF0200_InstantPaymentService ============== -->
+		
+		<!-- ========== AF0200_InstantPaymentNotClearCardCompService ===================== -->
+		<!-- Flow 1.HTL 2.AFS -->		
+		<Workflow Enabled="true"
+			Timeout="30000"
+			Name="AF0200_InstantPaymentNotClearCardCompService">
+			
+			<Flow>				
+
+				<!-- Node 1 HT -->
+				<Map Target="Input.1"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.1.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs0200i/T11TXREF_transactionRef" />
+
+				<!-- SDS270317 -->
+				<Map Target="Input.1.message/body/TLBRFN_ourRef"
+					Source="Input.Init.message/body/afs0200i/T11CRDNO_cardNumber" />
+
+				<Rest Id="1"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+			
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.1.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.1.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs0200i"  
+					TransposeTo="message/body" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF0200_InstantPaymentSingleService"
+					Timeout="3000"/>
+				
+				<OnTimeout>
+					<Reverse Id="1" />
+					
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.1.message/body/abcsf1" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>				
+					<Reverse Id="1" />
+					
+					<Map Target="Output.Final"
+						Source="Output.1" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.1.message/body/abcsf1" />					
+					
+					<Map Target="Output.Final.message/body/afs0200o"
+						Source="Output.2.message/body" />
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.1"
+					Transpose="subBodyToBody" />
+				
+				<Map Target="Output.Final.message/body/afs0200o"
+					Source="Output.2.message/body" />
+			</Flow>				
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0200i"
+					MessageMapName="AFS0200I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs0200o"
+					MessageMapName="AFS0200O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF0200_InstantPaymentNotClearCardCompService ============== -->
+
+		<!-- ========== EB_AFSPinGenericService ======================== -->
+		<!-- Flow 1.InternalAccNo 2.EBS 3.AFS -->			
+		<Workflow Enabled="true" Name="EB_AFSPinGenericService">
+
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1"
+					Source="Input.Init"	/>
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+								
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs0302i/T2CRDNO_cardNumber" />
+
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				<!-- End of Node 1 Inquiry Internal Acc Number -->
+				
+				<!-- Node 2 EBS -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/eb900000i"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/header/I13DID_destinationID"
+					Source="Input.Init.message/header/I13DID_destinationID" />
+				
+				<Rest Id="2"
+					URI="/EBREST/EB_GenericService"
+					Timeout="3000" />
+
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+
+				<OnReject>
+					<Map Target="Output.Final.message/header"
+						Source="Output.2.message/header" />						
+					
+					<!-- SDS180117 -->
+					<Map Target="Output.Final.message/body/eb900000o"
+						Source="Output.2.message/body/subBody" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />					
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 to AFS -->
+				<Map Target="Input.3"
+					Source="Input.Init"
+					TransposeFrom="message/body/afs0302i"
+					TransposeTo="message/body" />
+				
+				<!-- SDS180117 -->
+				<Map Target="Input.3.message/body/T2NEWPIN_newPIN"
+					Source="Output.2.message/body/subBody/E1E52_pinBlock_@0" />
+
+				<Map Target="Input.3.message/body/T2CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+
+				<Rest Id="3"
+					URI="/AFREST/AF0302_PinChangeSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final.message/body/afs0302o"
+						Source="Output.3.message/body" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/header"
+						Source="Output.2.message/header" />	
+
+
+					<!-- SDS180117 -->
+					<Map Target="Output.Final.message/body/eb900000o"
+						Source="Output.2.message/body/subBody" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs0302o/T2CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs0302i/T2CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+		
+				<Map Target="Output.Final.message/header"
+					Source="Output.2.message/header" />	
+
+				<!-- SDS180117 -->
+				<Map Target="Output.Final.message/body/eb900000o"
+					Source="Output.2.message/body/subBody" />
+				
+				<Map Target="Output.Final.message/body/afs0302o"
+					Source="Output.3.message/body" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs0302o/T2CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs0302i/T2CRDNO_cardNumber" />					
+			</Flow>	
+	
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/eb900000i"
+					MessageMapName="EB900000I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0302i"
+					MessageMapName="AFS0302I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<!-- SDS180117 -->
+				<Node Name="message/body/eb900000o"
+					MessageMapName="EB900000R"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0302o"
+					MessageMapName="AFS0302O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of EB_AFSPinGenericService ================= -->
+
+		<!-- ========== EB_AFSPinGenericNotClearCardCompService ======================== -->
+		<!-- Flow 1.EBS 2.AFS -->			
+		<Workflow Enabled="true" Name="EB_AFSPinGenericNotClearCardCompService">
+
+			<Flow>
+				<!-- Node 1 EBS -->
+				<Map Target="Input.1"
+					Source="Input.Init"
+					TransposeFrom="message/body/eb900000i"
+					TransposeTo="message/body" />
+				
+				<Rest Id="1"
+					URI="/EBREST/EB_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final.message/header"
+						Source="Output.2.message/header" />				
+
+					<!-- SDS180117 -->
+					<Map Target="Output.Final.message/body/eb900000o"
+						Source="Output.1.message/body/subBody" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/afs0302i"
+					TransposeTo="message/body" />					
+
+				<!-- SDS180117 -->
+				<Map Target="Input.2.message/body/T2NEWPIN_newPIN"
+					Source="Output.1.message/body/subBody/E1E52_pinBlock_@0" />
+
+				<Rest Id="2"
+					URI="/AFREST/AF0302_PinChangeSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final.message/body/afs0302o"
+						Source="Output.2.message/body" />
+					
+					<Map Target="Output.Final.message/header"
+						Source="Output.1.message/header" />					
+
+					<!-- SDS180117 -->
+					<Map Target="Output.Final.message/body/eb900000o"
+						Source="Output.1.message/body/subBody" />	
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />						
+					<Leave />
+				</OnReject>					
+		
+				<Map Target="Output.Final.message/header"
+					Source="Output.1.message/header" />	
+				
+				<!-- SDS180117 -->
+				<Map Target="Output.Final.message/body/eb900000o"
+					Source="Output.1.message/body/subBody" />
+				
+				<Map Target="Output.Final.message/body/afs0302o"
+					Source="Output.2.message/body" />
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/eb900000i"
+					MessageMapName="EB900000I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0302i"
+					MessageMapName="AFS0302I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<!-- SDS180117 -->
+				<Node Name="message/body/eb900000o"
+					MessageMapName="EB900000R"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0302o"
+					MessageMapName="AFS0302O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of EB_AFSPinGenericNotClearCardCompService ================= -->
+
+		<!-- ========== AF0320_PinChangeReversalService ================================ -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->			
+		<Workflow Enabled="true" Name="AF0320_PinChangeReversalService">
+
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T3CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+
+				<Map Target="Input.2.message/body/T3CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+
+				<Rest Id="2"
+					URI="/AFREST/AF0320_PinChangeReversalSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/T3CRDNO_cardNumber"
+						Source="Input.Init.message/body/T3CRDNO_cardNumber" />
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/T3CRDNO_cardNumber"
+					Source="Input.Init.message/body/T3CRDNO_cardNumber" />				
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS0320I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS0320O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF0320_PinChangeReversalService ================= -->
+
+		<!-- ========== EB_AFSPinValidateService ======================== -->
+		<!-- Flow 1.InternalAccNo 2.EBS 3.AFS -->			
+		<Workflow Enabled="true" Name="EB_AFSPinValidateService">
+
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs0330i/T4CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 EBS -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/eb900000i"
+					TransposeTo="message/body" />
+	
+				<Map Target="Input.2.message/header/I13DID_destinationID"
+					Source="Input.Init.message/header/I13DID_destinationID" />	
+	
+				<Rest Id="2"
+					URI="/EBREST/EB_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final.message/header"
+						Source="Output.2.message/header" />					
+					
+					<!-- SDS180117 -->
+					<Map Target="Output.Final.message/body/eb900000o"
+						Source="Output.2.message/body/subBody" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 to AFS -->
+				<Map Target="Input.3"
+					Source="Input.Init"
+					TransposeFrom="message/body/afs0330i"
+					TransposeTo="message/body" />
+
+				<!-- SDS180117 -->
+				<Map Target="Input.3.message/body/T4CURPIN_currentPIN"
+					Source="Output.2.message/body/subBody/E1E52_pinBlock_@0" />
+
+				<Map Target="Input.3.message/body/T4CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+				
+				<Rest Id="3"
+					URI="/AFREST/AF0330_PinValidationSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final.message/body/afs0330o"
+						Source="Output.3.message/body" />
+
+					<Map Target="Output.Final.message/header"
+						Source="Output.2.message/header" />					
+
+					<!-- SDS180117 -->
+					<Map Target="Output.Final.message/body/eb900000o"
+						Source="Output.2.message/body/subBody" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs0330o/T4CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs0330i/T4CRDNO_cardNumber" />
+					<Leave />
+				</OnReject>					
+
+				<Map Target="Output.Final.message/header"
+					Source="Output.2.message/header" />	
+
+
+				<!-- SDS180117 -->
+				<Map Target="Output.Final.message/body/eb900000o"
+					Source="Output.2.message/body/subBody" />
+				
+				<Map Target="Output.Final.message/body/afs0330o"
+					Source="Output.3.message/body" />
+				
+				<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+					Source="Output.3.message/header/I13MSTA_messageStatus" />	
+
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs0330o/T4CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs0330i/T4CRDNO_cardNumber" />
+
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/eb900000i"
+					MessageMapName="EB900000I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0330i"
+					MessageMapName="AFS0330I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<!-- SDS180117 -->
+				<Node Name="message/body/eb900000o"
+					MessageMapName="EB900000R"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0330o"
+					MessageMapName="AFS0330O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of EB_AFSPinValidateService ================= -->		
+		
+		<!-- ========== EB_AFSPinValidateNotClearCardCompService ======================== -->
+		<!-- Flow 1.EBS 2.AFS -->			
+		<Workflow Enabled="true" Name="EB_AFSPinValidateNotClearCardCompService">
+	
+			<Flow>
+				<!-- Node 1 EBS -->
+				<Map Target="Input.1"
+					Source="Input.Init"
+					TransposeFrom="message/body/eb900000i"
+					TransposeTo="message/body" />
+				
+				<Rest Id="1"
+					URI="/EBREST/EB_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final.message/header"
+						Source="Output.1.message/header" />					
+					
+					<!-- SDS180117 -->
+					<Map Target="Output.Final.message/body/eb900000o"
+						Source="Output.1.message/body/subBody" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/afs0330i"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/body/T4CURPIN_currentPIN"
+					Source="Output.1.message/body/subBody/E1E52_pinBlock_@0" />				
+				
+				<Rest Id="2"
+					URI="/AFREST/AF0330_PinValidationSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final.message/body/afs0330o"
+						Source="Output.2.message/body" />
+					
+					<Map Target="Output.Final.message/header"
+						Source="Output.1.message/header" />					
+					
+					<!-- SDS180117 -->
+					<Map Target="Output.Final.message/body/eb900000o"
+						Source="Output.1.message/body/subBody" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+					<Leave />
+				</OnReject>					
+
+				<Map Target="Output.Final.message/header"
+					Source="Output.1.message/header" />	
+
+				<!-- SDS180117 -->
+				<Map Target="Output.Final.message/body/eb900000o"
+					Source="Output.1.message/body/subBody" />
+				
+				<Map Target="Output.Final.message/body/afs0330o"
+					Source="Output.2.message/body" />
+				
+				<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+					Source="Output.2.message/header/I13MSTA_messageStatus" />	
+			</Flow>	
+	
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/eb900000i"
+					MessageMapName="EB900000I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0330i"
+					MessageMapName="AFS0330I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<!-- SDS180117 -->
+				<Node Name="message/body/eb900000o"
+					MessageMapName="EB900000R"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs0330o"
+					MessageMapName="AFS0330O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of EB_AFSPinValidateNotClearCardCompService ================= -->			
+		
+		<!-- ========== AF0800_CardActivateDeactivateService ============================ -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->		
+		<Workflow Enabled="true" Name="AF0800_CardActivateDeactivateService">
+
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T1CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T1CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF0800_CardActivateDeactivateSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/T1CRDNO_cardNumber"
+						Source="Input.Init.message/body/T1CRDNO_cardNumber" />
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/T1CRDNO_cardNumber"
+					Source="Input.Init.message/body/T1CRDNO_cardNumber" />				
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS0800I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS0800O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF0800_CardActivateDeactivateService ================= -->
+
+		<!-- ========== AF1200_BillPymtFndTrfReversalService ============================= -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->		
+		<Workflow Enabled="true" Name="AF1200_BillPymtFndTrfReversalService">
+
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T9CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T9CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF1200_BillPymtFndTrfReversalSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/T9CRDNO_cardNumber"
+						Source="Input.Init.message/body/T9CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/T9CRDNO_cardNumber"
+					Source="Input.Init.message/body/T9CRDNO_cardNumber" />				
+			</Flow>
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1200I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1200O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1200_BillPymtFndTrfReversalService ================= -->
+
+		<!-- ========== AF1300_BalanceEnquiryService ===================== -->
+		<!-- Flow 1.Internal Acc No 2.AFS  -->	
+		<Workflow Enabled="true" Name="AF1300_BalanceEnquiryService">
+			
+			<Flow>
+				<!-- Node 1 Internal Acc No -->				
+				<Map Target="Input.1"
+					Source="Input.Init" />
+
+				<Map Target="Input.1.message/header/HDTXCD_transactionCode"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T6CRDNO_cardNumber" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				<!-- End of Node 1 Internal Acc No -->
+
+				<!-- Node 2 AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />
+
+				<Map Target="Input.2.message/body/T6CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/ZXREST/ZX_AFS1300BalanceEnquirySingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/T6CRDNO_cardNumber"
+						Source="Input.Init.message/body/T6CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+				
+				<Map Target="Output.Final.message/header"
+					Source="Input.Init.message/header" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/T6CRDNO_cardNumber"
+					Source="Input.Init.message/body/T6CRDNO_cardNumber" />				
+			</Flow>
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1300I"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1300O"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1300_BalanceEnquiryService ============== -->		
+
+		<!-- ========== AF1300_BalanceEnquiryNotClearCardCompService ===================== -->
+		<!-- Flow 1.AFS -->	
+		<Workflow Enabled="true" Name="AF1300_BalanceEnquiryNotClearCardCompService">
+
+			<Flow>
+				<!-- Node 1 AFS -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Rest Id="1"
+					URI="/ZXREST/ZX_AFS1300BalanceEnquirySingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.1" />
+				
+				<Map Target="Output.Final.message/header"
+					Source="Input.Init.message/header" />
+			</Flow>
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1300I"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1300O"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1300_BalanceEnquiryNotClearCardCompService ============== -->
+
+		<!-- ========== DD21214_BalanceEnquiryCompService ===================== -->
+		<!-- Flow 1.DD21215 2.DD21214  -->	
+		<Workflow Enabled="true" Name="DD21214_BalanceEnquiryCompService">
+			
+			<Flow>
+				<!-- Node 1 Internal Acc No -->				
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Map Target="Input.1.message/header/HDTXCD_transactionCode"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/IINACC_inputInternalAccountNumber" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				<!-- End of Node 1 Internal Acc No -->
+				
+				<!-- Node 2 DD21214 -->
+				<Map Target="Input.2"
+					Source="Input.Init" />
+				
+				<Map Target="Input.2.message/body/IINACC_inputInternalAccountNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/DDREST/DD21214BalanceEnquirySingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/IINACC_inputInternalAccountNumber"
+						Source="Input.Init.message/body/IINACC_inputInternalAccountNumber" />					
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+
+				<Map Target="Output.Final.message/body/dd21214o"
+					Source="Output.2.message/body" />
+				
+				<Map Target="Output.Final.message/body/dd21214r"
+					Source="Output.2.message/body/subBody" />
+
+				<Map Target="Output.Final.message/header"
+					Source="Input.Init.message/header" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/dd21214o/WINACC_cardNumber"
+					Source="Input.Init.message/body/IINACC_inputInternalAccountNumber" />
+				
+				<Map Target="Output.Final.message/body/dd21214r/WINACC_cardNumber_@0"
+					Source="Input.Init.message/body/IINACC_inputInternalAccountNumber" />
+			</Flow>
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="DD21214I"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/dd21214o"
+					MessageMapName="DD21214O"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/dd21214r"
+					MessageMapName="DD21214R"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="true" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of DD21214_BalanceEnquiryCompService ============== -->
+
+		<!-- ========== DD21214_BalanceEnquiryNotClearCardCompService ===================== -->
+		<!-- Flow 1.DD21214 -->	
+		<Workflow Enabled="true" Name="DD21214_BalanceEnquiryNotClearCardCompService">
+
+			<Flow>
+				<!-- Node 1 DD -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21214BalanceEnquirySingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+
+				<Map Target="Output.Final"
+					Source="Output.1" />
+
+				<Map Target="Output.Final.message/body/dd21214o"
+					Source="Output.1.message/body" />
+				
+				<Map Target="Output.Final.message/body/dd21214r"
+					Source="Output.1.message/body/subBody" />
+				
+				<Map Target="Output.Final.message/header"
+					Source="Input.Init.message/header" />
+			</Flow>
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="DD21214I"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/dd21214o"
+					MessageMapName="DD21214O"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/dd21214r"
+					MessageMapName="DD21214R"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="true" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of DD21214_BalanceEnquiryNotClearCardCompService ============== -->
+
+		<!-- ========== AF1400_TransactionDisplayService ============================= -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->		
+		<Workflow Enabled="true" Name="AF1400_TransactionDisplayService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+    			<Map Target="Input.1"
+     			Source="Input.Init" />
+				 
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T7CRACNO_cardAccountNumber" />
+
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T7CRACNO_cardAccountNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF1400_TransactionDisplaySingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />				
+					
+					<Map Target="Output.Final.message/body/afs1400o"
+						Source="Output.2.message/body" />
+					
+					<Map Target="Output.Final.message/body/afs1400r"
+						Source="Output.2.message/body/subBody" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs1400o/T7CRACNO_cardAccountNumber"
+						Source="Input.Init.message/body/T7CRACNO_cardAccountNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+
+   				 <Map Target="Output.Final.message/body/afs1400o"
+     				Source="Output.2.message/body" />
+
+    			<Map Target="Output.Final.message/body/afs1400r"
+    				Source="Output.2.message/body/subBody" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs1400o/T7CRACNO_cardAccountNumber"
+					Source="Input.Init.message/body/T7CRACNO_cardAccountNumber" />
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1400I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs1400o"
+					MessageMapName="AFS1400O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs1400r"
+					MessageMapName="AFS1400R"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="true" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1400_TransactionDisplayService ================= -->		
+		
+		<!-- ========== AF1500_CardBlockUnblockService ============================= -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->		
+		<Workflow Enabled="true" Name="AF1500_CardBlockUnblockService">
+	
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T10CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T10CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF1500_CardBlockUnblockSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/T10CRDNO_cardNumber"
+						Source="Input.Init.message/body/T10CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/T10CRDNO_cardNumber"
+					Source="Input.Init.message/body/T10CRDNO_cardNumber" />					
+			</Flow>	
+	
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1500I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1500O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1500_CardBlockUnblockService ================= -->
+
+		<!-- ========== AF1600_FPMInstantPaymentService ===================== -->
+		<!-- Flow 1.InternalAccNo 2.HTL 3.AFS -->			
+		<Workflow Enabled="true"
+			Timeout="30000"
+			Name="AF1600_FPMInstantPaymentService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+    			<Map Target="Input.1"
+     				Source="Input.Init" />
+
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />
+				
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 HT -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.2.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs1600i/T11TXREF_transactionRef" />
+				
+				<Rest Id="2"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 to AFS -->
+				<Map Target="Input.3"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs1600i"
+					TransposeTo="message/body" />
+
+				<Map Target="Input.3.message/body/T11CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+
+				<Rest Id="3"
+					URI="/AFREST/AF1600_FPMInstantPaymentSingleService"
+					Timeout="3000"
+					AcceptTimeout = "true"/>
+					
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />					
+
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+
+					<Map Target="Output.Final.message/body/afs1600o"
+						Source="Output.3.message/body" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs1600o/T11CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+					
+				<Map Target="Output.Final"
+					Source="Output.2"
+					Transpose="subBodyToBody" />
+
+				<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+					Source="Output.3.message/header/I13MSTA_messageStatus" />	
+
+				<Map Target="Output.Final.message/body/abcsf1"
+					Source="Output.2.message/body/abcsf1" />	
+
+				<Map Target="Output.Final.message/body/afs1600o"
+					Source="Output.3.message/body" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs1600o/T11CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />					
+			</Flow>
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs1600i"
+					MessageMapName="AFS1600FPMI"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs1600o"
+					MessageMapName="AFS1600FPMO"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1600_FPMInstantPaymentService ============== -->
+		
+		<!-- ========== AF1600_FPMInstantPaymentNotClearCardCompService ===================== -->
+		<!-- Flow 1.HTL 2.AFS -->		
+		<Workflow Enabled="true"
+			Timeout="30000"
+			Name="AF1600_FPMInstantPaymentNotClearCardCompService">
+			
+			<Flow>				
+
+				<!-- Node 1 HT -->
+				<Map Target="Input.1"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.1.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs1600i/T11TXREF_transactionRef" />
+				
+				<!-- SDS270317 -->
+				<Map Target="Input.1.message/body/TLBRFN_ourRef"
+					Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />
+
+				<Rest Id="1"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+			
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.1.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.1.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs1600i"  
+					TransposeTo="message/body" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF1600_FPMInstantPaymentSingleService"
+					Timeout="3000" 
+					AcceptTimeout = "true"/>
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.1.message/body/abcsf1" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>				
+					<Reverse Id="1" />
+					
+					<Map Target="Output.Final"
+						Source="Output.1" />
+
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.1.message/body/abcsf1" />					
+					
+					<Map Target="Output.Final.message/body/afs1600o"
+						Source="Output.2.message/body" />
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.1"
+					Transpose="subBodyToBody" />
+				
+				<Map Target="Output.Final.message/body/afs1600o"
+					Source="Output.2.message/body" />
+			</Flow>				
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs1600i"
+					MessageMapName="AFS1600FPMI"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs1600o"
+					MessageMapName="AFS1600FPMO"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1600_FPMInstantPaymentNotClearCardCompService ============== -->
+
+		<!-- ========== AF1600_OCBInstantPaymentService ===================== -->
+		<!-- Flow 1.InternalAccNo 2.HTL 3.AFS -->
+		<Workflow Enabled="true"
+			Timeout="30000"
+			Name="AF1600_OCBInstantPaymentService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />
+				
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 HT -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.2.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs1600i/T11TXREF_transactionRef" />
+					
+				<Rest Id="2"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 to AFS -->
+				<Map Target="Input.3"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs1600i"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.3.message/body/T11CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+				
+				<Rest Id="3"
+					URI="/AFREST/AF1600_OCBInstantPaymentSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />					
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					
+					<Map Target="Output.Final.message/body/afs1600o"
+						Source="Output.3.message/body" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs1600o/T11CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2"
+					Transpose="subBodyToBody" />
+				
+				<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+					Source="Output.3.message/header/I13MSTA_messageStatus" />	
+				
+				<Map Target="Output.Final.message/body/abcsf1"
+					Source="Output.2.message/body/abcsf1" />	
+				
+				<Map Target="Output.Final.message/body/afs1600o"
+					Source="Output.3.message/body" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs1600o/T11CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />				
+			</Flow>
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs1600i"
+					MessageMapName="AFS1600OCBI"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs1600o"
+					MessageMapName="AFS1600OCBO"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1600_OCBInstantPaymentService ============== -->
+
+		<!-- ========== AF1620_OCBManualECInstPaymntService ===================== -->
+		<!-- Flow 1.InternalAccNo 2.HTL 3.AFS -->			
+		<Workflow Enabled="true"
+			Timeout="30000"
+			Name="AF1620_OCBManualECInstPaymntService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs1620i/T12CRDNO_cardNumber" />
+				
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 HT -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<!-- SDS220317 -->
+				<Map Target="Input.2.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs1620i/T12TXREF_transactionRef" />
+					
+				<Rest Id="2"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 to AFS -->
+				<Map Target="Input.3"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs1620i"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.3.message/body/T12CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+				
+				<Rest Id="3"
+					URI="/AFREST/AF1620_InstantPaymentReversalSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />					
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					
+					<Map Target="Output.Final.message/body/afs1620o"
+						Source="Output.3.message/body" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs1620o/T12CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs1620i/T12CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2"
+					Transpose="subBodyToBody" />
+				
+				<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+					Source="Output.3.message/header/I13MSTA_messageStatus" />	
+				
+				<Map Target="Output.Final.message/body/abcsf1"
+					Source="Output.2.message/body/abcsf1" />	
+				
+				<Map Target="Output.Final.message/body/afs1620o"
+					Source="Output.3.message/body" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs1620o/T12CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs1620i/T12CRDNO_cardNumber" />
+			</Flow>
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs1620i"
+					MessageMapName="AFS1620I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs1620o"
+					MessageMapName="AFS1620O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1620_OCBManualECInstPaymntService ============== -->
+
+		<!-- ========== AF1600_OCBHouseChqInstantPaymentService ===================== -->
+		<!-- Flow 1.InternalAccNo 2.HTL 3.AFS -->
+		<Workflow Enabled="true"
+			Timeout="30000"
+			Name="AF1600_OCBHouseChqInstantPaymentService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />
+				
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 HT -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.2.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs1600i/T11TXREF_transactionRef" />
+					
+				<Rest Id="2"
+					URI="/HTREST/HT_TmqdsIccsGenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 to AFS -->
+				<Map Target="Input.3"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs1600i"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.3.message/body/T11CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+				
+				<Rest Id="3"
+					URI="/AFREST/AF1600_OCBInstantPaymentSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />					
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					
+					<Map Target="Output.Final.message/body/afs1600o"
+						Source="Output.3.message/body" />
+					
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs1600o/T11CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2"
+					Transpose="subBodyToBody" />
+				
+				<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+					Source="Output.3.message/header/I13MSTA_messageStatus" />	
+				
+				<Map Target="Output.Final.message/body/abcsf1"
+					Source="Output.2.message/body/abcsf1" />	
+				
+				<Map Target="Output.Final.message/body/afs1600o"
+					Source="Output.3.message/body" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs1600o/T11CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs1600i/T11CRDNO_cardNumber" />				
+			</Flow>
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest-tmqdsiccs"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs1600i"
+					MessageMapName="AFS1600OCBI"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs1600o"
+					MessageMapName="AFS1600OCBO"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1600_OCBHouseChqInstantPaymentService ============== -->
+
+		<!-- ========== AF1620_OCBHouseChqManualECInstPaymntService ===================== -->
+		<!-- Flow 1.InternalAccNo 2.HTL 3.AFS -->			
+		<Workflow Enabled="true"
+			Timeout="30000"
+			Name="AF1620_OCBHouseChqManualECInstPaymntService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/afs1620i/T12CRDNO_cardNumber" />
+				
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 HT -->
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.2.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+
+				<!-- SDS220317 -->
+				<Map Target="Input.2.message/body/TLBGLFNO_gLReferencingNo"
+					Source="Input.Init.message/body/afs1620i/T12TXREF_transactionRef" />
+					
+				<Rest Id="2"
+					URI="/HTREST/HT_TmqdsIccsGenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 to AFS -->
+				<Map Target="Input.3"
+					Source="Input.Init" 
+					TransposeFrom="message/body/afs1620i"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.3.message/body/T12CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />					
+				
+				<Rest Id="3"
+					URI="/AFREST/AF1620_InstantPaymentReversalSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Reverse Id="2" />
+					
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.3.message/header/I13MSTA_messageStatus" />	
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.2.message/body/abcsf1" />					
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.2.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.2.message/body/abcs42" />
+					
+					<Map Target="Output.Final.message/body/afs1620o"
+						Source="Output.3.message/body" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs1620o/T12CRDNO_cardNumber"
+						Source="Input.Init.message/body/afs1620i/T12CRDNO_cardNumber" />
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2"
+					Transpose="subBodyToBody" />
+				
+				<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+					Source="Output.3.message/header/I13MSTA_messageStatus" />	
+				
+				<Map Target="Output.Final.message/body/abcsf1"
+					Source="Output.2.message/body/abcsf1" />	
+				
+				<Map Target="Output.Final.message/body/afs1620o"
+					Source="Output.3.message/body" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs1620o/T12CRDNO_cardNumber"
+					Source="Input.Init.message/body/afs1620i/T12CRDNO_cardNumber" />				
+			</Flow>
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest-tmqdsiccs"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs1620i"
+					MessageMapName="AFS1620I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+				
+				<Node Name="message/body/afs1620o"
+					MessageMapName="AFS1620O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1620_OCBHouseChqManualECInstPaymntService ============== -->
+
+		<!-- ========== AF1620_InstantPaymentReversalService ============================= -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->		
+		<Workflow Enabled="true" Name="AF1620_InstantPaymentReversalService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T12CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T12CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF1620_InstantPaymentReversalSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/T12CRDNO_cardNumber"
+						Source="Input.Init.message/body/T12CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/T12CRDNO_cardNumber"
+					Source="Input.Init.message/body/T12CRDNO_cardNumber" />					
+			</Flow>				
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1620I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1620O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1620_InstantPaymentReversalService ================= -->
+
+		<!-- ========== AF1620_InstantPaymentReversalService ============================= -->
+		<!-- Flow 1.InternalAccNo 2.AFS 3.HT-->		
+		<!--
+		<Workflow Enabled="true" Name="AF1620_InstantPaymentReversalService">
+			
+			<Flow>
+				- Node 1 Inquiry Internal Acc Number -
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T12CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				- Node 2 to AFS -
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T12CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF1620_InstantPaymentReversalSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					<Leave />
+				</OnReject>					
+				
+				- Node 3 HT -
+				<Map Target="Input.3"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcsreq"
+					TransposeTo="message/body" />
+				
+				<Map Target="Input.3.message/body/TLBRFN_ourRef"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="3"
+					URI="/HTREST/HT_GenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.3" />
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.3.message/body/abcs41" />
+
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.3.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.3" />
+			</Flow>				
+			
+			- Input Message -
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+					
+				<Node Name="message/body/abcsreq"
+					MessageMapName="abcsrequest"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1620I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			- Output Message -
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+					
+				<Node Name="message/body"
+					MessageMapName="AFS1620O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			- WebEngines -
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>
+			</WebEngines>
+		</Workflow>
+		-->
+		<!-- ========== End of AF1620_InstantPaymentReversalService ================= -->
+
+		<!-- ========== AF1700_CheckCardStatusService ============================= -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->		
+		<Workflow Enabled="true" Name="AF1700_CheckCardStatusService">
+
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T13CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T13CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF1700_CheckCardStatusSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/T13CRDNO_cardNumber"
+						Source="Input.Init.message/body/T13CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/T13CRDNO_cardNumber"
+					Source="Input.Init.message/body/T13CRDNO_cardNumber" />				
+			</Flow>				
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1700I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS1700O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF1700_CheckCardStatusService ================= -->
+
+		<!-- ========== AF2100_DDSStatusInquiryService ============================= -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->		
+		<Workflow Enabled="true" Name="AF2100_DDSStatusInquiryService">
+
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T21CDACNO_internalAccNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T21CDACNO_internalAccNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF2100_DDSStatusInquirySingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/T21CDACNO_internalAccNumber"
+						Source="Input.Init.message/body/T21CDACNO_internalAccNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/T21CDACNO_internalAccNumber"
+					Source="Input.Init.message/body/T21CDACNO_internalAccNumber" />					
+			</Flow>		
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS2100I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS2100O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF2100_DDSStatusInquiryService ================= -->
+
+		<!-- ========== AF2200_CreditCardSummaryService ============================= -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->		
+		<Workflow Enabled="true" Name="AF2200_CreditCardSummaryService">
+			
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T16CRDNO_internalAccNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T16CRDNO_internalAccNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF2200_CreditCardSummarySingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />		
+						
+					<Map Target="Output.Final.message/body/afs2200o"
+						Source="Output.2.message/body" />
+					
+					<Map Target="Output.Final.message/body/afs2200r"
+						Source="Output.2.message/body/subBody" />
+					
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs2200o/T16CRDNO_cardNumber"
+						Source="Input.Init.message/body/T16CRDNO_internalAccNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+					
+   				 <Map Target="Output.Final.message/body/afs2200o"
+     				Source="Output.2.message/body" />
+
+    			<Map Target="Output.Final.message/body/afs2200r"
+    				Source="Output.2.message/body/subBody" />
+				
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs2200o/T16CRDNO_cardNumber"
+					Source="Input.Init.message/body/T16CRDNO_internalAccNumber" />				
+			</Flow>					
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS2200I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs2200o"
+					MessageMapName="AFS2200O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs2200r"
+					MessageMapName="AFS2200R"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="true" />				
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF2200_CreditCardSummaryService ================= -->
+
+		<!-- ========== AF2400_AuthorizationListingService ============================= -->
+		<!-- Flow 1.InternalAccNo 2.AFS -->		
+		<Workflow Enabled="true" Name="AF2400_AuthorizationListingService">
+				
+			<Flow>
+				<!-- Node 1 Inquiry Internal Acc Number -->
+				<Map Target="Input.1.message/body/INNPUT_clearCardNo"
+					Source="Input.Init.message/body/T14CRDNO_cardNumber" />
+					
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD21215_IFCInternalAccInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 to AFS -->
+				<Map Target="Input.2"
+					Source="Input.Init" />					
+				
+				<Map Target="Input.2.message/body/T14CRDNO_cardNumber"
+					Source="Output.1.message/body/subBody/CINACA_internalAccNoAlpha_@0" />
+				
+				<Rest Id="2"
+					URI="/AFREST/AF2400_AuthorizationListingSingleService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+						
+   				 	<Map Target="Output.Final.message/body/afs2400o"
+     					Source="Output.2.message/body" />
+
+	    			<Map Target="Output.Final.message/body/afs2400r"
+    					Source="Output.2.message/body/subBody" />
+
+					<!-- SDS280916 -->
+					<Map Target="Output.Final.message/body/afs2400o/T14CRDNO_cardNumber"
+						Source="Input.Init.message/body/T14CRDNO_cardNumber" />					
+					<Leave />
+				</OnReject>					
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+					
+   			 	<Map Target="Output.Final.message/body/afs2400o"
+     				Source="Output.2.message/body" />
+
+	    		<Map Target="Output.Final.message/body/afs2400r"
+    				Source="Output.2.message/body/subBody" />
+   
+				<!-- SDS280916 -->
+				<Map Target="Output.Final.message/body/afs2400o/T14CRDNO_cardNumber"
+					Source="Input.Init.message/body/T14CRDNO_cardNumber" />		   
+			</Flow>	
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="AFS2400I"
+					MessageMapPath="phoenix_cfg/ebs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs2400o"
+					MessageMapName="AFS2400O"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="false" />
+				
+				<Node Name="message/body/afs2400r"
+					MessageMapName="AFS2400R"
+					MessageMapPath="phoenix_cfg/ebs"
+					Recurring="true" />				
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of AF2400_AuthorizationListingService ================= -->
+		<!-- ======================= End of AFS ========================== -->		
+
+		<!-- =========================== CIF ============================= -->	
+		<!-- ========== CF15137_CIFCompListofCusAccByPrimMNoService ====== -->
+		<Workflow Enabled="true" Name="CF15137_CIFCompListofCusAccByPrimMNoService">
+
+			<!-- 1. CF15137 2. CF15103 -->
+			<Flow>
+				<!-- Node 1 CF15137 -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Rest Id="1"
+					URI="/CFREST/CF15137_CIFPrimaryMobileSflsInquiryService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 CF15103 -->				
+				<Map Target="Input.2"
+					Source="Input.Init" />
+				
+				<Map Target="Input.2.message/header/HDTXCD_transactionCode"
+					Value="" />
+				
+				<Map Target="Input.2.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.2.message/header/I13SSNO_scenarioID"
+					Value="" />			
+					
+				<Map Target="Input.2.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Map Target="Input.2.message/body/CFCIFN_customernumber"
+					Source="Output.1.message/body/subBody/CFACCN_cIFNo_@0" />
+				
+				<Rest Id="2"
+					URI="/CFREST/CF15103_CifAccountListingByCifNoService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+				
+				<Map Target="Output.Final.message/body/cifr"
+					Source="Output.2.message/body/subBody" />
+				
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="CF15137I"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+
+				<Node Name="message/body/cifo"
+					MessageMapName="CF15103O"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+
+				<Node Name="message/body/cifr"
+					MessageMapName="CF15103R"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="true" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of CF15137_CIFCompListofCusAccByPrimMNoService  -->		
+		
+		<!-- ========== CF15137_CIFCompSearchbyPrimMNoService ============= -->
+		<Workflow Enabled="true" Name="CF15137_CIFCompSearchbyPrimMNoService">
+
+			<!-- 1. CF15137 2. CF16840 -->
+			<Flow>
+				<!-- Node 1 CF15137 -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Rest Id="1"
+					URI="/CFREST/CF15137_CIFPrimaryMobileSflsInquiryService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 CF16840 -->				
+				<Map Target="Input.2"
+					Source="Input.Init" />
+				
+				<Map Target="Input.2.message/header/HDTXCD_transactionCode"
+					Value="" />
+					
+				<Map Target="Input.2.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Map Target="Input.2.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.2.message/header/I13SSNO_scenarioID"
+					Value="" />
+
+				<Map Target="Input.2.message/body/CFCIFN_customernumber"
+					Source="Output.1.message/body/subBody/CFACCN_cIFNo_@0" />	
+
+				<Rest Id="2"
+					URI="/CFREST/CF16840_CIFDetailInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+				
+				<Map Target="Output.Final.message/body/cifr"
+					Source="Output.2.message/body/subBody" />				
+
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="CF15137I"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/cifo"
+					MessageMapName="CF16840O"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/cifr"
+					MessageMapName="CF16840R"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="true" />				
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of CF15137_CIFCompSearchbyPrimMNoService ======= -->	
+		<!-- ========================= End of CIF ========================== -->
+
+		<!-- ========== HT_ChequeBookRequestService ======================== -->
+		<Workflow Enabled="true" Name="HT_ChequeBookRequestService">
+
+			<!-- 1. DD 2. SDS 3. HT -->
+			<Flow>
+				<!-- Node 1 DD -->
+				<Map Target="Input.1"
+					Source="Input.Init"
+					TransposeFrom="message/body/dd26326i" 
+					TransposeTo="message/body" />
+
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+					
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Rest Id="1"
+					URI="/DDREST/DD26326_CAChqBookInqService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1"/>
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 SDS -->	
+				<Map Target="Input.2"
+					Source="Input.Init"
+					TransposeFrom="message/body/abcschk" 
+					TransposeTo="message/body" />
+				
+    <!--
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="Input.2.message/body/TLBTCD_transactionCode" />
+    -->
+				
+				<!-- Manually Map First need debug in future -->
+				<Map Target="Input.2.message/body/CHGBKT1_chargeBucket1"
+					Source="Output.1.message/body/subBody/CHGBKT1_chargeBucket1_@0" />				
+				<Map Target="Input.2.message/body/EQVAMT1_chargeAmt1"
+					Source="Output.1.message/body/subBody/EQVAMT1_chargeAmt1_@0" />
+
+				<Map Target="Input.2.message/body/CHGBKT2_chargeBucket2"
+					Source="Output.1.message/body/subBody/CHGBKT2_chargeBucket2_@0" />				
+				<Map Target="Input.2.message/body/EQVAMT2_chargeAmt2"
+					Source="Output.1.message/body/subBody/EQVAMT2_chargeAmt2_@0" />
+
+				<Map Target="Input.2.message/body/CHGBKT3_chargeBucket3"
+					Source="Output.1.message/body/subBody/CHGBKT3_chargeBucket3_@0" />				
+				<Map Target="Input.2.message/body/EQVAMT3_chargeAmt3"
+					Source="Output.1.message/body/subBody/EQVAMT3_chargeAmt3_@0" />
+
+				<Map Target="Input.2.message/body/CHGBKT4_chargeBucket4"
+					Source="Output.1.message/body/subBody/CHGBKT4_chargeBucket4_@0" />				
+				<Map Target="Input.2.message/body/EQVAMT4_chargeAmt4"
+					Source="Output.1.message/body/subBody/EQVAMT4_chargeAmt4_@0" />
+
+				<Map Target="Input.2.message/body/CHGBKT5_chargeBucket5"
+					Source="Output.1.message/body/subBody/CHGBKT5_chargeBucket5_@0" />				
+				<Map Target="Input.2.message/body/EQVAMT5_chargeAmt5"
+					Source="Output.1.message/body/subBody/EQVAMT5_chargeAmt5_@0" />
+
+				<Map Target="Input.2.message/body/CHGBKT6_chargeBucket6"
+					Source="Output.1.message/body/subBody/CHGBKT6_chargeBucket6_@0" />				
+				<Map Target="Input.2.message/body/EQVAMT6_chargeAmt6"
+					Source="Output.1.message/body/subBody/EQVAMT6_chargeAmt6_@0" />
+
+				<Map Target="Input.2.message/body/CHGBKT7_chargeBucket7"
+					Source="Output.1.message/body/subBody/CHGBKT7_chargeBucket7_@0" />				
+				<Map Target="Input.2.message/body/EQVAMT7_chargeAmt7"
+					Source="Output.1.message/body/subBody/EQVAMT7_chargeAmt7_@0" />
+				<!-- End of Manually Map First need debug in future -->
+				
+				<Rest Id="2"
+					URI="/ZXREST/ZX_SDSMappingService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 3 HT -->
+				<Map Target="Input.3"
+					Source="Input.Init" 
+					TransposeFrom="message/body/abcschk" 
+					TransposeTo="message/body" />
+
+				<Map Target="Input.3.message/body"
+					Source="Output.2.message/body" />
+				
+				<Rest Id="3"
+					URI="/HTREST/HT_ChequeBookService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.3" />
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.3.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.3.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+
+				<Map Target="Output.Final"
+					Source="Output.3"
+					Transpose="subBodyToBody" />
+				
+				<Map Target="Output.Final.message/body/abcsf1"
+					Source="Output.3.message/body/abcsf1" />
+				
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body/dd26326i"
+					MessageMapName="DD26326I"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcschk"
+					MessageMapName="abcsrequest-tmqdschk"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of HT_ChequeBookRequestService ================= -->	
+
+		<!-- ========== BP_BillPymtByCASAService ===================== -->
+		<Workflow Enabled="true" Name="BP_BillPymtByCASAService">
+			<!-- 1. HT 2. BPG -->
+			<Flow>
+				<!-- Node 1 HT -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Rest Id="1"
+					URI="/HTREST/HT_TmqdsBillGenericService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					
+					<Map Target="Output.Final.message/body/abcs41"
+						Source="Output.1.message/body/abcs41" />
+					
+					<Map Target="Output.Final.message/body/abcs42"
+						Source="Output.1.message/body/abcs42" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 BPG -->				
+				<Map Target="Input.2"
+					Source="Input.Init" />
+				
+				<Rest Id="2"
+					URI="/ZXREST/ZX_BPGOnOfflineBillPaymentService"
+					Timeout="3000" 
+					AcceptTimeout = "true"/>
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.1.message/body/abcsf1" />
+					
+					<Map Target="Output.Final.message/body/bpgo"
+						Source="Output.2.message/body" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />	
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Reverse Id="1" />
+					
+					<Map Target="Output.Final"
+						Source="Output.1" />
+
+					<Map Target="Output.Final.message/body/abcsf1"
+						Source="Output.1.message/body/abcsf1" />
+					
+					<Map Target="Output.Final.message/body/bpgo"
+						Source="Output.2.message/body" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.2.message/header/I13MSTA_messageStatus" />					
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.1" />
+
+				<Map Target="Output.Final"
+					Source="Output.2" />
+
+				<Map Target="Output.Final.message/body/abcsf1"
+					Source="Output.1.message/body/abcsf1" />
+				
+				<Map Target="Output.Final.message/body/bpgo"
+					Source="Output.2.message/body" />					
+			</Flow>	
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="abcsrequest-tmqdsbill"
+					MessageMapPath="phoenix_cfg/abcs/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcsf1"
+					MessageMapName="abcsresponse-tmqf1"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs41"
+					MessageMapName="abcsresponse-tmq41"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body/abcs42"
+					MessageMapName="abcsresponse-tmq42"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="true" />
+
+				<Node Name="message/body/bpgo"
+					MessageMapName="ZXBPGOnOffBillPaymentO"
+					MessageMapPath="phoenix_cfg/thirdpartywb/"
+					Recurring="false" />				
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>					
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of BP_BillPymtByCASAService ============== -->
+
+		<!-- ========== DD16841_AcctListInqByCardNoService ====== -->
+		<!-- Node 1.CF16841 2.CF15151-->
+		<Workflow Enabled="true" Name="DD16841_AcctListInqByCardNoService">
+			
+			<Flow>
+				<!-- Node 1 CF16841 -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Rest Id="1"
+					URI="/CFREST/CF16841_AcctListInqByCardNoService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 CF15151 -->				
+				<Map Target="Input.2.message/body/CFCIFN_customernumber"
+					Source="Output.1.message/body/subBody/CFCIFN_customerNumber_@0" />
+				
+				<Rest Id="2"
+					URI="/CFREST/CF15151_AccountSummaryExcludeLBDService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					<Leave />
+				</OnReject>					
+				<Map Target="Output.Final"
+					Source="Output.2" />				
+				
+				<Map Target="Output.Final.message/body/cf15151o"
+					Source="Output.2.message/body" />
+				
+				<Map Target="Output.Final.message/body/cf15151r"
+					Source="Output.2.message/body/subBody" />				
+				
+			</Flow>	
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="CF16841I"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/cf15151o"
+					MessageMapName="CF15151O"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/cf15151r"
+					MessageMapName="CF15151R"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="true" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of DD16841_AcctListInqByCardNoService  -->		
+
+		<!-- ========== ZX_INFPointEnquiryCompService ====== -->
+		<!-- Node 1.InfiniaPoint-->
+		<Workflow Enabled="true" Name="ZZ_INFPointEnquiryCompService">
+			
+			<Flow>
+				<!-- Node 1 Infinia Point -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Rest Id="1"
+					URI="/ZXREST/ZX_INFPointEnquiryService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					
+					<Map Target="Output.Final.message/body/infbd"
+						Source="Output.1.message/body" />
+					<Leave />
+				</OnReject>
+
+				<Map Target="Output.Final"
+					Source="Output.1" />
+
+				<Map Target="Output.Final.message/body/infbd"
+					Source="Output.1.message/body" />
+
+				<Map Target="Output.Final.message/body/infpdr"
+					Source="Output.1.message/body/subBody" />
+				
+				<Map Target="Output.Final.message/body/infrtr"
+					Source="Output.1.message/body/subBody" />				
+				
+			</Flow>	
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="ZXINFPointEnquiryI"
+					MessageMapPath="phoenix_cfg/thirdpartywb/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="false" />
+
+				<Node Name="message/body/infbd"
+					MessageMapName="ZXINFPointEnquiryO"
+					MessageMapPath="phoenix_cfg/thirdpartywb/"
+					Recurring="false" />
+
+				<Node Name="message/body/infpdr"
+					MessageMapName="ZXINFRepeatpdR"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="true" />
+				
+				<Node Name="message/body/infrtr"
+					MessageMapName="ZXINFRepeatrtR"
+					MessageMapPath="phoenix_cfg/thirdpartywb"
+					Recurring="true" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of ZX_INFPointEnquiryCompService  -->
+		
+		<!-- ========== ZZ_HTCorFXUpdTCompService ====== -->
+		<!-- Node 1.Opics from HT-->
+		<Workflow Enabled="true" Name="ZZ_OPCHTCorFXUpdTCompService">
+
+			<Flow>
+				<!-- Node 1 OPICS -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+
+				<Rest Id="1"
+					URI="/ZXREST/ZX_OPCHTCorFXUpdTService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					
+					<Map Target="Output.Final.message/header/I13MSTA_messageStatus"
+						Source="Output.1.message/header/I13MSTA_messageStatus" />						
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.1" />
+			</Flow>	
+
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="ZXOPCHTCorFxUpdTI"
+					MessageMapPath="phoenix_cfg/thirdpartywb/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="abcsheader"
+					MessageMapPath="phoenix_cfg/abcs"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="ZXOPCHTCorFxUpdTO"
+					MessageMapPath="phoenix_cfg/thirdpartywb/"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of ZZ_HTCorFXUpdTCompService  -->
+
+		<!-- ========== TF67447_ReceiveInwardSWIFTMessageCompService ====== -->
+		<!-- Node 1.SDS Write File 2. TF-->
+		<Workflow Enabled="true" Name="TF67447_ReceiveInwardSWIFTMessageCompService">
+			
+			<!-- 1. SDS Write File 2. TF67447 -->
+			<Flow>
+				<!-- Node 1 SDS -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Rest Id="1"
+					URI="/ZXREST/ZX_SDSSwiftMappingTF67447Service"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 TF67457 -->				
+				<Map Target="Input.2"
+					Source="Input.Init" />
+				
+				<Map Target="Input.2.message/header/HDTXCD_transactionCode"
+					Value="" />
+				
+				<Map Target="Input.2.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.2.message/header/I13SSNO_scenarioID"
+					Value="" />			
+				
+				<Map Target="Input.2.message/header/I13TRCD_transactionCode"
+					Value="1111" />
+
+				<Map Target="Input.2"
+					Source="Output.1" />
+
+				<Rest Id="2"
+					URI="/TFREST/TF67457_ReceiveInwardSWIFTMessageFileService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+			</Flow>	
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="TF67447I"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="TF67457O"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of TF67447_ReceiveInwardSWIFTMessageCompService  -->
+
+		<!-- ========== TF67427_ReceiveSWIFTACKNAKMessageCompService ====== -->
+		<!-- Node 1.SDS Write File 2. TF-->
+		<Workflow Enabled="true" Name="TF67427_ReceiveSWIFTACKNAKMessageCompService">
+			
+			<!-- 1. SDS Write File 2. TF67447 -->
+			<Flow>
+				<!-- Node 1 SDS -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+				
+				<Rest Id="1"
+					URI="/ZXREST/ZX_SDSSwiftMappingTF67427Service"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 TF67437 -->				
+				<Map Target="Input.2"
+					Source="Input.Init" />
+				
+				<Map Target="Input.2.message/header/HDTXCD_transactionCode"
+					Value="" />
+				
+				<Map Target="Input.2.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.2.message/header/I13SSNO_scenarioID"
+					Value="" />			
+				
+				<Map Target="Input.2.message/header/I13TRCD_transactionCode"
+					Value="" />
+				
+				<Map Target="Input.2"
+					Source="Output.1" />
+				
+				<Rest Id="2"
+					URI="/TFREST/TF67437_ReceiveSWIFTACKNAKMessageFileService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					<Leave />
+				</OnReject>
+				
+				<Map Target="Output.Final"
+					Source="Output.2" />
+			</Flow>	
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="TF67427I"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="TF67437O"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of TF67427_ReceiveSWIFTACKNAKMessageCompService  -->
+
+		<!-- ========== DD26650_CASAInquiryICCSCompService ====== -->
+		<!-- Node 1.CF16585 2.DD26650-->
+		<Workflow Enabled="true" Name="DD26650_CASAInquiryICCSCompService">
+			
+			<Flow>
+				<!-- Node 1 CF16585 -->
+				<Map Target="Input.1"
+					Source="Input.Init" />
+
+				<Map Target="Input.1.message/body/IDXOAC_oLDACCOUNTNO"
+					Source="Input.Init.message/body/ACCTNO_accountNumber" />
+
+				<Map Target="Input.1.message/body/ACTYPE_aCCOUNTTYPE"
+					Source="Input.Init.message/body/ACTYPE_accountType" />
+
+				<Map Target="Input.1.message/header/I13MSTA_messageStatus"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13SSNO_scenarioID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13DID_destinationID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13FMID_dataID"
+					Value="" />
+				
+				<Map Target="Input.1.message/header/I13TRCD_transactionCode"
+					Value="" />
+
+				<Rest Id="1"
+					URI="/CFREST/CF16585_CFOACNDetailsInquiryService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.1" />
+					<Leave />
+				</OnReject>
+				
+				<!-- Node 2 CF15151 -->				
+				<Map Target="Input.2.message/body/ACCTNO_accountNumber"
+					Source="Output.1.message/body/subBody/IDXNAC_nEWACCOUNTNO_@0" />
+
+				<Map Target="Input.2.message/body/ACTYPE_accountType"
+					Source="Output.1.message/body/ACTYPE_aCCOUNTTYPE" />
+
+				<Rest Id="2"
+					URI="/DDREST/DD26650_CASAInquiryICCSService"
+					Timeout="3000" />
+				
+				<OnTimeout>
+					<Map Target="Output.Final"
+						Source="Input.Init" />
+					<Leave />
+				</OnTimeout>
+				
+				<OnReject>
+					<Map Target="Output.Final"
+						Source="Output.2" />
+					<Leave />
+				</OnReject>					
+				<Map Target="Output.Final"
+					Source="Output.2" />				
+				
+				<Map Target="Output.Final.message/body/dd26650o"
+					Source="Output.2.message/body" />
+				
+				<Map Target="Output.Final.message/body/dd26650r"
+					Source="Output.2.message/body/subBody" />				
+				
+			</Flow>	
+			
+			<!-- Input Message -->
+			<In>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+				
+				<Node Name="message/body"
+					MessageMapName="DD26650I"
+					MessageMapPath="phoenix_cfg/mbase/"
+					Recurring="false" />
+			</In>
+			
+			<!-- Output Message -->			
+			<Out>
+				<Node Name="message/header"
+					MessageMapName="dspheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/header"
+					MessageMapName="appheader"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/dd26650o"
+					MessageMapName="DD26650O"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="false" />
+				
+				<Node Name="message/body/dd26650r"
+					MessageMapName="DD26650R"
+					MessageMapPath="phoenix_cfg/mbase"
+					Recurring="true" />
+			</Out>
+			
+			<!-- WebEngines -->	
+			<WebEngines>
+				<WebEngine Name="ZZSOAP"/>
+				<WebEngine Name="ZZREST"/>				
+			</WebEngines>
+		</Workflow>
+		<!-- ========== End of DD26650_CASAInquiryICCSCompService  -->
+		
+	</Workflows>
+	
+</Iris>

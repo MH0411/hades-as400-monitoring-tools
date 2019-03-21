@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    xmlns:tns="http://webStartpoints.iris.silverglobe.com">
+    
+    <xs:element name="Iris">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Startpoints"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Startpoints">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Startpoint"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Startpoint">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element minOccurs="1" maxOccurs="1" ref="TCP" />
+                <xs:element minOccurs="1" maxOccurs="1" ref="DTAQ" />
+                <xs:element minOccurs="1" maxOccurs="1" ref="MQ" />
+                <xs:element minOccurs="1" maxOccurs="1" ref="NEXUS" />
+            </xs:choice>
+            
+            <xs:attributeGroup ref="StartpointAttribute"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Remote">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="RemoteIp" type="xs:string" />
+                <xs:element name="RemotePort" type="xs:int" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="References">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Reference" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Reference">
+        <xs:complexType>
+            <xs:attributeGroup ref="ReferenceAttribute"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Retrieval">
+        <xs:complexType>
+            <xs:attribute name="Position" type="xs:int" use="required"/>
+            <xs:attribute name="Codepage" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="TCP">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="LocalIp" type="xs:string" />
+                <xs:element name="LocalPort" type="xs:int" />
+                <xs:element name="InitialType" type="xs:int" />
+                <xs:element name="InitialLength" type="xs:int" />
+                <xs:element name="AllowZeroEcho" type="xs:boolean" />
+                <xs:element minOccurs="0" maxOccurs="1" ref="SSL"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="DTAQ">
+        <xs:complexType>            
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="DTAQDEQ" />
+                <xs:element minOccurs="1" maxOccurs="1" ref="DTAQENQ" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="NEXUS">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="NEXUSDEQ" />
+                <xs:element minOccurs="1" maxOccurs="1" ref="NEXUSENQ" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="MQ">
+        <xs:complexType>            
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="MQGET" />
+                <xs:element minOccurs="1" maxOccurs="1" ref="MQPUT" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="MQPUT">
+        <xs:complexType>            
+            <xs:sequence>
+                <xs:element name="RemoteIp" type="xs:string" />
+                <xs:element name="RemotePort" type="xs:int" />
+                <xs:element name="Manager" type="xs:string" />
+                <xs:element name="Channel" type="xs:string" />
+                <xs:element name="User" type="xs:string" />
+                <xs:element name="Queue" type="xs:string" />
+                <xs:element name="ReturnQueue" type="xs:string" />
+                <xs:element name="CCSID" type="xs:int" />
+				<xs:element minOccurs="0" maxOccurs="1" ref="SSL"/>
+            </xs:sequence>
+            
+            <xs:attribute name="Enabled" type="xs:boolean" use="required" />
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="MQGET">
+        <xs:complexType>            
+            <xs:sequence>
+                <xs:element name="RemoteIp" type="xs:string" />
+                <xs:element name="RemotePort" type="xs:int" />
+                <xs:element name="Manager" type="xs:string" />
+                <xs:element name="Channel" type="xs:string" />
+                <xs:element name="User" type="xs:string" />
+                <xs:element name="Queue" type="xs:string" />
+                <xs:element name="CCSID" type="xs:int" />
+                <xs:element minOccurs="0" maxOccurs="1" ref="SSL"/>
+            </xs:sequence>
+            
+            <xs:attribute name="Enabled" type="xs:boolean" use="required" />
+        </xs:complexType>
+    </xs:element>
+    
+   <xs:element name="NEXUSENQ">
+        <xs:complexType>            
+            <xs:sequence>
+                <xs:element name="RemoteIp" type="xs:string" />
+                <xs:element name="RemotePort" type="xs:int" />
+                <xs:element name="Queue" type="xs:string" />
+                <xs:element minOccurs="0" maxOccurs="1" ref="SSL"/>
+            </xs:sequence>
+            
+            <xs:attribute name="Enabled" type="xs:boolean" use="required" />
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="NEXUSDEQ">
+        <xs:complexType>            
+            <xs:sequence>
+                <xs:element name="RemoteIp" type="xs:string" />
+                <xs:element name="RemotePort" type="xs:int" />
+                <xs:element name="Queue" type="xs:string" />
+				<xs:element minOccurs="0" maxOccurs="1" ref="SSL"/>
+            </xs:sequence>
+            
+            <xs:attribute name="Enabled" type="xs:boolean" use="required" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DTAQDEQ">
+        <xs:complexType>            
+            <xs:sequence>
+                <xs:element name="RemoteIp" type="xs:string" />
+                <xs:element name="User" type="xs:string" />
+                <xs:element name="Password" type="xs:string" />
+                <xs:element name="Queue" type="xs:string" />
+                <xs:element name="FailFast" type="xs:boolean" />
+            </xs:sequence>
+            
+            <xs:attribute name="Enabled" type="xs:boolean" use="required" />
+        </xs:complexType>
+    </xs:element>
+
+   <xs:element name="DTAQENQ">
+        <xs:complexType>            
+            <xs:sequence>
+                <xs:element name="RemoteIp" type="xs:string" />
+                <xs:element name="User" type="xs:string" />
+                <xs:element name="Password" type="xs:string" />
+                <xs:element name="Queue" type="xs:string" />
+                <xs:element name="FailFast" type="xs:boolean" />
+            </xs:sequence>
+            
+            <xs:attribute name="Enabled" type="xs:boolean" use="required" />
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="SSL">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element name="SSLEnabled" type="xs:boolean" />
+                <xs:element name="SSLKeystorePath" type="xs:string"/>
+                <xs:element name="SSLKeystorePassword" type="xs:string"/>
+                <xs:element name="SSLContext" type="xs:string"/>
+                <xs:element name="SSLSuite" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:attributeGroup name="StartpointAttribute">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+        <xs:attribute name="Type" type="xs:string" use="required"/>
+        <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+        <xs:attribute name="ChannelURL" type="xs:string"/>
+        <xs:attribute name="ChannelIdentTree" type="xs:string" use="required"/>
+        <xs:attribute name="ChannelMessageType" type="xs:string" use="required"/>
+        <xs:attribute name="ChannelCCSID" type="xs:string" use="required"/>
+        <xs:attribute name="ChannelTimeout" type="xs:int" use="required"/>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="ReferenceAttribute">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+        <xs:attribute name="Position" type="xs:int" use="required"/>
+        <xs:attribute name="Length" type="xs:int" use="required"/>
+    </xs:attributeGroup>
+    
+</xs:schema>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+  xmlns:tns="http://mmapref.phoenix.silverglobe.com">
+  
+  <xs:element name="MessageMap">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="Field"/>
+      </xs:sequence>
+      
+      <xs:attributeGroup ref="MessageMapAttributes" />
+      
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Field">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Field" />
+      </xs:sequence>
+      
+      <xs:attributeGroup ref="FieldAttributes" />      
+      
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:attributeGroup name="MessageMapAttributes">
+    <xs:attribute name="Id" type="xs:string" use="required" />
+  </xs:attributeGroup>
+  
+  <xs:attributeGroup name="FieldAttributes">
+    <!-- Standard field information -->
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Alias" type="xs:string" />
+    <xs:attribute name="Type" type="xs:string" />
+    <xs:attribute name="Length" type="xs:int" />
+    <xs:attribute name="Decimal" type="xs:int" />
+    
+    <!-- For use with variable length fields -->
+    <xs:attribute name="VaryType" type="xs:string" />
+    <xs:attribute name="VaryLength" type="xs:int" />
+    
+    <!-- Extended field formatting -->
+    <xs:attribute name="Format" type="xs:string" />
+    <xs:attribute name="Justify" type="xs:int" />
+    <xs:attribute name="Default" type="xs:string" />
+    <xs:attribute name="Initialize" type="xs:int" />
+    
+    <!-- Math and encoding operation -->
+    <xs:attribute name="MathOperation" type="xs:string" />
+    <xs:attribute name="Encoding" type="xs:string" />
+    
+    <!-- Field text description -->
+    <xs:attribute name="Description" type="xs:string" />
+  </xs:attributeGroup>
+ 
+</xs:schema>

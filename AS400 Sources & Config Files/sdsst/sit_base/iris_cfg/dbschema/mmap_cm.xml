@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageMap Id="cm">
+
+	<Field Id="date_logd" Type="16" />
+	<Field Id="time_logd" Type="16" />
+	<Field Id="tims_logd" Type="16" />
+	<Field Id="ref_conn" Type="21" Length="12" />
+	<Field Id="ref_reqs" Type="16" />
+	<Field Id="ref_node" Type="16" />
+	<Field Id="entry_type" Type="21" Length="1" />
+	<Field Id="entry_size" Type="16" />
+	<Field Id="codepage" Type="21" Length="10" />
+	<Field Id="thread_type" Type="21" Length="10" />
+	<Field Id="thread_name" Type="22" Length="255" />
+	<Field Id="server_name" Type="22" Length="30" />
+	<Field Id="raw_data" Type="0" Length="65535" />
+
+</MessageMap>

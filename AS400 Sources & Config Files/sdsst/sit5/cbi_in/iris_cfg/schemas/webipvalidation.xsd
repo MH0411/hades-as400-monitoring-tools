@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	xmlns:tns="http://webipvalidation.iris.silverglobe.com">
+	
+	<xs:element name="Iris">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="1" maxOccurs="1" ref="IPValidations" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="IPValidations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="IPValidation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="IPValidation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="1" ref="IPv4" />
+				<xs:element minOccurs="0" maxOccurs="1" ref="IPv6" />
+			</xs:sequence>
+			
+			<xs:attribute name="Id" type="xs:string" use="required" />
+			<xs:attribute name="Enabled" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="IPv4">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="Allow" />
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="Deny" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="IPv6">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="Allow" />
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="Deny" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="Allow">
+		<xs:complexType>
+			<xs:attribute name="Start" use="required" type="xs:string" />
+			<xs:attribute name="End" use="required" type="xs:string" />
+			<xs:attribute name="StartTime" use="optional" type="xs:string" />
+			<xs:attribute name="EndTime" use="optional" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="Deny">
+		<xs:complexType>
+			<xs:attribute name="Start" use="required" type="xs:string" />
+			<xs:attribute name="End" use="required" type="xs:string" />
+			<xs:attribute name="StartTime" use="optional" type="xs:string" />
+			<xs:attribute name="EndTime" use="optional" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageMap Id="xs">
+
+	<Field Id="date_reqs" Type="16" />
+	<Field Id="time_reqs" Type="16" />
+	<Field Id="tims_reqs" Type="16" />
+	<Field Id="date_resp" Type="16" />
+	<Field Id="time_resp" Type="16" />
+	<Field Id="tims_resp" Type="16" />
+	<Field Id="remote_ip" Type="22" Length="45" />
+	<Field Id="remote_port" Type="16" />
+	<Field Id="ref_conn" Type="21" Length="12" />
+	<Field Id="ref_reqs" Type="16" />
+	<Field Id="ref_node" Type="16" />
+	<Field Id="host_ref" Type="22" Length="64" />
+	<Field Id="host_sts" Type="22" Length="10" />
+	<Field Id="appl_ref" Type="22" Length="64" />
+	<Field Id="method" Type="22" Length="10" />
+	<Field Id="url" Type="22" Length="255" />
+	<Field Id="respcd" Type="21" Length="3" />
+	<Field Id="elps_all" Type="16" />
+	<Field Id="elps_rqt" Type="16" />
+	<Field Id="elps_rst" Type="16" />
+	<Field Id="elps_tot" Type="16" />
+	<Field Id="elps_wbt" Type="16" />
+	<Field Id="elps_hst" Type="16" />
+	<Field Id="elps_int" Type="16" />
+	<Field Id="server_name" Type="22" Length="30" />
+
+</MessageMap>

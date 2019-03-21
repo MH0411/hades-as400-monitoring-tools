@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageMap Id="rq">
+
+	<Field Id="date_reqs" Type="16" />
+	<Field Id="time_reqs" Type="16" />
+	<Field Id="tims_reqs" Type="16" />
+	<Field Id="remote_ip" Type="22" Length="45" />
+	<Field Id="remote_port" Type="16" />
+	<Field Id="ref_conn" Type="21" Length="12" />
+	<Field Id="ref_reqs" Type="16" />
+	<Field Id="ref_node" Type="16" />
+	<Field Id="method" Type="22" Length="10" />
+	<Field Id="url" Type="22" Length="255" />
+	<Field Id="len_hdr" Type="16" />
+	<Field Id="len_bdy" Type="16" />
+	<Field Id="dta_hdr" Type="22" Length="6144" />
+	<Field Id="user_agent" Type="22" Length="512" />
+	<Field Id="cookie" Type="22" Length="64" />
+	<Field Id="server_name" Type="22" Length="30" />
+
+</MessageMap>

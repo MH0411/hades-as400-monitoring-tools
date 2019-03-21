@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- End points configuration -->
+<Iris>
+
+	<!-- Parameters relating to end point configurations -->
+	<Endpoints>
+
+<!-- JAVA Setting -->
+
+		<Endpoint Name="ChannelV" Type="JAVA" Enabled="true"
+			ChannelMessageType="" Description="3rd Party WebService">
+			
+			<JAVA>
+				<ThreadCount>5</ThreadCount>
+				
+				<WebApplications>
+					<WebApplication WebService="ZV_FTSSMSService" Application="FTSSMSService" />
+					<WebApplication WebService="ZV_SDSDynamicSMSService" Application="SDSDynamicSMSService" />
+				</WebApplications>
+			</JAVA>
+			
+		</Endpoint>
+
+		<Endpoint Name="ChannelW" Type="JAVA" Enabled="true"
+			ChannelMessageType="" Description="3rd Party WebService">
+			
+			<JAVA>
+				<ThreadCount>5</ThreadCount>
+				
+				<WebApplications>
+					<!-- PYS Services -->
+					<WebApplication WebService="ZW_ZWPYSRM58810SwiftBlockFourService" Application="ZWBlockFourService" />
+					<WebApplication WebService="ZW_ZWPYSRM58811InwardPostStatusService" Application="ZWInwardPostStatusService" />
+					<WebApplication WebService="ZW_ZWPYSRM58812InwardCreditACTService" Application="ZWInwardCreditService" />
+					<WebApplication WebService="ZW_ZWPYSRM58813OutwardReversalResponseService" Application="ZWOutwardReversalService" />					
+					<WebApplication WebService="ZW_ZWPYSRM58814CreditDebitAdviceService" Application="ZWCreditDebitService" />					
+					<WebApplication WebService="ZW_ZWPYSRM58815BulkSwiftBlockFourService" Application="ZWBulkBlockFourService" />
+					<WebApplication WebService="ZW_ZWPYSTF67417OutwardSwiftService" Application="ZWOutwardSwiftService" />
+				</WebApplications>
+			</JAVA>
+			
+		</Endpoint>
+
+		<Endpoint Name="ChannelY" Type="JAVA" Enabled="true"
+			ChannelMessageType="" Description="3rd Party WebService">
+			
+			<JAVA>
+				<ThreadCount>5</ThreadCount>
+				
+				<WebApplications>
+					<!-- SMS Services -->
+					<WebApplication WebService="ZY_SMSBulkSMSService" Application="SMSBulkService" />				
+
+				</WebApplications>
+			</JAVA>
+			
+		</Endpoint>
+
+		<Endpoint Name="ChannelX" Type="JAVA" Enabled="true"
+			ChannelMessageType="" Description="3rd Party WebService">
+			
+			<JAVA>
+				<ThreadCount>5</ThreadCount>
+				
+				<WebApplications>
+					<!-- SMS Services -->
+					<WebApplication WebService="ZX_SMSSMSService" Application="SMSService" />				
+					
+					<!-- OTP Services -->
+					<WebApplication WebService="ZX_OTPGenCusService" Application="GenCusService" />					
+					<WebApplication WebService="ZX_OTPActOTPService" Application="ActOTPService" />					
+					<WebApplication WebService="ZX_OTPValidateOTPService" Application="ValidateOTPService" />
+					
+					<!-- BPG Services -->					
+					<WebApplication WebService="BP_AcctValidationService" Application="OnlineBillAmtEnqService" />	
+					<WebApplication WebService="ZX_BPGOnOfflineBillPaymentService" Application="OnOfflineBillPaymentService" />
+					<WebApplication WebService="ZX_BPGGetCustomerdataService" Application="GetCustomerDataService" />
+					<WebApplication WebService="ZX_BPGSetCustomerdataService" Application="SetCustomerDataService" />
+					<WebApplication WebService="ZX_BPGGetPaymentStatusService" Application="GetPaymentStatusService" />
+					<WebApplication WebService="ZX_BPGGetTransactionHistoryService" Application="GetTransactionHistoryService" />					
+					<WebApplication WebService="ZX_BPGGetTransactionHistoryDPService" Application="GetTransactionHistoryDPService" />					
+
+					<!-- DDS Services -->	
+					<WebApplication WebService="ZX_DDARegistrationService" Application="DDARegistrationService" />					
+					<WebApplication WebService="ZX_DDAAmendmentService" Application="DDAAmendmentService" />		
+					<WebApplication WebService="ZX_DDACancellationService" Application="DDACancellationService" />		
+					<WebApplication WebService="ZX_DDAStopPaymentnService" Application="DDAStopPaymentnService" />		
+					<WebApplication WebService="ZX_DDAStatusEnquiryService" Application="DDAStatusEnquiryService" />		
+					<WebApplication WebService="ZX_DDADetailEnquiryService" Application="DDADetailEnquiryService" />		
+					<WebApplication WebService="ZX_DDATransactionHistoryEnquiryService" Application="DDATransactionHistoryEnquiryService" />	
+					<WebApplication WebService="ZX_DDAOICListEnquiryService" Application="DDAOICListEnquiryService" />	
+					<WebApplication WebService="ZX_DDACancellationReasonCodeEnquiryService" Application="DDACancellationReasonCodeEnquiryService" />	
+					<WebApplication WebService="ZX_DDAPaymentFrequencyEnquiryService" Application="DDAPaymentFrequencyEnquiryService" />	
+					
+					<!-- OPICS Services -->
+					<WebApplication WebService="ZX_OPCCorporateFXInquiryService" Application="CorporateFXInquiryService" />						
+					<WebApplication WebService="ZX_OPCTFCorFXInqService" Application="TFCorFXInqService" />						
+					<WebApplication WebService="ZX_OPCTFCorFXAddService" Application="TFCorFXAddService" />						
+					<WebApplication WebService="ZX_OPCTFCorFXUpdUService" Application="TFCorFXUpdUService" />						
+					<WebApplication WebService="ZX_OPCTFCorFXValService" Application="TFCorFXValService" />				
+					<WebApplication WebService="ZX_OPCCIFCreationService" Application="OpicsCIFCreationService" />								
+					<WebApplication WebService="ZX_OPCRMCorFXUpdTService" Application="RMCorFXUpdTService" />
+					<WebApplication WebService="ZX_OPCRMCorFXRsvService" Application="RMCorFXRsvService" />
+					<WebApplication WebService="ZX_OPCHTCorFXUpdTService" Application="HTCorFXUpdTService" />
+					<WebApplication WebService="ZX_OPCCusCreditExposuresService" Application="CusCreditExposures" />					
+					<WebApplication WebService="ZX_OPCCorporateFXService" Application="CorporateFXService" />	
+					
+					<!-- INFINIA Services -->						
+					<WebApplication WebService="ZX_INFPointEnquiryService" Application="PointsEnquiryService" />										
+					<WebApplication WebService="ZX_INFViewStatementService" Application="ViewStatementService" />
+
+					<!-- PYS Services -->
+					<WebApplication WebService="ZX_PYSRM58810SwiftBlockFourService" Application="BlockFourService" />
+					<WebApplication WebService="ZX_PYSRM58811InwardPostStatusService" Application="InwardPostStatusService" />
+					<WebApplication WebService="ZX_PYSRM58812InwardCreditACTService" Application="InwardCreditService" />
+					<WebApplication WebService="ZX_PYSRM58813OutwardReversalResponseService" Application="OutwardReversalService" />					
+					<WebApplication WebService="ZX_PYSRM58814CreditDebitAdviceService" Application="CreditDebitService" />					
+					<WebApplication WebService="ZX_PYSRM58815BulkSwiftBlockFourService" Application="BulkBlockFourService" />
+					<WebApplication WebService="ZX_PYSTF67417OutwardSwiftService" Application="OutwardSwiftService" />
+
+					<!-- AFS Services -->
+					<WebApplication WebService="ZX_AFS1300BalanceEnquirySingleService" Application="AFS1300Service" />
+					<WebApplication WebService="ZX_AFS2300AccountBoardingPrimarySingleService" Application="AFS2300Service" />
+					<WebApplication WebService="ZX_AFS2900CardIssuanceSupplSingleService" Application="AFS2900Service" />
+					
+					<!-- OCB Services -->
+					<WebApplication WebService="ZX_OCBErrorCorrectionService" Application="ErrorCorrectionService" />					
+					<WebApplication WebService="ZX_OCBIccsMicrEnquiryService" Application="IccsMicrEnquiryService" />					
+					
+					<!-- SDS Service -->
+					<WebApplication WebService="ZX_SDSMappingService" Application="MapHostBucketService" />
+					<WebApplication WebService="ZX_SDSSwiftMappingTF67447Service" Application="MapSwiftTF67447Service" />
+					<WebApplication WebService="ZX_SDSSwiftMappingTF67427Service" Application="MapSwiftTF67427Service" />
+					<WebApplication WebService="ZX_SDSExportWebRuleService" Application="ExportWebRuleService" />
+
+				</WebApplications>
+			</JAVA>
+			
+		</Endpoint>
+
+		<Endpoint Name="ChannelF" Type="JAVA" Enabled="true"
+			ChannelMessageType="" Description="AFS EBS WebService">
+			
+			<JAVA>
+				<ThreadCount>5</ThreadCount>
+				
+				<WebApplications>
+					
+					<!-- AFS Services -->
+					<WebApplication WebService="AF0150_BillPymtFndTrfSingleService" Application="AFS0150Service" />
+					<WebApplication WebService="AF1200_BillPymtAutoRvsrSingleService" Application="AFS1200AutoRsvr0150Service" />					
+					<WebApplication WebService="AF0200_InstantPaymentSingleService" Application="AFS0200Service" />
+					<WebApplication WebService="AF1620_InstantPaymentAutoRsvrSingleService" Application="AFS1620AutoRsvr1600Service" />	
+					<WebApplication WebService="AF0302_PinChangeSingleService" Application="AFS0302Service" />
+					<WebApplication WebService="AF0320_PinChangeReversalSingleService" Application="AFS0320Service" />
+					<WebApplication WebService="AF0330_PinValidationSingleService" Application="AFS0330Service" />
+					<WebApplication WebService="AF0800_CardActivateDeactivateSingleService" Application="AFS0800Service" />
+					<WebApplication WebService="AF0900_EchoMessageSingleService" Application="AFS0900Service" />
+					<WebApplication WebService="AF1100_LinkCardSummarySingleService" Application="AFS1100Service" />
+					<WebApplication WebService="AF1200_BillPymtFndTrfReversalSingleService" Application="AFS1200Service" />
+					<WebApplication WebService="AF1400_TransactionDisplaySingleService" Application="AFS1400Service" />
+					<WebApplication WebService="AF1500_CardBlockUnblockSingleService" Application="AFS1500Service" />
+					<WebApplication WebService="AF1600_FPMInstantPaymentSingleService" Application="AFS1600FPMService" />						
+					<WebApplication WebService="AF1600_OCBInstantPaymentSingleService" Application="AFS1600OCBService" />						
+					<WebApplication WebService="AF1620_InstantPaymentReversalSingleService" Application="AFS1620Service" />
+					<WebApplication WebService="AF1700_CheckCardStatusSingleService" Application="AFS1700Service" />
+					<WebApplication WebService="AF2100_DDSStatusInquirySingleService" Application="AFS2100Service" />
+					<WebApplication WebService="AF2200_CreditCardSummarySingleService" Application="AFS2200Service" />
+					<WebApplication WebService="AF2400_AuthorizationListingSingleService" Application="AFS2400Service" />
+					
+				</WebApplications>
+			</JAVA>
+			
+		</Endpoint>
+<!-- DTAQ Setting -->
+
+		<!-- HT DTAQ -->
+		<Endpoint Name="ChannelJ" Type="DTAQ" Enabled="true"
+			ChannelMessageType="FIXED" 
+			Description="Host Teller">
+
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBSGPLDPC1.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCJWHTAO$.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+				
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBDGPLDSP.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DSJ11WHTAI.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</DTAQ>
+		</Endpoint>
+		
+		<!-- CF DTAQ -->
+		<Endpoint Name="ChannelK" Type="DTAQ" Enabled="true"
+			ChannelMessageType="FIXED" 
+			Description="Customer Information File">
+
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBSGPLDPC1.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCKWCFAO$.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+				
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBDGPLDSP.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DSK11WCFAI.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</DTAQ>
+		</Endpoint>
+		
+		<!-- DD DTAQ -->
+		<Endpoint Name="ChannelL" Type="DTAQ" Enabled="true"
+			ChannelMessageType="FIXED" 
+			Description="Deposit">
+
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBSGPLDPC1.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCLWDDAO$.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+				
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBDGPLDSP.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DSL11WDDAI.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</DTAQ>
+		</Endpoint>
+		
+		<!-- LN DTAQ -->
+		<Endpoint Name="ChannelM" Type="DTAQ" Enabled="true"
+			ChannelMessageType="FIXED" 
+			Description="Loans">
+
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBSGPLDPC1.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCMWLNAO$.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+				
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBDGPLDSP.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DSM11WLNAI.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</DTAQ>
+		</Endpoint>
+		
+		<!-- RM DTAQ -->
+		<Endpoint Name="ChannelN" Type="DTAQ" Enabled="true"
+			ChannelMessageType="FIXED" 
+			Description="Remittance">
+
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBSGPLDPC1.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCNWRMAO$.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+				
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBDGPLDSP.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DSN11WRMAI.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</DTAQ>
+		</Endpoint>
+		
+		<!-- TF DTAQ -->
+		<Endpoint Name="ChannelO" Type="DTAQ" Enabled="true"
+			ChannelMessageType="FIXED" 
+			Description="Trade Finance">
+
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBSGPLDPC1.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCOWTFAO$.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+				
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBDGPLDSP.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DSO11WTFAI.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</DTAQ>
+		</Endpoint>
+		
+		<!-- GL DTAQ -->
+		<Endpoint Name="ChannelP" Type="DTAQ" Enabled="true"
+			ChannelMessageType="FIXED" 
+			Description="General Ledge">
+
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBSGPLDPC1.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCPWGLAO$.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+				
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBDGPLDSP.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DSP11WGLAI.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</DTAQ>
+		</Endpoint>
+		
+		<!-- IFS DTAQ -->
+		<Endpoint Name="ChannelQ" Type="DTAQ" Enabled="false"
+			ChannelMessageType="FIXED" 
+			Description="Interfaces">
+
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBSGPLDPC1.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCQWIFAO$.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+				
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBDGPLDSP.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DSQ11WIFAI.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</DTAQ>
+		</Endpoint>
+		
+		<!-- EBS DTAQ -->
+		<Endpoint Name="ChannelR" Type="DTAQ" Enabled="true"
+			ChannelMessageType="FIXED" 
+			Description="Electronic Banking System">
+
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBSGPLDPC1.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCRWEBAO$.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+				
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<!-- CBDGPLDSP.LIB -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DSR11WEBAI.DTAQ</Queue>
+					<!-- If unreachable at startup, fail immediately. -->
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</DTAQ>
+		</Endpoint>
+
+<!-- TCP Setting -->
+
+		<!-- HT TCP -->
+		<Endpoint Name="ChannelJ" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="Host Teller">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30110</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+
+		<!-- CIF TCP -->
+		<Endpoint Name="ChannelK" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="Customer Information File">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30111</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+		
+		<!-- DD TCP -->
+		<Endpoint Name="ChannelL" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="Deposit">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30112</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+		
+		<!-- LN TCP -->
+		<Endpoint Name="ChannelM" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="Loans">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30113</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+		
+		<!-- RM TCP -->
+		<Endpoint Name="ChannelN" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="Remittance">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30114</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+		
+		<!-- TF TCP -->
+		<Endpoint Name="ChannelO" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="Trade Finance">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30115</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+		
+		<!-- GL TCP -->
+		<Endpoint Name="ChannelP" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="General Ledge">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30116</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+		
+		<!-- IFC TCP -->
+		<Endpoint Name="ChannelQ" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="Interfaces">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30117</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+		
+		<!-- EBS TCP -->
+		<Endpoint Name="ChannelR" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="Electronic Banking System">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30118</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+
+		<!-- HST TCP -->
+		<Endpoint Name="ChannelS" Type="TCP" Enabled="false"
+			ChannelMessageType="FIXED"
+			Description="Outgoing from Silverlake Host">
+
+			<TCP>
+				<!-- Remote information -->
+				<Remote>
+					<!-- Legacy system IP address -->
+					<RemoteIp>127.0.0.1</RemoteIp>
+					<!-- Legacy system port number -->
+					<RemotePort>30119</RemotePort>
+				</Remote>
+				<!-- Local bind IP address (set 0.0.0.0 for all interfaces) -->
+				<LocalIp>default</LocalIp>
+				<!-- Local bind port number (set 0 for random) -->
+				<LocalPort>0</LocalPort>
+				<!-- If unreachable at startup, fail immediately. -->
+				<FailFast>false</FailFast>
+				<!-- Legacy system SSL enabled -->
+				<SSL>false</SSL>
+				<!-- Legacy system socket message length type -->
+				<InitialType>13</InitialType>
+				<!-- Legacy system socket message length size -->
+				<InitialLength>9</InitialLength>
+				<!-- Legacy system accepts zero length echo -->
+				<AllowZeroEcho>true</AllowZeroEcho>
+
+				<!-- Position in legacy system header to insert 4 bytes retrieval key -->
+				<Retrieval Position="104" Codepage="EBCDIC" />
+			</TCP>
+		</Endpoint>
+
+	</Endpoints>
+
+</Iris>
+

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    xmlns:tns="http://webroutes.iris.silverglobe.com">
+    
+    <xs:element name="Iris">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Routing"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Routing">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Routes"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Routes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Route"/>
+            </xs:sequence>
+            
+            <xs:attributeGroup ref="RoutesAttribute"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Route">
+        <xs:complexType>
+            <xs:attributeGroup ref="RouteAttribute"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:attributeGroup name="RoutesAttribute">
+        <xs:attribute name="Hostname" type="xs:string" use="required"/>
+        <xs:attribute name="Port" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="RouteAttribute">
+        <xs:attribute name="URI" type="xs:string" use="required"/>
+        <xs:attribute name="Type" type="xs:string" use="required"/>
+        <xs:attribute name="Subtype" type="xs:string" use="optional"/>
+        <xs:attribute name="Path" type="xs:string" use="required"/>
+        <xs:attribute name="Limit" type="xs:int" use="optional"/>
+    </xs:attributeGroup>
+    
+</xs:schema>

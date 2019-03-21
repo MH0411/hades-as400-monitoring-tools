@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Web SQL Configuration -->
+<Iris>
+
+	<!-- Parameters relating to SQL statements -->
+   <WebSQLServices>
+
+      <!--========== 0.1 Get business date =======================-->
+      <WebSQLService Name="GetBusinessDateService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+            select * from CBSDATDEPS.DDPAR1
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 0.2 Get Control Unit Desc =======================-->
+      <WebSQLService Name="GetControlUnnitDescService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+            select TLCTL, TLCTLD from CBSPARCMN5.TLCTLU
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+      
+      <!--========== 0.3 Get Biller Type Desc =======================-->
+      <WebSQLService Name="GetBillerTypeDescService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+            select AGCOMP, AGNAME from CBSPARCMN5.DDIAGN
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+      
+      <!--========== 0.4 Get Location Name Desc =======================-->
+      <WebSQLService Name="GetLocationNameDescService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+            select TLNUM, TLNAME from CBSPARCMN5.TLTEL where SUBSTR(TLNUM, 1, 3) = 'CDM'
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 1. KQ ======================================-->
+      <WebSQLService Name="GetKQLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+           select * from KQ where cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &gt; cast(cast( :startlimit
+           as varchar(14)) as timestamp)
+           and
+           cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &lt;= (select current timestamp - 10 second
+           from sysibm.sysdummy1)
+           fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 2. KS ======================================-->
+      <WebSQLService Name="GetKSLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+           select * from KS where cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &gt; cast(cast( :startlimit
+           as varchar(14)) as timestamp)
+           and
+           cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &lt;= (select current timestamp - 10 second
+           from sysibm.sysdummy1)
+           fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 3. RQ ======================================-->
+      <WebSQLService Name="GetRQLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+           select * from RQ where cast(case length(cast(
+           date_reqs as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_reqs as varchar(8))
+           when 2 then '000000'  || cast(date_reqs as varchar(8))
+           when 3 then '00000'   || cast(date_reqs as varchar(8))
+           when 4 then '0000'    || cast(date_reqs as varchar(8))
+           when 5 then '000'     || cast(date_reqs as varchar(8))
+           when 6 then '00'      || cast(date_reqs as varchar(8))
+           when 7 then '0'       || cast(date_reqs as varchar(8))
+           else                     cast(date_reqs as varchar(8))
+           end || case length(cast(time_reqs as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_reqs as varchar(6))
+           when 2 then '0000'  || cast(time_reqs as varchar(6))
+           when 3 then '000'   || cast(time_reqs as varchar(6))
+           when 4 then '00'    || cast(time_reqs as varchar(6))
+           when 5 then '0'     || cast(time_reqs as varchar(6))
+           else                   cast(time_reqs as varchar(6))
+           end as timestamp) &gt; cast(cast( :startlimit
+           as varchar(14)) as timestamp)
+           and
+           cast(case length(cast(
+           date_reqs as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_reqs as varchar(8))
+           when 2 then '000000'  || cast(date_reqs as varchar(8))
+           when 3 then '00000'   || cast(date_reqs as varchar(8))
+           when 4 then '0000'    || cast(date_reqs as varchar(8))
+           when 5 then '000'     || cast(date_reqs as varchar(8))
+           when 6 then '00'      || cast(date_reqs as varchar(8))
+           when 7 then '0'       || cast(date_reqs as varchar(8))
+           else                     cast(date_reqs as varchar(8))
+           end || case length(cast(time_reqs as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_reqs as varchar(6))
+           when 2 then '0000'  || cast(time_reqs as varchar(6))
+           when 3 then '000'   || cast(time_reqs as varchar(6))
+           when 4 then '00'    || cast(time_reqs as varchar(6))
+           when 5 then '0'     || cast(time_reqs as varchar(6))
+           else                   cast(time_reqs as varchar(6))
+           end as timestamp) &lt;= (select current timestamp - 10 second
+           from sysibm.sysdummy1)
+           fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 4. RS ======================================-->
+      <WebSQLService Name="GetRSLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+           select * from RS where cast(case length(cast(
+           date_resp as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_resp as varchar(8))
+           when 2 then '000000'  || cast(date_resp as varchar(8))
+           when 3 then '00000'   || cast(date_resp as varchar(8))
+           when 4 then '0000'    || cast(date_resp as varchar(8))
+           when 5 then '000'     || cast(date_resp as varchar(8))
+           when 6 then '00'      || cast(date_resp as varchar(8))
+           when 7 then '0'       || cast(date_resp as varchar(8))
+           else                     cast(date_resp as varchar(8))
+           end || case length(cast(time_resp as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_resp as varchar(6))
+           when 2 then '0000'  || cast(time_resp as varchar(6))
+           when 3 then '000'   || cast(time_resp as varchar(6))
+           when 4 then '00'    || cast(time_resp as varchar(6))
+           when 5 then '0'     || cast(time_resp as varchar(6))
+           else                   cast(time_resp as varchar(6))
+           end as timestamp) &gt; cast(cast( :startlimit
+           as varchar(14)) as timestamp)
+           and
+           cast(case length(cast(
+           date_resp as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_resp as varchar(8))
+           when 2 then '000000'  || cast(date_resp as varchar(8))
+           when 3 then '00000'   || cast(date_resp as varchar(8))
+           when 4 then '0000'    || cast(date_resp as varchar(8))
+           when 5 then '000'     || cast(date_resp as varchar(8))
+           when 6 then '00'      || cast(date_resp as varchar(8))
+           when 7 then '0'       || cast(date_resp as varchar(8))
+           else                     cast(date_resp as varchar(8))
+           end || case length(cast(time_resp as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_resp as varchar(6))
+           when 2 then '0000'  || cast(time_resp as varchar(6))
+           when 3 then '000'   || cast(time_resp as varchar(6))
+           when 4 then '00'    || cast(time_resp as varchar(6))
+           when 5 then '0'     || cast(time_resp as varchar(6))
+           else                   cast(time_resp as varchar(6))
+           end as timestamp) &lt;= (select current timestamp - 10 second
+           from sysibm.sysdummy1)
+           fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 5. CX ======================================-->
+      <WebSQLService Name="GetCXLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+           select * from CX where cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &gt; cast(cast( :startlimit
+           as varchar(14)) as timestamp)
+           and
+           cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &lt;= (select current timestamp - 10 second
+           from sysibm.sysdummy1)
+           fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 6. XS ======================================-->
+      <WebSQLService Name="GetXSLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+           select date_reqs, time_reqs, tims_reqs, date_resp,
+           time_resp, tims_resp, remote_ip, remote_port,
+           ref_conn, ref_reqs, ref_node, host_ref, host_sts,
+           appl_ref, method, url, respcd, elps_all, elps_rqt,
+           elps_rst, elps_tot, elps_wbt, elps_hst, elps_int,
+           server_name from XS where cast(case length(cast(
+           date_resp as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_resp as varchar(8))
+           when 2 then '000000'  || cast(date_resp as varchar(8))
+           when 3 then '00000'   || cast(date_resp as varchar(8))
+           when 4 then '0000'    || cast(date_resp as varchar(8))
+           when 5 then '000'     || cast(date_resp as varchar(8))
+           when 6 then '00'      || cast(date_resp as varchar(8))
+           when 7 then '0'       || cast(date_resp as varchar(8))
+           else                     cast(date_resp as varchar(8))
+           end || case length(cast(time_resp as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_resp as varchar(6))
+           when 2 then '0000'  || cast(time_resp as varchar(6))
+           when 3 then '000'   || cast(time_resp as varchar(6))
+           when 4 then '00'    || cast(time_resp as varchar(6))
+           when 5 then '0'     || cast(time_resp as varchar(6))
+           else                   cast(time_resp as varchar(6))
+           end as timestamp) &gt; cast(cast( :startlimit
+           as varchar(14)) as timestamp)
+           and
+           cast(case length(cast(
+           date_resp as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_resp as varchar(8))
+           when 2 then '000000'  || cast(date_resp as varchar(8))
+           when 3 then '00000'   || cast(date_resp as varchar(8))
+           when 4 then '0000'    || cast(date_resp as varchar(8))
+           when 5 then '000'     || cast(date_resp as varchar(8))
+           when 6 then '00'      || cast(date_resp as varchar(8))
+           when 7 then '0'       || cast(date_resp as varchar(8))
+           else                     cast(date_resp as varchar(8))
+           end || case length(cast(time_resp as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_resp as varchar(6))
+           when 2 then '0000'  || cast(time_resp as varchar(6))
+           when 3 then '000'   || cast(time_resp as varchar(6))
+           when 4 then '00'    || cast(time_resp as varchar(6))
+           when 5 then '0'     || cast(time_resp as varchar(6))
+           else                   cast(time_resp as varchar(6))
+           end as timestamp) &lt;= (select current timestamp - 10 second
+           from sysibm.sysdummy1)
+           fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 7. ER ======================================-->
+      <WebSQLService Name="GetERLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+           select * from ER where cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &gt; cast(cast( :startlimit
+           as varchar(14)) as timestamp)
+           and
+           cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &lt;= (select current timestamp - 10 second
+           from sysibm.sysdummy1)
+           fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 8. EV ======================================-->
+      <WebSQLService Name="GetEVLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+           select * from EV where cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &gt; cast(cast( :startlimit
+           as varchar(14)) as timestamp)
+           and
+           cast(case length(cast(
+           date_logd as varchar(8)))
+           when 0 then '00000000'
+           when 1 then '0000000' || cast(date_logd as varchar(8))
+           when 2 then '000000'  || cast(date_logd as varchar(8))
+           when 3 then '00000'   || cast(date_logd as varchar(8))
+           when 4 then '0000'    || cast(date_logd as varchar(8))
+           when 5 then '000'     || cast(date_logd as varchar(8))
+           when 6 then '00'      || cast(date_logd as varchar(8))
+           when 7 then '0'       || cast(date_logd as varchar(8))
+           else                     cast(date_logd as varchar(8))
+           end || case length(cast(time_logd as varchar(6)))
+           when 0 then '000000'
+           when 1 then '00000' || cast(time_logd as varchar(6))
+           when 2 then '0000'  || cast(time_logd as varchar(6))
+           when 3 then '000'   || cast(time_logd as varchar(6))
+           when 4 then '00'    || cast(time_logd as varchar(6))
+           when 5 then '0'     || cast(time_logd as varchar(6))
+           else                   cast(time_logd as varchar(6))
+           end as timestamp) &lt;= (select current timestamp - 10 second
+           from sysibm.sysdummy1)
+           fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 9. CM ======================================-->
+      <WebSQLService Name="GetCMLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+            select * from CM where cast(case length(cast(
+            date_logd as varchar(8)))
+            when 0 then '00000000'
+            when 1 then '0000000' || cast(date_logd as varchar(8))
+            when 2 then '000000'  || cast(date_logd as varchar(8))
+            when 3 then '00000'   || cast(date_logd as varchar(8))
+            when 4 then '0000'    || cast(date_logd as varchar(8))
+            when 5 then '000'     || cast(date_logd as varchar(8))
+            when 6 then '00'      || cast(date_logd as varchar(8))
+            when 7 then '0'       || cast(date_logd as varchar(8))
+            else                     cast(date_logd as varchar(8))
+            end || case length(cast(time_logd as varchar(6)))
+            when 0 then '000000'
+            when 1 then '00000' || cast(time_logd as varchar(6))
+            when 2 then '0000'  || cast(time_logd as varchar(6))
+            when 3 then '000'   || cast(time_logd as varchar(6))
+            when 4 then '00'    || cast(time_logd as varchar(6))
+            when 5 then '0'     || cast(time_logd as varchar(6))
+            else                   cast(time_logd as varchar(6))
+            end as timestamp) &gt; cast(cast( :startlimit
+            as varchar(14)) as timestamp)
+            and
+            cast(case length(cast(
+            date_logd as varchar(8)))
+            when 0 then '00000000'
+            when 1 then '0000000' || cast(date_logd as varchar(8))
+            when 2 then '000000'  || cast(date_logd as varchar(8))
+            when 3 then '00000'   || cast(date_logd as varchar(8))
+            when 4 then '0000'    || cast(date_logd as varchar(8))
+            when 5 then '000'     || cast(date_logd as varchar(8))
+            when 6 then '00'      || cast(date_logd as varchar(8))
+            when 7 then '0'       || cast(date_logd as varchar(8))
+            else                     cast(date_logd as varchar(8))
+            end || case length(cast(time_logd as varchar(6)))
+            when 0 then '000000'
+            when 1 then '00000' || cast(time_logd as varchar(6))
+            when 2 then '0000'  || cast(time_logd as varchar(6))
+            when 3 then '000'   || cast(time_logd as varchar(6))
+            when 4 then '00'    || cast(time_logd as varchar(6))
+            when 5 then '0'     || cast(time_logd as varchar(6))
+            else                   cast(time_logd as varchar(6))
+            end as timestamp) &lt;= (select current timestamp - 10 second
+            from sysibm.sysdummy1)
+            fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 10. SR ======================================-->
+      <WebSQLService Name="GetSRLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+            select * from SR where cast(case length(cast(
+            date_logd as varchar(8)))
+            when 0 then '00000000'
+            when 1 then '0000000' || cast(date_logd as varchar(8))
+            when 2 then '000000'  || cast(date_logd as varchar(8))
+            when 3 then '00000'   || cast(date_logd as varchar(8))
+            when 4 then '0000'    || cast(date_logd as varchar(8))
+            when 5 then '000'     || cast(date_logd as varchar(8))
+            when 6 then '00'      || cast(date_logd as varchar(8))
+            when 7 then '0'       || cast(date_logd as varchar(8))
+            else                     cast(date_logd as varchar(8))
+            end || case length(cast(time_logd as varchar(6)))
+            when 0 then '000000'
+            when 1 then '00000' || cast(time_logd as varchar(6))
+            when 2 then '0000'  || cast(time_logd as varchar(6))
+            when 3 then '000'   || cast(time_logd as varchar(6))
+            when 4 then '00'    || cast(time_logd as varchar(6))
+            when 5 then '0'     || cast(time_logd as varchar(6))
+            else                   cast(time_logd as varchar(6))
+            end as timestamp) &gt; cast(cast( :startlimit
+            as varchar(14)) as timestamp)
+            and
+            cast(case length(cast(
+            date_logd as varchar(8)))
+            when 0 then '00000000'
+            when 1 then '0000000' || cast(date_logd as varchar(8))
+            when 2 then '000000'  || cast(date_logd as varchar(8))
+            when 3 then '00000'   || cast(date_logd as varchar(8))
+            when 4 then '0000'    || cast(date_logd as varchar(8))
+            when 5 then '000'     || cast(date_logd as varchar(8))
+            when 6 then '00'      || cast(date_logd as varchar(8))
+            when 7 then '0'       || cast(date_logd as varchar(8))
+            else                     cast(date_logd as varchar(8))
+            end || case length(cast(time_logd as varchar(6)))
+            when 0 then '000000'
+            when 1 then '00000' || cast(time_logd as varchar(6))
+            when 2 then '0000'  || cast(time_logd as varchar(6))
+            when 3 then '000'   || cast(time_logd as varchar(6))
+            when 4 then '00'    || cast(time_logd as varchar(6))
+            when 5 then '0'     || cast(time_logd as varchar(6))
+            else                   cast(time_logd as varchar(6))
+            end as timestamp) &lt;= (select current timestamp - 10 second
+            from sysibm.sysdummy1)
+            fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+      <!--========== 12. SR ======================================-->
+      <WebSQLService Name="GetHRLogService" Enabled="true">
+         <MessageMapName/>
+         <Statement Type="Query">
+            select * from HR where cast(case length(cast(
+            date_logd as varchar(8)))
+            when 0 then '00000000'
+            when 1 then '0000000' || cast(date_logd as varchar(8))
+            when 2 then '000000'  || cast(date_logd as varchar(8))
+            when 3 then '00000'   || cast(date_logd as varchar(8))
+            when 4 then '0000'    || cast(date_logd as varchar(8))
+            when 5 then '000'     || cast(date_logd as varchar(8))
+            when 6 then '00'      || cast(date_logd as varchar(8))
+            when 7 then '0'       || cast(date_logd as varchar(8))
+            else                     cast(date_logd as varchar(8))
+            end || case length(cast(time_logd as varchar(6)))
+            when 0 then '000000'
+            when 1 then '00000' || cast(time_logd as varchar(6))
+            when 2 then '0000'  || cast(time_logd as varchar(6))
+            when 3 then '000'   || cast(time_logd as varchar(6))
+            when 4 then '00'    || cast(time_logd as varchar(6))
+            when 5 then '0'     || cast(time_logd as varchar(6))
+            else                   cast(time_logd as varchar(6))
+            end as timestamp) &gt; cast(cast( :startlimit
+            as varchar(14)) as timestamp)
+            and
+            cast(case length(cast(
+            date_logd as varchar(8)))
+            when 0 then '00000000'
+            when 1 then '0000000' || cast(date_logd as varchar(8))
+            when 2 then '000000'  || cast(date_logd as varchar(8))
+            when 3 then '00000'   || cast(date_logd as varchar(8))
+            when 4 then '0000'    || cast(date_logd as varchar(8))
+            when 5 then '000'     || cast(date_logd as varchar(8))
+            when 6 then '00'      || cast(date_logd as varchar(8))
+            when 7 then '0'       || cast(date_logd as varchar(8))
+            else                     cast(date_logd as varchar(8))
+            end || case length(cast(time_logd as varchar(6)))
+            when 0 then '000000'
+            when 1 then '00000' || cast(time_logd as varchar(6))
+            when 2 then '0000'  || cast(time_logd as varchar(6))
+            when 3 then '000'   || cast(time_logd as varchar(6))
+            when 4 then '00'    || cast(time_logd as varchar(6))
+            when 5 then '0'     || cast(time_logd as varchar(6))
+            else                   cast(time_logd as varchar(6))
+            end as timestamp) &lt;= (select current timestamp - 10 second
+            from sysibm.sysdummy1)
+            fetch first 500 rows only
+         </Statement>
+         <AdditionalData>
+            <Field Id="" Value=""/>
+         </AdditionalData>
+         <WebSQLEngines>
+            <WebSQLEngine Name="DB2"/>
+         </WebSQLEngines>
+      </WebSQLService>
+
+   </WebSQLServices>
+
+</Iris>

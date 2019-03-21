@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+  xmlns:tns="http://map.phoenix.silverglobe.com">
+  
+  <xs:element name="Transform">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="MapPack" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ConstraintPack" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Table" />
+      </xs:sequence>
+      
+      <xs:attribute name="Id" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="MapPack">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Eval" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Constraint" />
+      </xs:choice>
+      
+      <xs:attribute name="Id" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Eval">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Source" />
+      </xs:sequence>
+      
+      <xs:attribute name="Target" type="xs:string" />
+      <xs:attribute name="Format" type="xs:string" />
+      <xs:attribute name="Justify" type="xs:int" />
+      <xs:attribute name="MathOperation" type="xs:string" />
+      <xs:attribute name="Encoding" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Source" >
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="Default" type="xs:string" />
+          <xs:attribute name="Initialize" type="xs:string" />
+          <xs:attribute name="Lookup" type="xs:string" />
+          <xs:attribute name="Format" type="xs:string" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Constraint">
+    <xs:complexType>
+      <xs:attribute name="Id" type="xs:string" />
+      <xs:attribute name="Engine" type="xs:string" />
+      <xs:attribute name="True" type="xs:string" />
+      <xs:attribute name="False" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="ConstraintPack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="R" />
+      </xs:sequence>
+      
+      <xs:attribute name="Id" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="R">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="E" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="E">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string" />
+        </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Table">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="TableItem" />
+      </xs:sequence>
+      
+      <xs:attribute name="Id" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="TableItem">
+    <xs:complexType>
+      <xs:attribute name="FromValue" type="xs:string" />
+      <xs:attribute name="ToValue" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

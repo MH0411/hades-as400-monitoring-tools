@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    xmlns:tns="http://webworkflows.iris.silverglobe.com">
+    
+    <xs:element name="Iris">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Workflows"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Workflows">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Workflow"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Workflow">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" ref="Flow" />
+                <xs:element minOccurs="0" maxOccurs="1" ref="In" />
+                <xs:element minOccurs="0" maxOccurs="1" ref="Out" />
+                <xs:element minOccurs="0" maxOccurs="1" ref="WebEngines" />
+            </xs:sequence>
+            
+            <xs:attributeGroup ref="WorkflowAttributes"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Flow">
+        <xs:complexType>
+        	<xs:choice maxOccurs="unbounded">
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Map" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Rest" />
+        	    <xs:element minOccurs="0" maxOccurs="unbounded" ref="Reverse" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="OnTimeout" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="OnReject" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Leave" />
+        	</xs:choice>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Map">
+        <xs:complexType>
+        	<xs:attribute name="Id" type="xs:int" use="optional"/>
+            <xs:attribute name="Target" type="xs:string" use="required"/>
+            <xs:attribute name="Source" type="xs:string" use="optional"/>
+            <xs:attribute name="Value" type="xs:string" use="optional"/>
+            <xs:attribute name="Transpose" type="xs:string" use="optional"/>
+            <xs:attribute name="TransposeFrom" type="xs:string" use="optional"/>
+            <xs:attribute name="TransposeTo" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Rest">
+        <xs:complexType>
+            <xs:attribute name="Id" type="xs:int" use="required"/>
+            <xs:attribute name="URI" type="xs:string" use="required"/>
+            <xs:attribute name="Timeout" type="xs:int" use="optional"/>
+            <xs:attribute name="AcceptReject" type="xs:boolean" use="optional"/>
+            <xs:attribute name="AcceptTimeout" type="xs:boolean" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Reverse">
+        <xs:complexType>
+            <xs:attribute name="Id" type="xs:int" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="OnTimeout">
+        <xs:complexType>
+        	<xs:choice maxOccurs="unbounded">
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Map" />
+        	    <xs:element minOccurs="0" maxOccurs="unbounded" ref="Reverse" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Leave" />
+        	</xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="OnReject">
+        <xs:complexType>
+        	<xs:choice maxOccurs="unbounded">
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Map" />
+        	    <xs:element minOccurs="0" maxOccurs="unbounded" ref="Reverse" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Leave" />
+        	</xs:choice>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Leave" />
+    
+    <xs:element name="In">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Node" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+      <xs:element name="Out">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Node" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Node">
+        <xs:complexType>
+            <xs:attribute name="Name" type="xs:string" use="required"/>
+            <xs:attribute name="MessageMapName" type="xs:string" use="required"/>
+            <xs:attribute name="MessageMapPath" type="xs:string" use="required"/>
+            <xs:attribute name="Recurring" type="xs:boolean" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="WebEngines">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="WebEngine"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="WebEngine">
+        <xs:complexType>
+            <xs:attribute name="Name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:attributeGroup name="WorkflowAttributes">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+        <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+        <xs:attribute name="Timeout" type="xs:int" use="optional"/>
+    </xs:attributeGroup>
+    
+</xs:schema>

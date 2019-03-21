@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Iris HTTP Server -->
+<Iris>
+
+	<!-- Parameters relating to enqueue operations -->
+	<Routing>
+		<Routes Hostname="*" Port="0">
+			
+			<Route URI="/HTREST"
+			Type="webservice" 
+			Subtype="" 
+			Path="HTREST"/>
+			
+			<Route URI="/HTSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="HTSOAP"/>
+			
+			<Route URI="/RTREST"
+			Type="webservice" 
+			Subtype="" 
+			Path="RTREST"/>
+			
+			<Route URI="/RTSOAP"
+			Type="webservice" 
+			Subtype="" 
+			Path="RTSOAP"/>
+			
+			<Route URI="/CFREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="CFREST"/>
+			
+			<Route URI="/CFSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="CFSOAP"/>
+			
+			<Route URI="/CDREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="CDREST"/>
+			
+			<Route URI="/CDSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="CDSOAP"/>
+			
+			<Route URI="/DDREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="DDREST"/>
+			
+			<Route URI="/DDSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="DDSOAP"/>
+			
+			<Route URI="/LNREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="LNREST"/>
+			
+			<Route URI="/LNSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="LNSOAP"/>
+			
+			<Route URI="/RMREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="RMREST"/>
+			
+			<Route URI="/RMSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="RMSOAP"/>
+			
+			<Route URI="/TFREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="TFREST"/>
+			
+			<Route URI="/TFSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="TFSOAP"/>
+			
+			<Route URI="/GLREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="GLREST"/>
+			
+			<Route URI="/GLSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="GLSOAP"/>
+
+			<Route URI="/EBREST"
+			Type="webservice" 
+			Subtype="" 
+			Path="EBREST"/>
+			
+			<Route URI="/EBSOAP"
+			Type="webservice" 
+			Subtype="" 
+			Path="EBSOAP"/>
+
+			<!-- 3rd Party Web Service -->
+			<Route URI="/ZVREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="ZVREST"/>
+			
+			<Route URI="/ZVSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="ZVSOAP"/>
+			
+			<Route URI="/ZWREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="ZWREST"/>
+			
+			<Route URI="/ZWSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="ZWSOAP"/>
+
+			<Route URI="/ZXREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="ZXREST"/>
+			
+			<Route URI="/ZXSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="ZXSOAP"/>
+
+			<Route URI="/ZYREST" 
+			Type="webservice" 
+			Subtype="" 
+			Path="ZYREST"/>
+			
+			<Route URI="/ZYSOAP" 
+			Type="webservice" 
+			Subtype="" 
+			Path="ZYSOAP"/>
+
+			<Route URI="/AFREST"
+			Type="webservice" 
+			Subtype="" 
+			Path="AFREST"/>
+			
+			<Route URI="/AFSOAP"
+			Type="webservice" 
+			Subtype="" 
+			Path="AFSOAP"/>
+			
+			<!-- Composite Web Service -->
+			<Route URI="/ZZSOAP"
+				Type="webservice" 
+				Subtype="" 
+				Path="ZZSOAP"/>
+
+			<Route URI="/ZZREST"
+				Type="webservice" 
+				Subtype="" 
+				Path="ZZREST"/>
+
+			<!-- SQL Service -->
+			<Route URI="/DB2"
+			Type="SQL"
+			Subtype=""
+			Path="DB2"/>
+
+			<!-- Log/Config File -->	
+			<Route URI="/logs" 
+			Type="file" 
+			Subtype="irislogs" 
+			Path="file://iris_logs"/>
+			
+			<Route URI="/irisconfig" 
+			Type="file" 
+			Subtype="irislogs" 
+			Path="file://iris_cfg"/>
+			
+			<Route URI="/phoenixconfig" 
+			Type="file" 
+			Subtype="irislogs" 
+			Path="file://phoenix_cfg"/>
+			
+			<Route URI="/upload" 
+				Type="file" 
+				Subtype="upload" 
+				Path="file:///upload"/>
+
+			<Route URI="/mqlogs" 
+				Type="file" 
+				Subtype="upload" 
+				Path="file:///sdspd/prd1/cbi_ou_mq/mq_log"/>
+
+		</Routes>
+	</Routing>
+
+</Iris>

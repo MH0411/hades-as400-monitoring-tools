@@ -1,0 +1,1331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Iris>
+	<WebApplications>
+		
+		<!-- FTS SMS Applications -->
+		<WebApplication Name="FTSSMSService"
+			Context="com.silverglobe.caller.FTSSMSService"
+			Timeout="30"
+			Enabled="true">
+
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ftssmsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+
+			</JavaProperties>
+		</WebApplication>
+		<!-- End of FTS SMS Applications -->
+		
+		<!-- SDS Dynamic SMS Applications -->
+		<WebApplication Name="SDSDynamicSMSService"
+			Context="com.silverglobe.caller.SDSDynamicSMSService"
+			Timeout="30"
+			Enabled="true">
+
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/sdsdynamicsmsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+
+			</JavaProperties>
+		</WebApplication>
+		<!-- End of SDS Dynamic SMS Applications -->
+	
+	
+		<!-- PYS Bulk Applications -->
+		
+		<WebApplication Name="ZWBlockFourService"
+			Context="com.silverglobe.eastnets.caller.BlockFourService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58810service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEFALSEFALSEhttp://10.40.34.73/PaymentSafe_WebServices/Block4SWIFTService.asmx?wsdl" />						
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="ZWInwardPostStatusService"
+			Context="com.silverglobe.eastnets.caller.InwardPostStatusService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58811service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT"
+					Value="http://10.40.34.73/PaymentSafe_WebServices/InwardPostingResultsStatusService.asmx?wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="ZWInwardCreditService"
+			Context="com.silverglobe.eastnets.caller.InwardCreditService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58812service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEFALSEhttp://10.40.34.73/PaymentSafe_WebServices/InwardPostingResultsStatusWithACTInfoService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="ZWOutwardReversalService"
+			Context="com.silverglobe.eastnets.caller.OutwardReversalService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit1/lib/pysrm58813service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/OutwardReversalResponseService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="ZWCreditDebitService"
+			Context="com.silverglobe.eastnets.caller.CreditDebitService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58814service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/OutwardDebitorCreditAdviceRequestService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="ZWBulkBlockFourService"
+			Context="com.silverglobe.eastnets.caller.BulkBlockFourService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58815service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/Block4SWIFTService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="ZWOutwardSwiftService"
+			Context="com.silverglobe.eastnets.caller.OutwardSwiftService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pystf67417service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/FullSWIFTService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		
+		<!-- End of PYS Bulk Applications -->
+
+	<!-- SMS Applications -->
+		
+		<WebApplication Name="SMSBulkService"
+			Context="com.silverglobe.servion.caller.SMSBulkService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/smsbulkservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="cbi.smssvc@cbiuae.com" />
+				<Property Name="PASSWORD" Value="abc#abc1" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.50.53.24:8080/SMS_BULK_UPLOAD/Services/SMSService?wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="SMSService"
+			Context="com.silverglobe.servion.caller.SMSService"
+			Timeout="30"
+			Enabled="false">
+
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/smsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="cbi.smssvc@cbiuae.com" />
+				<Property Name="PASSWORD" Value="abc#abc1" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.50.53.24:8080/SMS_ENGINE/Services/SMSService?wsdl" />				
+			</JavaProperties>
+		</WebApplication>
+	<!-- End of SMS Applications -->
+
+	<!-- OTP Applications -->
+		<WebApplication Name="GenCusService"
+			Context="com.silverglobe.servion.caller.GenCusService"
+			Timeout="30"
+			Enabled="true">
+
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/otpservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="cbi.smssvc@cbiuae.com" />
+				<Property Name="PASSWORD" Value="abc#abc1" />
+				<Property Name="URL_ENDPOINT" Value="http://10.40.34.70:8080/OTP_GENERATION/Services/OtpService?wsdl" />				
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="ActOTPService"
+			Context="com.silverglobe.servion.caller.ActOTPService"
+			Timeout="30"
+			Enabled="false">
+
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/otpservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="cbi.smssvc@cbiuae.com" />
+				<Property Name="PASSWORD" Value="abc#abc1" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.70:8080/OTP_GENERATION/Services/OtpService?wsdl" />				
+			</JavaProperties>
+		</WebApplication>		
+		
+		<WebApplication Name="ValidateOTPService"
+			Context="com.silverglobe.servion.caller.ValidateOTPService"
+			Timeout="30"
+			Enabled="false">
+
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/otpservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="cbi.smssvc@cbiuae.com" />
+				<Property Name="PASSWORD" Value="abc#abc1" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.70:8080/OTP_GENERATION/Services/OtpService?wsdl" />				
+			</JavaProperties>
+		</WebApplication>		
+	<!-- End of OTP Applications -->
+		
+	<!-- BPG Applications -->		
+		<WebApplication Name="OnlineBillAmtEnqService"
+			Context="com.silverglobe.servion.caller.OnlineBillAmtEnqService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/bpgservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="12345678" />				
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.50.53.23:8080/ePaymentGateway/services/ProcessRequest?wsdl" />				
+			</JavaProperties>
+		</WebApplication>		
+		
+		<WebApplication Name="OnOfflineBillPaymentService"
+			Context="com.silverglobe.servion.caller.OnOfflineBillPaymentService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/bpgservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="12345678" />				
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.50.53.23:8080/ePaymentGateway/services/ProcessRequest?wsdl" />				
+			</JavaProperties>
+		</WebApplication>
+
+		<WebApplication Name="GetCustomerDataService"
+			Context="com.silverglobe.servion.caller.GetCustomerDataService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/bpgservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="12345678" />				
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.50.53.23:8080/ePaymentGateway/services/ProcessRequest?wsdl" />				
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="SetCustomerDataService"
+			Context="com.silverglobe.servion.caller.SetCustomerDataService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/bpgservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="12345678" />				
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.50.53.23:8080/ePaymentGateway/services/ProcessRequest?wsdl" />				
+			</JavaProperties>
+		</WebApplication>		
+		
+		<WebApplication Name="GetPaymentStatusService"
+			Context="com.silverglobe.servion.caller.GetPaymentStatusService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/bpgservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="12345678" />				
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.50.53.23:8080/ePaymentGateway/services/ProcessRequest?wsdl" />				
+			</JavaProperties>
+		</WebApplication>
+
+		<WebApplication Name="GetTransactionHistoryService"
+			Context="com.silverglobe.servion.caller.GetTransactionHistoryService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/bpgservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="12345678" />				
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.50.53.23:8080/ePaymentGateway/services/ProcessRequest?wsdl" />				
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="GetTransactionHistoryDPService"
+			Context="com.silverglobe.servion.caller.GetTransactionHistoryDPService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/bpgservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="12345678" />				
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.50.53.23:8080/ePaymentGateway/services/ProcessRequest?wsdl" />				
+			</JavaProperties>
+		</WebApplication>
+
+	<!-- End of BPG Applications -->
+		
+	<!-- DDS Applications -->
+		
+		<WebApplication Name="DDARegistrationService"
+			Context="com.silverglobe.dds.caller.DDARegistrationService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />				
+			</JavaProperties>
+		</WebApplication>
+
+		<WebApplication Name="DDAAmendmentService"
+			Context="com.silverglobe.dds.caller.DDAAmendmentService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />				
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="DDACancellationService"
+			Context="com.silverglobe.dds.caller.DDACancellationService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="DDAStopPaymentnService"
+			Context="com.silverglobe.dds.caller.DDAStopPaymentnService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="DDAStatusEnquiryService"
+			Context="com.silverglobe.dds.caller.DDAStatusEnquiryService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="DDADetailEnquiryService"
+			Context="com.silverglobe.dds.caller.DDADetailEnquiryService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="DDATransactionHistoryEnquiryService"
+			Context="com.silverglobe.dds.caller.DDATransactionHistoryEnquiryService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="DDAOICListEnquiryService"
+			Context="com.silverglobe.dds.caller.DDAOICListEnquiryService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="DDACancellationReasonCodeEnquiryService"
+			Context="com.silverglobe.dds.caller.DDACancellationReasonCodeEnquiryService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="DDAPaymentFrequencyEnquiryService"
+			Context="com.silverglobe.dds.caller.DDAPaymentFrequencyEnquiryService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/ddsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.89:1122/WSDL/DDSPro.wsdl" />
+			</JavaProperties>
+		</WebApplication>
+
+	<!-- End of DDS Applications -->			
+
+	<!-- OPICS Applications -->
+		<WebApplication Name="CorporateFXInquiryService"
+			Context="com.silverglobe.opics.caller.CorporateFXInquiryService"
+			Timeout="30"
+			Enabled="false">
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />				
+			</JavaProperties>
+		</WebApplication>		
+		<WebApplication Name="TFCorFXInqService"
+			Context="com.silverglobe.opics.caller.TFCorFXInqService"
+			Timeout="24"
+			Enabled="false">
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>			
+		<WebApplication Name="TFCorFXAddService"
+			Context="com.silverglobe.opics.caller.TFCorFXAddService"
+			Timeout="24"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>			
+		<WebApplication Name="TFCorFXUpdUService"
+			Context="com.silverglobe.opics.caller.TFCorFXUpdUService"
+			Timeout="24"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>			
+		<WebApplication Name="TFCorFXValService"
+			Context="com.silverglobe.opics.caller.TFCorFXValService"
+			Timeout="24"
+			Enabled="false">
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		<WebApplication Name="OpicsCIFCreationService"
+			Context="com.silverglobe.opics.caller.OpicsCIFCreationService"
+			Timeout="30"
+			Enabled="false">
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>		
+		<WebApplication Name="RMCorFXUpdTService"
+			Context="com.silverglobe.opics.caller.RMCorFXUpdTService"
+			Timeout="24"
+			Enabled="false">
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		<WebApplication Name="RMCorFXRsvService"
+			Context="com.silverglobe.opics.caller.RMCorFXRsvService"
+			Timeout="24"
+			Enabled="false">
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		<WebApplication Name="HTCorFXUpdTService"
+			Context="com.silverglobe.opics.caller.HTCorFXUpdTService"
+			Timeout="24"
+			Enabled="false">
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		<WebApplication Name="CusCreditExposures"
+			Context="com.silverglobe.opics.caller.CusCreditExposures"
+			Timeout="30"
+			Enabled="false">
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		<WebApplication Name="CorporateFXService"
+			Context="com.silverglobe.opics.caller.CorporateFXService"
+			Timeout="30"
+			Enabled="false">
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/opicsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.113/CBIService/CustomerCorporateFXService.svc?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+	<!-- End of OPICS Applications -->
+
+	<!-- INFINIA Applications -->
+		
+		<WebApplication Name="PointsEnquiryService"
+			Context="com.silverglobe.infinia.caller.PointsEnquiryService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/infiniaservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://45.114.140.226:7014/PointSummaryService?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="ViewStatementService"
+			Context="com.silverglobe.infinia.caller.ViewStatementService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/infiniaservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://45.114.140.226:7014/PointSummaryService?wsdl" />						
+			</JavaProperties>
+		</WebApplication>			
+		
+	<!-- End of INFINIA Applications -->
+
+	<!-- PYS Applications -->
+		
+		<WebApplication Name="BlockFourService"
+			Context="com.silverglobe.eastnets.caller.BlockFourService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58810service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/Block4SWIFTService.asmx?wsdl" />						
+			</JavaProperties>
+		</WebApplication>	
+
+		<WebApplication Name="InwardPostStatusService"
+			Context="com.silverglobe.eastnets.caller.InwardPostStatusService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58811service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT"
+      Value="http://10.40.34.73/PaymentSafe_WebServices/InwardPostingResultsStatusService.asmx?wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="InwardCreditService"
+			Context="com.silverglobe.eastnets.caller.InwardCreditService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58812service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/InwardPostingResultsStatusWithACTInfoService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="OutwardReversalService"
+			Context="com.silverglobe.eastnets.caller.OutwardReversalService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58813service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/OutwardReversalResponseService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="CreditDebitService"
+			Context="com.silverglobe.eastnets.caller.CreditDebitService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58814service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/OutwardDebitorCreditAdviceRequestService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+
+		<WebApplication Name="BulkBlockFourService"
+			Context="com.silverglobe.eastnets.caller.BulkBlockFourService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pysrm58815service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/Block4SWIFTService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+
+		<WebApplication Name="OutwardSwiftService"
+			Context="com.silverglobe.eastnets.caller.OutwardSwiftService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/pystf67417service.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.73/PaymentSafe_WebServices/FullSWIFTService.asmx?wsdl" />					
+			</JavaProperties>
+		</WebApplication>
+		
+	<!-- End of PYS Applications -->
+
+	<!-- AFS Applications -->
+		<!-- MBASE Header -->
+		<WebApplication Name="AFS1300Service"
+			Context="com.silverglobe.afs.caller.AFS1300Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="AFSRESPFLD" Value="message/body/T6RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="ZX" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>		
+
+		<WebApplication Name="AFS2300Service"
+			Context="com.silverglobe.afs.caller.AFS2300Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="AFSRESPFLD" Value="message/body/T18RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="ZX" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="AFS2900Service"
+			Context="com.silverglobe.afs.caller.AFS2900Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="AFSRESPFLD" Value="message/body/T20RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="ZX" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>		
+
+		<!-- EBS Header -->
+		<WebApplication Name="AFS0150Service"
+			Context="com.silverglobe.afs.caller.AFS0150Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T8RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>	
+
+		<WebApplication Name="AFS1200AutoRsvr0150Service"
+			Context="com.silverglobe.afs.caller.AFS1200AutoRsvr0150Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T9RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />				
+			</JavaProperties>
+		</WebApplication>
+
+		<WebApplication Name="AFS0200Service"
+			Context="com.silverglobe.afs.caller.AFS0200Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T11RESCD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>	
+
+		<WebApplication Name="AFS1620AutoRsvr1600Service"
+			Context="com.silverglobe.afs.caller.AFS1620AutoRsvr1600Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T12RESCD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />				
+			</JavaProperties>
+		</WebApplication>
+
+		<WebApplication Name="AFS0302Service"
+			Context="com.silverglobe.afs.caller.AFS0302Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T2RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />				
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS0320Service"
+			Context="com.silverglobe.afs.caller.AFS0320Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T3RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />	
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS0330Service"
+			Context="com.silverglobe.afs.caller.AFS0330Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T4RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS0800Service"
+			Context="com.silverglobe.afs.caller.AFS0800Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T1RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS0900Service"
+			Context="com.silverglobe.afs.caller.AFS0900Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS1100Service"
+			Context="com.silverglobe.afs.caller.AFS1100Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T5RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS1200Service"
+			Context="com.silverglobe.afs.caller.AFS1200Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T9RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />	
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS1400Service"
+			Context="com.silverglobe.afs.caller.AFS1400Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T7RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />				
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS1500Service"
+			Context="com.silverglobe.afs.caller.AFS1500Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T10RESCD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>	
+
+
+		<WebApplication Name="AFS1600FPMService"
+			Context="com.silverglobe.afs.caller.AFS0200Service" Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->	
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T11RESCD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />
+			</JavaProperties>
+		</WebApplication>
+
+		<WebApplication Name="AFS1600OCBService"
+			Context="com.silverglobe.afs.caller.AFS0200Service" Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T11RESCD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />
+			</JavaProperties>
+		</WebApplication>
+
+		<WebApplication Name="AFS1620Service"
+			Context="com.silverglobe.afs.caller.AFS1620Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T12RESCD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />				
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS1700Service"
+			Context="com.silverglobe.afs.caller.AFS1700Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T13RESCDE_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS2100Service"
+			Context="com.silverglobe.afs.caller.AFS2100Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T21RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>	
+
+		<WebApplication Name="AFS2200Service"
+			Context="com.silverglobe.afs.caller.AFS2200Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T16RESCOD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>	
+		
+		<WebApplication Name="AFS2400Service"
+			Context="com.silverglobe.afs.caller.AFS2400Service"
+			Timeout="49"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/afsservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/ebs" />
+				<Property Name="AFSRESPFLD" Value="message/body/T14RESCD_responseCode" />
+				<Property Name="APPCODE" Value="AF" />
+				<Property Name="AFSMQPORT" Value="40129" />
+				<Property Name="AFSMQCONNTIMEOUT" Value="53000" />
+				<Property Name="AFSMQREADTIMEOUT" Value="49000" />			
+			</JavaProperties>
+		</WebApplication>
+		
+	<!-- End of AFS Applications -->
+		
+	<!-- OCB Applications -->
+		<WebApplication Name="ErrorCorrectionService"
+			Context="com.silverglobe.sde.caller.ErrorCorrectionService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit_base/lib/ocbservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="USER" Value="DSPC" />
+				<Property Name="PASSWORD" Value="1234567890" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.36.37:8331/sde.mcb.service/services/soap/dspc/errorCorrection?wsdl" />
+			</JavaProperties>
+		</WebApplication>
+		
+		<WebApplication Name="IccsMicrEnquiryService"
+			Context="com.silverglobe.caller.MICREnquiry"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit_base/lib/micrenq.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="URL_ENDPOINT" Value="FALSEhttp://10.40.34.93:8083/SoapService.svc" />
+			</JavaProperties>
+		</WebApplication>
+	<!-- End of OCB Applications -->		
+
+	<!-- SDS Applications -->
+		<WebApplication Name="MapHostBucketService"
+			Context="com.silverglobe.mapping.caller.MapHostBucketService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/mapservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+			</JavaProperties>
+		</WebApplication>
+		<WebApplication Name="MapSwiftTF67447Service"
+			Context="com.silverglobe.mapping.caller.MapSwiftTF67447Service"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/mapservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+			</JavaProperties>
+		</WebApplication>
+		<WebApplication Name="MapSwiftTF67427Service"
+			Context="com.silverglobe.mapping.caller.MapSwiftTF67427Service"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/mapservice.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+			</JavaProperties>
+		</WebApplication>			
+		
+		<WebApplication Name="ExportWebRuleService"
+			Context="com.silverglobe.fesync.caller.FeSyncExportService"
+			Timeout="30"
+			Enabled="false">
+			
+			<!-- Java properties -->
+			<JavaProperties>
+				<!-- Java resources -->
+				<Property Name="Class" Value="" />
+				<Property Name="JAR" Value="/sdsst/sit5/lib/fesync.jar" />
+				<Property Name="PhoenixPath" Value="/sdsst/sit_base/phoenix_cfg/thirdpartywb" />
+				<Property Name="WEBRULEPATH" Value="/cbi_in/iris_cfg/" />
+				<Property Name="WEBRULENAME" Value="webrules.xml" />
+			</JavaProperties>
+		</WebApplication>
+		<!-- End of SDS Applications -->	
+
+	</WebApplications>
+</Iris>

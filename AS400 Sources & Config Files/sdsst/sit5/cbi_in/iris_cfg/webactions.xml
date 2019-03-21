@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?><Iris>	<ActionsSendSMS>
+		<ActionSendSMS Name="IFCFTSDynamicSMS">
+			<Template>This is just a Sample Template For Statement Confirmation. Dear Customer, your Statement Ref# is :message/body/TLBF21_singleFl21 under A/C# ending with :__BCKACC03MSKFT has been sent.</Template>
+			<Contact Type="CIF" 
+				Source="message/body/TLBF04_singleFl4" />
+		</ActionSendSMS>
+		<ActionSendSMS Name="JRN_HTL_AccountClose_ACC01">
+			<Template>Dear Customer, your A/C# ending with :__BCKACC01MSKFT was successfully closed. Please do not hesitate to contact us on 800 224 for any future services.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_CashDepositeOverCCDM_ACC01AMT02">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been credited with AED :__BCKAMT02 at :__FLDLCNAM Deposit Machine. Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_CashDepositeOverCCDM_ACC01AMT03">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been credited with AED :__BCKAMT03 at :__FLDLCNAM Deposit Machine. Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_CashDepositeOverOCB_ACC01AMT02">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been credited with AED :__BCKAMT02 at :__FLDBRCOD Branch. Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_CashDepositeOverOCB_ACC01AMT02TLCUR1">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been credited with :message/body/TLCUR1_alternateCurrency1 :__BCKAMT02 at :__FLDBRCOD Branch. Available A/C balance is :message/body/TLCUR1_alternateCurrency1 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_CashDepositeOverOCB_ACC01AMT02TLCUR2">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been credited with :message/body/TLCUR2_alternateCurrency2 :__BCKAMT02 at :__FLDBRCOD Branch. Available A/C balance is :message/body/TLCUR2_alternateCurrency2 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_CashDepositeOverOCB_ACC01AMT03">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been credited with AED :__BCKAMT03 at :__FLDBRCOD Branch. Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_CashWithdrawalByCCDM_ACC01AMT02">
+			<Template>Dear Customer, you have withdrawn AED :__BCKAMT02 from your  A/C# ending with :__BCKACC01MSKFT from :__FLDLCNAM ATM.  Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_CashWithdrawalByNotCCDM_ACC01AMT02">
+			<Template>Dear Customer, you have withdrawn AED :__BCKAMT02 from your  A/C# ending with :__BCKACC01MSKFT from :__FLDBRCOD Branch.  Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_CheckBookReq_ACC01TXREF">
+			<Template>Dear Customer, cheque book request for A/C # ending with :__BCKACC01MSKFT has been logged successfully under Ref# :message/body/TLBTXREF_systemTrxref . It will be processed shortly. Please Call 800224 if you have not made this request.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_ClearCheqDeposite_ACC01AMT02CHQ04">
+			<Template>Dear Customer, Cheque # :__BCKCHQ04 for :message/body/TLBCUR_currencycode  :__BCKAMT02was deposited in to your A/C# ending with :__BCKACC01MSKFT for clearing.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_ClearCheqDeposite_ACC01AMT02CHQ08">
+			<Template>Dear Customer, Cheque # :__BCKCHQ08 for :message/body/TLBCUR_currencycode  :__BCKAMT02was deposited in to your A/C# ending with :__BCKACC01MSKFT for clearing.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_DebitCardPurchase_ACC01AMT02">
+			<Template>Dear Customer, you spent AED :__BCKAMT02 at :__FLDDELIM04 on your Debit Card ending with :__FLDDELIM00MSKFT . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_DebitCardPurchaseReversal_ACC01AMT02">
+			<Template>Dear Customer, AED :__BCKAMT02 from :__FLDDELIM04 has been credited to your A/C # ending with :__FLDDELIM00MSKFT as a MasterCard purchase reversal.  We regret any inconvenience caused. </Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FCYFundsTransferWithinCBI_ACC01DES20AMT02AMT04CUR1CUR2TXREF">
+			<Template>Dear Customer, your fund transfer request of :message/body/TLCUR1_alternateCurrency1 :__BCKAMT02 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__BCKDES20MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is :message/body/TLCUR1_alternateCurrency1 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FCYFundsTransferWithinCBI_ACC01DES20AMT02AMT04CUR1CUR2TXREF</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FCYFundsTransferWithinCBI_ACC01DES20AMT02AMT06CUR1CUR2TXREF">
+			<Template>Dear Customer, your fund transfer request of :message/body/TLCUR1_alternateCurrency1 :__BCKAMT02 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__BCKDES20MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is :message/body/TLCUR1_alternateCurrency1 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FCYFundsTransferWithinCBI_ACC01DES20AMT02AMT06CUR1CUR2TXREF</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FCYFundsTransferWithinCBI_ACC20DES01AMT05AMT02CUR1CUR2TXREF">
+			<Template>Dear Customer, your fund transfer request of :message/body/TLCUR1_alternateCurrency1 :__BCKAMT05 from your A/C# ending with :__BCKACC20MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is :message/body/TLCUR1_alternateCurrency1 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF20_singleFl20" />
+			<SubActionSendSMS>SUB_JRN_HTL_FCYFundsTransferWithinCBI_ACC20DES01AMT05AMT02CUR1CUR2TXREF</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FCYFundsTransferWithinCBI_ACC20DES01AMT09AMT02CUR1CUR2TXREF">
+			<Template>Dear Customer, your fund transfer request of :message/body/TLCUR1_alternateCurrency1 :__BCKAMT09 from your A/C# ending with :__BCKACC20MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is :message/body/TLCUR1_alternateCurrency1 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF20_singleFl20" />
+			<SubActionSendSMS>SUB_JRN_HTL_FCYFundsTransferWithinCBI_ACC20DES01AMT09AMT02CUR1CUR2TXREF</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT0209LBTDTTXREFDES1114">
+			<Template>Dear Customer, your fund transfer request of AED :__INTAMT0209 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__INTDES1114MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT0209LBTDTTXREFDES1114</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES10">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT02 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__BCKDES10MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .
+</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES10</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES11">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT02 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__BCKDES11MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES11</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES20">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT02 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__BCKDES20MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES20</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT03LBTDTTXREFDES02">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT03 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__BCKDES02MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT03LBTDTTXREFDES02</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT0412LBTDTTXREFDES0305">
+			<Template>Dear Customer, your fund transfer request of AED :__INTAMT0412 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__INTDES0305MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT0412LBTDTTXREFDES0305</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT0509LBTDTTXREFDES20">
+			<Template>Dear Customer, your fund transfer request of AED :__INTAMT0509 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__BCKDES20MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT0509LBTDTTXREFDES20</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES1113">
+			<Template>Dear Customer, your fund transfer request of AED :__INTAMT2021 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__INTDES1113MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES1113</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES13">
+			<Template>Dear Customer, your fund transfer request of AED :__INTAMT2021 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__BCKDES13MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES13</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES1315">
+			<Template>Dear Customer, your fund transfer request of AED :__INTAMT2021 from your A/C# ending with :__BCKACC01MSKFT to A/C# :__INTDES1315MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES1315</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC0306AMT0509LBTDTTXREFDES01">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT0509 from your A/C# ending with :__INTACC0306MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="__INTACC0306" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC0306AMT0509LBTDTTXREFDES01</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC03AMT05LBTDTTXREFDES01">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT05 from your A/C# ending with :__BCKACC03MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF03_singleFl3" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC03AMT05LBTDTTXREFDES01</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC06AMT09LBTDTTXREFDES01">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT09 from your A/C# ending with :__BCKACC06MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF06_singleFl6" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC06AMT09LBTDTTXREFDES01</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC11AMT02LBTDTTXREFDES01">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT02 from your A/C# ending with :__BCKACC11MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF11_singleFl11" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC11AMT02LBTDTTXREFDES01</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC11AMT03LBTDTTXREFDES01">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT03 from your A/C# ending with :__BCKACC11MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF11_singleFl11" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC11AMT03LBTDTTXREFDES01</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC13AMT02LBTDTTXREFDES01">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT02 from your A/C# ending with :__BCKACC13MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF13_singleFl13" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC13AMT02LBTDTTXREFDES01</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC13AMT30LBTDTTXREFDES01">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT30 from your A/C# ending with :__BCKACC13MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF13_singleFl13" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC13AMT30LBTDTTXREFDES01</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBI_ACC20AMT2728LBTDTTXREFDES01">
+			<Template>Dear Customer, your fund transfer request of AED :__INTAMT2728 from your A/C# ending with :__BCKACC20MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF20_singleFl20" />
+			<SubActionSendSMS>SUB_JRN_HTL_FundsTransferWithinCBI_ACC20AMT2728LBTDTTXREFDES01</SubActionSendSMS>
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBIRequestOnly_ACC13DES01AMT02LBTDTTXREF">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT02 from your A/C# ending with :__BCKACC13MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF13_singleFl13" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_FundsTransferWithinCBIRequestOnly_ACC20DES01AMT02LBTDTTXREF">
+			<Template>Dear Customer, your fund transfer request of AED :__BCKAMT02 from your A/C# ending with :__BCKACC20MSKFT to A/C# :__BCKDES01MSKFT was  processed successfully on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF20_singleFl20" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_InHsCheqWithdrawal_ACC01AMT02BRCOD">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been debited by AED :__BCKAMT02 via cheque # :__BCKCHQ08 . Available A/C balance is AED  :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_InHsCheqWithdrawal_ACC01AMT03BRCOD">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been debited by AED :__BCKAMT03 via cheque # :__BCKCHQ08 . Available A/C balance is AED  :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_InHsCheqWithdrawal_ACC01AMT30BRCOD">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been debited by AED :__BCKAMT30 via cheque # :__BCKCHQ08 . Available A/C balance is AED  :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_InHsCheqWithdrawal_ACC11AMT02BRCOD">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC11MSKFT has been debited by AED :__BCKAMT02 via cheque # :__BCKCHQ08 . Available A/C balance is AED  :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF11_singleFl11" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_InwardClearingCheqPresented_ACC01AMT02CHQ08">
+			<Template>Dear Customer, Cheque # :__BCKCHQ08 for AED :__BCKAMT02 has been presented on :__FLDTRDAT  for debit from your A/C ending with :__BCKACC01MSKFT .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_InwardClearingCheqReturnedInsufficientFunds_ACC01CHQ08BCLSR">
+			<Template>Dear Customer, cheque # :__BCKCHQ08 presented to your A/C ending with :__BCKACC01MSKFT has been returned due to insufficient funds. Please fund your A/C to avoid further returns.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_InwardClearingCheqReturnedTechnicalReason_ACC01CHQ08BCLSR">
+			<Template>Dear Customer, cheque # :__BCKCHQ08 presented to your A/C ending with :__BCKACC01MSKFT has been returned due to technical reasons. Please call 800224 for more  details.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_NonSalaryCreditStaff_ACC11AMT02">
+			<Template>Dear Customer, your current month Salary of  AED :__BCKAMT02 has been credited to your A/C# ending with :__BCKACC11MSKFT .  Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF11_singleFl11" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_OutwardClearingCheqReturned_ACC01AMT02">
+			<Template>Dear Customer, cheque # :__BCKCHQ08 deposited into your A/C ending with :__BCKACC01MSKFT has been returned due to insufficient funds. </Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_PaymentLoanAccount_ACC01AMT02">
+			<Template>Dear Customer, you have successfully made a payment of AED :__BCKAMT02 towards your loan A/C # :__BCKACC01MSKFT . Thank you for banking with CBI. </Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_PaymentLoanAccount_ACC01AMT03">
+			<Template>Dear Customer, you have successfully made a payment of AED :__BCKAMT03 towards your loan A/C # :__BCKACC01MSKMD . Thank you for banking with CBI. </Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_SalaryCreditStaff_ACC01AMT02">
+			<Template>Dear valued employee, your current month Salary of  AED :__BCKAMT02 has been credited to your A/C. Available A/C balance is AED :__balance . CBI HR Division.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_SalaryCreditStaff_ACC11AMT02">
+			<Template>Dear valued employee, your current month Salary of  AED :__BCKAMT02 has been credited to your A/C. Available A/C balance is AED :__balance . CBI HR Division.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF11_singleFl11" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_TeamDepositePlacement_ACC01AMT02NWDAT">
+			<Template>Dear Customer, Your AED deposit of :__BCKAMT02 has been placed and it will mature on :__FLDMTDAT . Ref # is :message/body/TLBTXREF_systemTrxref . Thank you for banking with CBI.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_HTL_TeamDepositeTopUpWithdrawal_ACC01TXREF">
+			<Template>Dear Customer, Your service request for Term Deposit under Ref# :message/body/TLBTXREF_systemTrxref has been successfully processed. Thank you for banking with CBI.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_MBS_AutoFundTransferAdded28177_DRACCT">
+			<Template>Dear Customer, you have successfully added a new beneficiary for auto fund transfer. Please call 800 224 for more  details.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/DRACCT_debitaccountnumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_MBS_AutoFundTransferUpdated28177_DRACCT">
+			<Template>Dear Customer, you have successfully updated your beneficiary details for auto fund transfer. Thank you for banking with CBI.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/DRACCT_debitaccountnumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_MBS_ContactDetailUpdated18106_CFCIFN">
+			<Template>Dear Customer, your contact details have been updated successfully. Please call 800 224 if you have not made this request.</Template>
+			<Contact Type="CIF" 
+				Source="message/body/CFCIFN_customernumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_MBS_ContactDetailUpdated18115_CFACN">
+			<Template>Dear Customer, your contact details have been updated successfully. Please call 800 224 if you have not made this request.</Template>
+			<Contact Type="CIF" 
+				Source="message/body/CFACCN_accountNumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_MBS_ContactDetailUpdated18199_CFCIFN">
+			<Template>Dear Customer, your contact details have been updated successfully. Please call 800 224 if you have not made this request.</Template>
+			<Contact Type="CIF" 
+				Source="message/body/CFCIFN_customernumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_MBS_MobileNumberUpdated_CFACN">
+			<Template>Dear customer, your registered mobile number with CBI has been changed successfully. Call 800 224 if you have not initiated this request</Template>
+			<Contact Type="CIF" 
+				Source="message/body/CFACCN_accountNumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_CancellationDemandDraft_ACC01RMCKCAVL01TLCUR">
+			<Template>Dear Customer, your Demand Draft # :message/body/RMCKC_check for :message/body/TLBCUR_currencycode :__BCKAMT02 was cancelled successfully. Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_CancellationDemandDraft_ACC01RMCKCAVL01TLCUR3">
+			<Template>Dear Customer, your Demand Draft # :message/body/RMCKC_check for :message/body/TLCUR3_alternatecurency3 :__BCKAMT02 was cancelled successfully. Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_CancellationDemandDraft_ACC03RMCKCAVL03TLCUR">
+			<Template>Dear Customer, your Demand Draft # :message/body/RMCKC_check for :message/body/TLBCUR_currencycode :__BCKAMT04 was cancelled successfully. Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF03_singleFl3" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_CancellationManagersChq_ACC01RMCKCAVL01TLBCUR">
+			<Template>Dear Customer, your Managers Cheque # :message/body/RMCKC_check for :message/body/TLBCUR_currencycode :__BCKAMT02 was cancelled successfully. Available A/C balance is :message/body/TLBCUR_currencycode :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_CancellationManagersChq_ACC03RMCKCAVL03TLBCUR">
+			<Template>Dear Customer, your Managers Cheque # :message/body/RMCKC_check for :message/body/TLBCUR_currencycode :__BCKAMT04 was cancelled successfully. Available A/C balance is :message/body/TLBCUR_currencycode :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF03_singleFl3" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_InwardCredit_ACC01AMT04AVL01">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC01MSKFT has been credited with :message/body/TLCUR2_alternateCurrency2 :__BCKAMT04 via Funds Transfer. Available A/C balance is :message/body/TLCUR2_alternateCurrency2 :__balance . Please call 800 224 for more details.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_InwardCredit_ACC03AMT04AVL03">
+			<Template>Dear Customer, your A/C # ending with :__BCKACC03MSKFT has been credited with :message/body/TLCUR2_alternateCurrency2 :__BCKAMT04 via Funds Transfer. Available A/C balance is :message/body/TLCUR2_alternateCurrency2 :__balance . Please call 800 224 for more details.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF03_singleFl3" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_IssuanceDemandDraft_ACC01AMT02TLBCUR">
+			<Template>Dear customer, your A/C has been debited by :message/body/TLBCUR_currencycode :__BCKAMT02 for Demand Draft request under ref no :message/body/RMCKC_check .  The DD is ready for collection at your preferred branch.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_IssuanceDemandDraft_ACC01AMT02TLCUR3">
+			<Template>Dear customer, your A/C has been debited by :message/body/TLCUR3_alternatecurency3 :__CALSMA0211 for Demand Draft request under ref no :message/body/RMCKC_check . The DD is ready for collection at your preferred branch.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_IssuanceDemandDraft_ACC03AMT04">
+			<Template>Dear customer, your A/C has been debited by :message/body/TLBCUR_currencycode :__BCKAMT04 for Demand Draft request under ref no :message/body/RMCKC_check . The DD is ready for collection at your preferred branch.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF03_singleFl3" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_IssuanceManagersChq_ACC01AMT02">
+			<Template>Dear customer, your A/C has been debited by :message/body/TLBCUR_currencycode  :__BCKAMT02 for Managers Cheque request under ref no :message/body/RMCKC_check .  The MC is ready for collection at your preferred branch.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_IssuanceManagersChq_ACC03AMT04">
+			<Template>Dear customer, your A/C has been debited by :message/body/TLBCUR_currencycode  :__BCKAMT04 for Managers Cheque request under ref no :message/body/RMCKC_check .  The MC is ready for collection at your preferred branch.</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF03_singleFl3" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_OutwardDebit_ACC01AMT02RMCKCTLBCUR">
+			<Template>Dear Customer, your funds transfer request of :message/body/TLCUR1_alternateCurrency1 :__BCKAMT06 from your A/C# ending with :__BCKACC01MSKFT has been debited by :message/body/TLBCUR_currencycode :__BCKAMT02 . Available A/C balance is :message/body/TLBCUR_currencycode :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_OutwardDebit_ACC01AMT02RMCKCTLCUR2">
+			<Template>Dear Customer, your funds transfer request of :message/body/TLCUR3_alternatecurency3 :__BCKAMT14 from your A/C# ending with :__BCKACC01MSKFT has been debited by :message/body/TLCUR2_alternateCurrency2 :__CALSMA0218 . Available A/C balance is :message/body/TLCUR2_alternateCurrency2 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_OutwardDebit_ACC01AMT02RMCKCTLCUR3">
+			<Template>Dear Customer, your funds transfer request of :message/body/TLCUR2_alternateCurrency2 :__BCKAMT14 from your A/C# ending with :__BCKACC01MSKFT has been debited by :message/body/TLCUR3_alternatecurency3 :__CALSMA0218 . Available A/C balance is :message/body/TLCUR3_alternatecurency3 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="JRN_RMT_OutwardDebit_ACC03AMT04RMCKC">
+			<Template>Dear Customer, your funds transfer request of :message/body/TLCUR1_alternateCurrency1 :__BCKAMT06 from your A/C# ending with :__BCKACC03MSKFT has been debited by :message/body/TLBCUR_currencycode :__BCKAMT04 . Available A/C balance is :message/body/TLBCUR_currencycode :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF03_singleFl3" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FCYFundsTransferWithinCBI_ACC01DES20AMT02AMT04CUR1CUR2TXREF">
+			<Template>Dear Customer, you received fund transfer of :message/body/TLCUR2_alternateCurrency2 :__BCKAMT04 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__BCKDES20MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is :message/body/TLCUR2_alternateCurrency2 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF20_singleFl20" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FCYFundsTransferWithinCBI_ACC01DES20AMT02AMT06CUR1CUR2TXREF">
+			<Template>Dear Customer, you received fund transfer of :message/body/TLCUR2_alternateCurrency2 :__BCKAMT06 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__BCKDES20MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is :message/body/TLCUR2_alternateCurrency2 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF20_singleFl20" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FCYFundsTransferWithinCBI_ACC20DES01AMT05AMT02CUR1CUR2TXREF">
+			<Template>Dear Customer, you received fund transfer of :message/body/TLCUR2_alternateCurrency2 :__BCKAMT02 from A/C# ending with :__BCKACC20MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is :message/body/TLCUR2_alternateCurrency2 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FCYFundsTransferWithinCBI_ACC20DES01AMT09AMT02CUR1CUR2TXREF">
+			<Template>Dear Customer, you received fund transfer of :message/body/TLCUR2_alternateCurrency2 :__BCKAMT02 from A/C# ending with :__BCKACC20MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is :message/body/TLCUR2_alternateCurrency2 :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT0209LBTDTTXREFDES1114">
+			<Template>Dear Customer, you received fund transfer of AED :__INTAMT0209 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__INTDES1114MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="__INTDES1114" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES10">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT02 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__BCKDES10MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF10_singleFl10" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES11">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT02 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__BCKDES11MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF11_singleFl11" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES20">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT02 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__BCKDES20MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF20_singleFl20" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT03LBTDTTXREFDES02">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT03 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__BCKDES02MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF02_singleFl2" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT0412LBTDTTXREFDES0305">
+			<Template>Dear Customer, you received fund transfer of AED :__INTAMT0412 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__INTDES0305MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="__INTDES0305" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT0509LBTDTTXREFDES20">
+			<Template>Dear Customer, you received fund transfer of AED :__INTAMT0509 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__BCKDES20MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF20_singleFl20" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES1113">
+			<Template>Dear Customer, you received fund transfer of AED :__INTAMT2021 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__INTDES1113MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="__INTDES1113" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES13">
+			<Template>Dear Customer, you received fund transfer of AED :__INTAMT2021 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__BCKDES13MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF13_singleFl13" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES1315">
+			<Template>Dear Customer, you received fund transfer of AED :__INTAMT2021 from A/C# ending with :__BCKACC01MSKFT to your A/C# :__INTDES1315MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="__INTDES1315" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC0306AMT0509LBTDTTXREFDES01">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT0509 from A/C# ending with :__INTACC0306MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC03AMT05LBTDTTXREFDES01">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT05 from A/C# ending with :__BCKACC03MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC06AMT09LBTDTTXREFDES01">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT09 from A/C# ending with :__BCKACC06MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC11AMT02LBTDTTXREFDES01">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT02 from A/C# ending with :__BCKACC11MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC11AMT03LBTDTTXREFDES01">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT03 from A/C# ending with :__BCKACC11MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC13AMT02LBTDTTXREFDES01">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT02 from A/C# ending with :__BCKACC13MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC13AMT30LBTDTTXREFDES01">
+			<Template>Dear Customer, you received fund transfer of AED :__BCKAMT30 from A/C# ending with :__BCKACC13MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="SUB_JRN_HTL_FundsTransferWithinCBI_ACC20AMT2728LBTDTTXREFDES01">
+			<Template>Dear Customer, you received fund transfer of AED :__INTAMT2728 from A/C# ending with :__BCKACC20MSKFT to your A/C# :__BCKDES01MSKFT on :__FLDTRDAT . Ref# is :message/body/TLBTXREF_systemTrxref . Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_CreditCardBillPaymentbyClearCard_CCNOCAVAL">
+			<Template>Dear Customer, your payment request of AED :__BCKAMT02_comp_3_req towards :__FLDBLTYP_comp_3_req has been processed from your Credit Card# :comp.3.req.message/body/TLBCNTN_fXContractNo .</Template>
+			<Contact Type="CCNO" 
+				Source="comp.2.req.message/body/T8CRDNO_cardNumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_CreditCardBillPaymentbyClearCard_DDSICCS">
+			<Template>Dear Customer, your payment request of AED :__BCKAMT02_comp_3_req towards your utility bill has been processed from your Credit Card# :comp.3.req.message/body/TLBCFNAM_grpAccountname .</Template>
+			<Contact Type="CCNO" 
+				Source="comp.2.req.message/body/T8CRDNO_cardNumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_CreditCardBillPaymentbyInternalAcc_CCNOCAVAL">
+			<Template>Dear Customer, your payment request of AED :__BCKAMT02_comp_2_req towards :__FLDBLTYP_comp_2_req has been processed from your Credit Card# :comp.2.req.message/body/TLBCNTN_fXContractNo .</Template>
+			<Contact Type="CCNO" 
+				Source="comp.1.req.message/body/T8CRDNO_cardNumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_HTLAFS_CACCDebitTransactionByClearCard_ACC01AMT02">
+			<Template>Dear Customer, thank you for your payment of AED :__BCKAMT02_comp_2_req towards Credit Card # :comp.2.req.message/body/TLBCNTN_fXContractNo from your A/C # ending with :__BCKACC01MSKFT_comp_2_req .</Template>
+			<Contact Type="ACCT" 
+				Source="comp.2.req.message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_HTLAFS_CACCDebitTransactionByInternalAcc_ACC01AMT02">
+			<Template>Dear Customer, thank you for your payment of AED :__BCKAMT02_comp_1_req towards Credit Card # :comp.1.req.message/body/TLBCNTN_fXContractNo from your A/C # ending with :__BCKACC01MSKFT_comp_1_req .</Template>
+			<Contact Type="ACCT" 
+				Source="comp.1.req.message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_HTLAFS_CashDepositeOverCCDMByCC_CCNUMAMT02">
+			<Template>Dear Customer, your payment of AED :__BCKAMT02_comp_2_req toward credit card number :comp.2.req.message/body/TLBCNTN_fXContractNo has been received at :__FLDLCNAM_comp_2_req Deposit Machine. Available balance is AED :__FLDCCAVL_comp_3_req .</Template>
+			<Contact Type="CCNO" 
+				Source="comp.3.req.message/body/T11CRDNO_cardNumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_HTLAFS_CashDepositeOverOCBByCC_CCNUMAMT02">
+			<Template>Dear Customer, your payment of AED :__BCKAMT02_comp_2_req toward credit card number :comp.2.req.message/body/TLBCNTN_fXContractNo has been received at :__FLDBRCOD_comp_2_req Branch. Available balance is AED :__FLDCCAVL_comp_3_req .</Template>
+			<Contact Type="CCNO" 
+				Source="comp.3.req.message/body/T11CRDNO_cardNumber" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_HTLAFS_SACCDebitTransactionByClearCard_ACC01AMT02">
+			<Template>Dear Customer, thank you for your payment of AED :__BCKAMT02_comp_2_req towards Credit Card # :comp.2.req.message/body/TLBCNTN_fXContractNo from your A/C # ending with :__BCKACC01MSKFT_comp_2_req .</Template>
+			<Contact Type="ACCT" 
+				Source="comp.2.req.message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_HTLAFS_SACCDebitTransactionByInternalAcc_ACC01AMT02">
+			<Template>Dear Customer, thank you for your payment of AED :__BCKAMT02_comp_1_req towards Credit Card # :comp.1.req.message/body/TLBCNTN_fXContractNo from your A/C # ending with :__BCKACC01MSKFT_comp_1_req .</Template>
+			<Contact Type="ACCT" 
+				Source="comp.1.req.message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+		<ActionSendSMS Name="WBS_HTLBPG_BillPaymentByCASA_ACC01AMT06BLTYPTXREF">
+			<Template>Dear Customer, your payment request of AED :__BCKAMT06_comp_1_req towards :__FLDBLTYP_comp_2_req has been processed from your A/C # ending with :__BCKACC01MSKFT_comp_1_req  .  Available A/C balance is AED :__balance .</Template>
+			<Contact Type="ACCT" 
+				Source="comp.1.req.message/body/TLBF01_singleFl1" />
+		</ActionSendSMS>
+
+	</ActionsSendSMS>
+</Iris>

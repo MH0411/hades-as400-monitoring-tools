@@ -1,0 +1,1869 @@
+<?xml version="1.0" encoding="UTF-8"?><Iris>	<Constraints>
+		<Constraint Name="IFCFTSDynamicSMS">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/CNREQTYP_requestType</Context>
+				<Compare>IFCFTS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/ISREQTYP_subRequestType</Context>
+				<Compare>EVTJAVAEP</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_AccountClose_ACC01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>2891</Compare>
+				<Compare>1451</Compare>
+				<Compare>1461</Compare>
+				<Compare>1471</Compare>
+				<Compare>1481</Compare>
+				<Compare>1491</Compare>
+				<Compare>1670</Compare>
+				<Compare>1680</Compare>
+				<Compare>1690</Compare>
+				<Compare>5950</Compare>
+				<Compare>2880</Compare>
+				<Compare>4501</Compare>
+				<Compare>4507</Compare>
+				<Compare>4511</Compare>
+				<Compare>4517</Compare>
+				<Compare>4531</Compare>
+				<Compare>4532</Compare>
+				<Compare>4537</Compare>
+				<Compare>4538</Compare>
+				<Compare>4541</Compare>
+				<Compare>4547</Compare>
+				<Compare>2890</Compare>
+				<Compare>4594</Compare>
+				<Compare>8729</Compare>
+				<Compare>8730</Compare>
+				<Compare>2910</Compare>
+				<Compare>5951</Compare>
+				<Compare>2913</Compare>
+				<Compare>2911</Compare>
+				<Compare>2914</Compare>
+				<Compare>2893</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_CashDepositeOverCCDM_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBSRCSYS_inputsrcsystem</Context>
+				<Compare>CCDM</Compare>
+				<Compare>*CCDM</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9507</Compare>
+				<Compare>9508</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_CashDepositeOverCCDM_ACC01AMT03">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBSRCSYS_inputsrcsystem</Context>
+				<Compare>CCDM</Compare>
+				<Compare>*CCDM</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>2914</Compare>
+				<Compare>1461</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_CashDepositeOverOCB_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBSRCSYS_inputsrcsystem</Context>
+				<Compare>OCB</Compare>
+				<Compare>*OCB</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>2101</Compare>
+				<Compare>1101</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_CashDepositeOverOCB_ACC01AMT02TLCUR1">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBSRCSYS_inputsrcsystem</Context>
+				<Compare>OCB</Compare>
+				<Compare>*OCB</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>6502</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_CashDepositeOverOCB_ACC01AMT02TLCUR2">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="0">message/body/TLBSRCSYS_inputsrcsystem</Context>
+				<Compare>OCB</Compare>
+				<Compare>*OCB</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>6602</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_CashDepositeOverOCB_ACC01AMT03">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBSRCSYS_inputsrcsystem</Context>
+				<Compare>OCB</Compare>
+				<Compare>*OCB</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>2914</Compare>
+				<Compare>1461</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_CashWithdrawalByCCDM_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBSRCSYS_inputsrcsystem</Context>
+				<Compare>CCDM</Compare>
+				<Compare>*CCDM</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9663</Compare>
+				<Compare>9664</Compare>
+				<Compare>9666</Compare>
+				<Compare>9667</Compare>
+				<Compare>9673</Compare>
+				<Compare>9674</Compare>
+				<Compare>2880</Compare>
+				<Compare>1670</Compare>
+				<Compare>2610</Compare>
+				<Compare>4570</Compare>
+				<Compare>9601</Compare>
+				<Compare>9602</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_CashWithdrawalByNotCCDM_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="NE">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBSRCSYS_inputsrcsystem</Context>
+				<Compare>CCDM</Compare>
+			</Rule>
+			<Rule Operator="ORNE">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBSRCSYS_inputsrcsystem</Context>
+				<Compare>*CCDM</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9663</Compare>
+				<Compare>9664</Compare>
+				<Compare>9666</Compare>
+				<Compare>9667</Compare>
+				<Compare>9673</Compare>
+				<Compare>9674</Compare>
+				<Compare>2880</Compare>
+				<Compare>1670</Compare>
+				<Compare>2610</Compare>
+				<Compare>4570</Compare>
+				<Compare>9601</Compare>
+				<Compare>9602</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="JRN_HTL_CheckBookReq_ACC01TXREF">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9541</Compare>
+				<Compare>1013</Compare>
+				<Compare>9062</Compare>
+				<Compare>9162</Compare>
+				<Compare>9262</Compare>
+				<Compare>9362</Compare>
+				<Compare>8A00</Compare>
+				<Compare>8733</Compare>
+				<Compare>8A30</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_ClearCheqDeposite_ACC01AMT02CHQ04">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>2121</Compare>
+				<Compare>2131</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_ClearCheqDeposite_ACC01AMT02CHQ08">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>4824</Compare>
+				<Compare>4830</Compare>
+				<Compare>1121</Compare>
+				<Compare>1131</Compare>
+				<Compare>4127</Compare>
+				<Compare>4137</Compare>
+				<Compare>4821</Compare>
+				<Compare>4827</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_DebitCardPurchase_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9A00</Compare>
+				<Compare>9A01</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_DebitCardPurchaseReversal_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9A02</Compare>
+				<Compare>9A03</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FCYFundsTransferWithinCBI_ACC01DES20AMT02AMT04CUR1CUR2TXREF">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9165</Compare>
+				<Compare>9514</Compare>
+				<Compare>9518</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FCYFundsTransferWithinCBI_ACC01DES20AMT02AMT06CUR1CUR2TXREF">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9166</Compare>
+				<Compare>9515</Compare>
+				<Compare>9519</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FCYFundsTransferWithinCBI_ACC20DES01AMT05AMT02CUR1CUR2TXREF">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9126</Compare>
+				<Compare>9127</Compare>
+				<Compare>9130</Compare>
+				<Compare>9131</Compare>
+				<Compare>9512</Compare>
+				<Compare>9516</Compare>
+				<Compare>9520</Compare>
+				<Compare>9521</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FCYFundsTransferWithinCBI_ACC20DES01AMT09AMT02CUR1CUR2TXREF">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9513</Compare>
+				<Compare>9517</Compare>
+				<Compare>9522</Compare>
+				<Compare>9523</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT0209LBTDTTXREFDES1114">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>4320</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES10">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>2114</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES11">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9537</Compare>
+				<Compare>9538</Compare>
+				<Compare>8701</Compare>
+				<Compare>8702</Compare>
+				<Compare>1680</Compare>
+				<Compare>1640</Compare>
+				<Compare>2652</Compare>
+				<Compare>4884</Compare>
+				<Compare>4883</Compare>
+				<Compare>8A11</Compare>
+				<Compare>8A21</Compare>
+				<Compare>9533</Compare>
+				<Compare>9534</Compare>
+				<Compare>9535</Compare>
+				<Compare>9536</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT02LBTDTTXREFDES20">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9171</Compare>
+				<Compare>9172</Compare>
+				<Compare>9320</Compare>
+				<Compare>9321</Compare>
+				<Compare>9322</Compare>
+				<Compare>9323</Compare>
+				<Compare>9356</Compare>
+				<Compare>9357</Compare>
+				<Compare>9369</Compare>
+				<Compare>9370</Compare>
+				<Compare>9120</Compare>
+				<Compare>9371</Compare>
+				<Compare>9372</Compare>
+				<Compare>8500</Compare>
+				<Compare>8510</Compare>
+				<Compare>8520</Compare>
+				<Compare>8530</Compare>
+				<Compare>8540</Compare>
+				<Compare>8550</Compare>
+				<Compare>8560</Compare>
+				<Compare>8570</Compare>
+				<Compare>9121</Compare>
+				<Compare>8580</Compare>
+				<Compare>8600</Compare>
+				<Compare>9256</Compare>
+				<Compare>9257</Compare>
+				<Compare>9269</Compare>
+				<Compare>9270</Compare>
+				<Compare>9271</Compare>
+				<Compare>9272</Compare>
+				<Compare>9220</Compare>
+				<Compare>9122</Compare>
+				<Compare>9221</Compare>
+				<Compare>9222</Compare>
+				<Compare>9223</Compare>
+				<Compare>9123</Compare>
+				<Compare>9156</Compare>
+				<Compare>9157</Compare>
+				<Compare>9169</Compare>
+				<Compare>9170</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT03LBTDTTXREFDES02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9603</Compare>
+				<Compare>9604</Compare>
+				<Compare>9605</Compare>
+				<Compare>9606</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT0412LBTDTTXREFDES0305">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>2890</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT0509LBTDTTXREFDES20">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9144</Compare>
+				<Compare>9147</Compare>
+				<Compare>9344</Compare>
+				<Compare>9347</Compare>
+				<Compare>9244</Compare>
+				<Compare>9044</Compare>
+				<Compare>9047</Compare>
+				<Compare>9247</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES1113">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>8712</Compare>
+				<Compare>3520</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES13">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>8716</Compare>
+				<Compare>3930</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC01AMT2021LBTDTTXREFDES1315">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>8720</Compare>
+				<Compare>3620</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC0306AMT0509LBTDTTXREFDES01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>8728</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC03AMT05LBTDTTXREFDES01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9039</Compare>
+				<Compare>9239</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC06AMT09LBTDTTXREFDES01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9037</Compare>
+				<Compare>9237</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC11AMT02LBTDTTXREFDES01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>4832</Compare>
+				<Compare>4837</Compare>
+				<Compare>4838</Compare>
+				<Compare>4531</Compare>
+				<Compare>4532</Compare>
+				<Compare>4537</Compare>
+				<Compare>4538</Compare>
+				<Compare>4594</Compare>
+				<Compare>4591</Compare>
+				<Compare>4592</Compare>
+				<Compare>8705</Compare>
+				<Compare>4564</Compare>
+				<Compare>4565</Compare>
+				<Compare>1111</Compare>
+				<Compare>8706</Compare>
+				<Compare>8725</Compare>
+				<Compare>4647</Compare>
+				<Compare>4648</Compare>
+				<Compare>4641</Compare>
+				<Compare>4642</Compare>
+				<Compare>4831</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC11AMT03LBTDTTXREFDES01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>1471</Compare>
+				<Compare>2893</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC13AMT02LBTDTTXREFDES01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>8724</Compare>
+				<Compare>4117</Compare>
+				<Compare>4111</Compare>
+				<Compare>4811</Compare>
+				<Compare>4817</Compare>
+				<Compare>4511</Compare>
+				<Compare>4517</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC13AMT30LBTDTTXREFDES01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>3193</Compare>
+				<Compare>3194</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBI_ACC20AMT2728LBTDTTXREFDES01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>1491</Compare>
+				<Compare>2891</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBIRequestOnly_ACC13DES01AMT02LBTDTTXREF">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>3111</Compare>
+				<Compare>3161</Compare>
+				<Compare>3162</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_FundsTransferWithinCBIRequestOnly_ACC20DES01AMT02LBTDTTXREF">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>9238</Compare>
+				<Compare>9336</Compare>
+				<Compare>9338</Compare>
+				<Compare>9036</Compare>
+				<Compare>9038</Compare>
+				<Compare>9136</Compare>
+				<Compare>9138</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_InHsCheqWithdrawal_ACC01AMT02BRCOD">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>4817</Compare>
+				<Compare>3111</Compare>
+				<Compare>4511</Compare>
+				<Compare>4517</Compare>
+				<Compare>2114</Compare>
+				<Compare>4117</Compare>
+				<Compare>4111</Compare>
+				<Compare>0171</Compare>
+				<Compare>4811</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_InHsCheqWithdrawal_ACC01AMT03BRCOD">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>2893</Compare>
+				<Compare>1471</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_InHsCheqWithdrawal_ACC01AMT30BRCOD">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>3192</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_InHsCheqWithdrawal_ACC11AMT02BRCOD">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>1111</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_InwardClearingCheqPresented_ACC01AMT02CHQ08">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>ACH001</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_InwardClearingCheqReturnedInsufficientFunds_ACC01CHQ08BCLSR">
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>ACH003</Compare>
+				<Compare>ACH004</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBCLSR_closingReasoncode</Context>
+				<Compare>A</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_InwardClearingCheqReturnedTechnicalReason_ACC01CHQ08BCLSR">
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>ACH003</Compare>
+				<Compare>ACH004</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="NE">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBCLSR_closingReasoncode</Context>
+				<Compare>A</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_NonSalaryCreditStaff_ACC11AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>WPS004</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_OutwardClearingCheqReturned_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>ICCS028</Compare>
+				<Compare>ICCS029</Compare>
+				<Compare>ICCS030</Compare>
+				<Compare>ICCS031</Compare>
+				<Compare>ICCS068</Compare>
+				<Compare>ICCS069</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBCLSR_closingReasoncode</Context>
+				<Compare>A</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_PaymentLoanAccount_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>4111</Compare>
+				<Compare>4121</Compare>
+				<Compare>4131</Compare>
+				<Compare>4251</Compare>
+				<Compare>4641</Compare>
+				<Compare>4642</Compare>
+				<Compare>4801</Compare>
+				<Compare>4807</Compare>
+				<Compare>4821</Compare>
+				<Compare>4827</Compare>
+				<Compare>4107</Compare>
+				<Compare>4824</Compare>
+				<Compare>4830</Compare>
+				<Compare>4811</Compare>
+				<Compare>4817</Compare>
+				<Compare>4831</Compare>
+				<Compare>4832</Compare>
+				<Compare>4837</Compare>
+				<Compare>4838</Compare>
+				<Compare>4841</Compare>
+				<Compare>4847</Compare>
+				<Compare>4117</Compare>
+				<Compare>4501</Compare>
+				<Compare>4507</Compare>
+				<Compare>4511</Compare>
+				<Compare>4517</Compare>
+				<Compare>4531</Compare>
+				<Compare>4532</Compare>
+				<Compare>4537</Compare>
+				<Compare>4538</Compare>
+				<Compare>4541</Compare>
+				<Compare>4547</Compare>
+				<Compare>4127</Compare>
+				<Compare>4594</Compare>
+				<Compare>4590</Compare>
+				<Compare>4591</Compare>
+				<Compare>4592</Compare>
+				<Compare>4593</Compare>
+				<Compare>8580</Compare>
+				<Compare>8600</Compare>
+				<Compare>9156</Compare>
+				<Compare>9157</Compare>
+				<Compare>9256</Compare>
+				<Compare>4137</Compare>
+				<Compare>9257</Compare>
+				<Compare>9356</Compare>
+				<Compare>9357</Compare>
+				<Compare>4257</Compare>
+				<Compare>4647</Compare>
+				<Compare>4648</Compare>
+				<Compare>4101</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_PaymentLoanAccount_ACC01AMT03">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>4644</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_SalaryCreditStaff_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>0881</Compare>
+				<Compare>0882</Compare>
+				<Compare>0886</Compare>
+				<Compare>0887</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_SalaryCreditStaff_ACC11AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>1641</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_TeamDepositePlacement_ACC01AMT02NWDAT">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>3161</Compare>
+				<Compare>3162</Compare>
+				<Compare>9036</Compare>
+				<Compare>9038</Compare>
+				<Compare>9136</Compare>
+				<Compare>9138</Compare>
+				<Compare>3171</Compare>
+				<Compare>9238</Compare>
+				<Compare>9336</Compare>
+				<Compare>9338</Compare>
+				<Compare>3111</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_HTL_TeamDepositeTopUpWithdrawal_ACC01TXREF">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>3930</Compare>
+				<Compare>3932</Compare>
+				<Compare>3620</Compare>
+				<Compare>3630</Compare>
+				<Compare>9044</Compare>
+				<Compare>9047</Compare>
+				<Compare>9144</Compare>
+				<Compare>3192</Compare>
+				<Compare>9147</Compare>
+				<Compare>9244</Compare>
+				<Compare>9247</Compare>
+				<Compare>9250</Compare>
+				<Compare>9344</Compare>
+				<Compare>9347</Compare>
+				<Compare>8712</Compare>
+				<Compare>8716</Compare>
+				<Compare>8720</Compare>
+				<Compare>5960</Compare>
+				<Compare>3193</Compare>
+				<Compare>5962</Compare>
+				<Compare>5961</Compare>
+				<Compare>6814</Compare>
+				<Compare>3194</Compare>
+				<Compare>3195</Compare>
+				<Compare>8724</Compare>
+				<Compare>8725</Compare>
+				<Compare>3520</Compare>
+				<Compare>3530</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_MBS_AutoFundTransferAdded28177_DRACCT">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDTXCD</Context>
+				<Compare>28177</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDACCD</Context>
+				<Compare>A</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="0">message/body/AFTPCD_aFTproductcode</Context>
+				<Compare>300</Compare>
+				<Compare>509</Compare>
+				<Compare>402</Compare>
+				<Compare>500</Compare>
+				<Compare>506</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="JRN_MBS_AutoFundTransferUpdated28177_DRACCT">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDTXCD</Context>
+				<Compare>28177</Compare>
+			</Rule>
+			<Rule Operator="NE">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDACCD</Context>
+				<Compare>A</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/AFTPCD_aFTproductcode</Context>
+				<Compare>300</Compare>
+				<Compare>509</Compare>
+				<Compare>402</Compare>
+				<Compare>500</Compare>
+				<Compare>506</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="JRN_MBS_ContactDetailUpdated18106_CFCIFN">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDTXCD</Context>
+				<Compare>18106</Compare>
+			</Rule>
+			<Rule Operator="NE">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDACCD</Context>
+				<Compare>I</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_MBS_ContactDetailUpdated18115_CFACN">
+			<Rule Operator="OPN">
+				<Context StartPos="0" EndPos="0" DataType="0" />
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDTXCD</Context>
+				<Compare>18115</Compare>
+			</Rule>
+			<Rule Operator="NE">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/CFEADC_electronicaddresscode</Context>
+				<Compare>PM</Compare>
+			</Rule>
+			<Rule Operator="NE">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDACCD</Context>
+				<Compare>I</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_MBS_ContactDetailUpdated18199_CFCIFN">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDTXCD</Context>
+				<Compare>18199</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDACCD</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_MBS_MobileNumberUpdated_CFACN">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDTXCD</Context>
+				<Compare>18115</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/CFEADC_electronicaddresscode</Context>
+				<Compare>PM</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/header/HDACCD</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_CancellationDemandDraft_ACC01RMCKCAVL01TLCUR">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5334</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_CancellationDemandDraft_ACC01RMCKCAVL01TLCUR3">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5333</Compare>
+				<Compare>5338</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_CancellationDemandDraft_ACC03RMCKCAVL03TLCUR">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5336</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_CancellationManagersChq_ACC01RMCKCAVL01TLBCUR">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5312</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_CancellationManagersChq_ACC03RMCKCAVL03TLBCUR">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5314</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_InwardCredit_ACC01AMT04AVL01">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>53028STP</Compare>
+				<Compare>53030STP</Compare>
+				<Compare>53032STP</Compare>
+				<Compare>53034STP</Compare>
+				<Compare>53040ITT</Compare>
+				<Compare>53042ITT</Compare>
+				<Compare>53044ITT</Compare>
+				<Compare>53046ITT</Compare>
+				<Compare>53048STP</Compare>
+				<Compare>53050STP</Compare>
+				<Compare>53001ITT</Compare>
+				<Compare>53052STP</Compare>
+				<Compare>53054STP</Compare>
+				<Compare>53003ITT</Compare>
+				<Compare>53006ITT</Compare>
+				<Compare>53008ITT</Compare>
+				<Compare>53014ITT</Compare>
+				<Compare>53016ITT</Compare>
+				<Compare>53018ITT</Compare>
+				<Compare>53020ITT</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_InwardCredit_ACC03AMT04AVL03">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/TLBTCD_transactionCode</Context>
+				<Compare>53027STP</Compare>
+				<Compare>53029STP</Compare>
+				<Compare>53031STP</Compare>
+				<Compare>53033STP</Compare>
+				<Compare>53039ITT</Compare>
+				<Compare>53041ITT</Compare>
+				<Compare>53043ITT</Compare>
+				<Compare>53045ITT</Compare>
+				<Compare>53047STP</Compare>
+				<Compare>53049STP</Compare>
+				<Compare>53000ITT</Compare>
+				<Compare>53051STP</Compare>
+				<Compare>53053STP</Compare>
+				<Compare>53002ITT</Compare>
+				<Compare>53005ITT</Compare>
+				<Compare>53007ITT</Compare>
+				<Compare>53013ITT</Compare>
+				<Compare>53015ITT</Compare>
+				<Compare>53017ITT</Compare>
+				<Compare>53019ITT</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_IssuanceDemandDraft_ACC01AMT02TLBCUR">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5064</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_IssuanceDemandDraft_ACC01AMT02TLCUR3">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5062</Compare>
+				<Compare>5068</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_IssuanceDemandDraft_ACC03AMT04">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5067</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_IssuanceManagersChq_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5112</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_IssuanceManagersChq_ACC03AMT04">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5115</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_OutwardDebit_ACC01AMT02RMCKCTLBCUR">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5481</Compare>
+				<Compare>5485</Compare>
+				<Compare>5152</Compare>
+				<Compare>5972</Compare>
+				<Compare>5970</Compare>
+				<Compare>5890</Compare>
+				<Compare>5981</Compare>
+				<Compare>5985</Compare>
+				<Compare>5993</Compare>
+				<Compare>5458</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_OutwardDebit_ACC01AMT02RMCKCTLCUR2">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5483</Compare>
+				<Compare>5487</Compare>
+				<Compare>5156</Compare>
+				<Compare>5976</Compare>
+				<Compare>5979</Compare>
+				<Compare>5892</Compare>
+				<Compare>5983</Compare>
+				<Compare>5987</Compare>
+				<Compare>5995</Compare>
+				<Compare>5462</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_OutwardDebit_ACC01AMT02RMCKCTLCUR3">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5484</Compare>
+				<Compare>5488</Compare>
+				<Compare>5158</Compare>
+				<Compare>5977</Compare>
+				<Compare>5893</Compare>
+				<Compare>5984</Compare>
+				<Compare>5996</Compare>
+				<Compare>5464</Compare>
+				<Compare>5473</Compare>
+				<Compare>5475</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="JRN_RMT_OutwardDebit_ACC03AMT04RMCKC">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>JRN</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">message/body/RMTCOD_transactionCode</Context>
+				<Compare>5482</Compare>
+				<Compare>5486</Compare>
+				<Compare>5155</Compare>
+				<Compare>5971</Compare>
+				<Compare>5891</Compare>
+				<Compare>5982</Compare>
+				<Compare>5994</Compare>
+				<Compare>5461</Compare>
+				<Compare>5474</Compare>
+				<Compare>5476</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+		<Constraint Name="WBS_CreditCardBillPaymentbyClearCard_CCNOCAVAL">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>AF0150_BillPymtFndTrfService</Compare>
+				<Compare>AF0150_DDABillPymtFndTrfService</Compare>
+				<Compare>AF0150_ICCSChqbyCCService</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.3.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>9273</Compare>
+				<Compare>9373</Compare>
+				<Compare>9063</Compare>
+				<Compare>9173</Compare>
+				<Compare>9273</Compare>
+				<Compare>9373</Compare>
+				<Compare>9527</Compare>
+				<Compare>9063</Compare>
+				<Compare>9173</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="WBS_CreditCardBillPaymentbyClearCard_DDSICCS">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>AF0150_DDABillPymtFndTrfService</Compare>
+				<Compare>AF0150_ICCSChqbyCCService</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.3.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>6249</Compare>
+				<Compare>6250</Compare>
+				<Compare>ICCS027</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="WBS_CreditCardBillPaymentbyInternalAcc_CCNOCAVAL">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>AF0150_BillPymtFndTrfNotClearCardCompService</Compare>
+				<Compare>AF0150_DDABillPymtFndTrfNotClearCardCompService</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.2.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>9273</Compare>
+				<Compare>9373</Compare>
+				<Compare>9063</Compare>
+				<Compare>9173</Compare>
+				<Compare>9273</Compare>
+				<Compare>9373</Compare>
+				<Compare>9527</Compare>
+				<Compare>9063</Compare>
+				<Compare>9173</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="WBS_HTLAFS_CACCDebitTransactionByClearCard_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>AF0200_InstantPaymentService</Compare>
+				<Compare>AF1600_FPMInstantPaymentService</Compare>
+				<Compare>AF1600_OCBInstantPaymentService</Compare>
+				<Compare>AF1600_OCBHouseChqInstantPaymentService</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.2.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>9260</Compare>
+				<Compare>9360</Compare>
+				<Compare>0600</Compare>
+				<Compare>8620</Compare>
+				<Compare>9158</Compare>
+				<Compare>9258</Compare>
+				<Compare>9358</Compare>
+				<Compare>8621</Compare>
+				<Compare>8711</Compare>
+				<Compare>9160</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="WBS_HTLAFS_CACCDebitTransactionByInternalAcc_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>AF0200_InstantPaymentNotClearCardCompService</Compare>
+				<Compare>AF1600_FPMInstantPaymentNotClearCardCompService</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.1.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>9260</Compare>
+				<Compare>9360</Compare>
+				<Compare>0600</Compare>
+				<Compare>8620</Compare>
+				<Compare>9158</Compare>
+				<Compare>9258</Compare>
+				<Compare>9358</Compare>
+				<Compare>8621</Compare>
+				<Compare>8711</Compare>
+				<Compare>9160</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="WBS_HTLAFS_CashDepositeOverCCDMByCC_CCNUMAMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>AF0200_InstantPaymentService</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.2.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>9509</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="WBS_HTLAFS_CashDepositeOverOCBByCC_CCNUMAMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>AF1600_OCBInstantPaymentService</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.2.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>0101</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="WBS_HTLAFS_SACCDebitTransactionByClearCard_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>AF0200_InstantPaymentService</Compare>
+				<Compare>AF1600_FPMInstantPaymentService</Compare>
+				<Compare>AF1600_OCBInstantPaymentService</Compare>
+				<Compare>AF1600_OCBHouseChqInstantPaymentService</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.2.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>9261</Compare>
+				<Compare>9361</Compare>
+				<Compare>0603</Compare>
+				<Compare>8630</Compare>
+				<Compare>9159</Compare>
+				<Compare>9259</Compare>
+				<Compare>9359</Compare>
+				<Compare>8631</Compare>
+				<Compare>8710</Compare>
+				<Compare>9161</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="WBS_HTLAFS_SACCDebitTransactionByInternalAcc_ACC01AMT02">
+			<Rule Operator="OPN" />
+			<Rule Operator="CLS" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>AF0200_InstantPaymentNotClearCardCompService</Compare>
+				<Compare>AF1600_FPMInstantPaymentNotClearCardCompService</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.1.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>9261</Compare>
+				<Compare>9361</Compare>
+				<Compare>0603</Compare>
+				<Compare>8630</Compare>
+				<Compare>9159</Compare>
+				<Compare>9259</Compare>
+				<Compare>9359</Compare>
+				<Compare>8631</Compare>
+				<Compare>8710</Compare>
+				<Compare>9161</Compare>
+			</Rule>
+		</Constraint>
+		<Constraint Name="WBS_HTLBPG_BillPaymentByCASA_ACC01AMT06BLTYPTXREF">
+			<Rule Operator="OPN" />
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">__entry</Context>
+				<Compare>WBS</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__serviceName</Context>
+				<Compare>BP_BillPymtByCASAService</Compare>
+			</Rule>
+			<Rule Operator="EQ">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.0.res.__completionCode</Context>
+				<Compare>C</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+			<Rule Operator="OPN" />
+			<Rule Operator="IN">
+				<Context StartPos="0" EndPos="0" DataType="21">comp.1.req.message/body/TLBTCD_transactionCode</Context>
+				<Compare>8640</Compare>
+				<Compare>8650</Compare>
+				<Compare>9124</Compare>
+				<Compare>9125</Compare>
+				<Compare>9224</Compare>
+				<Compare>9225</Compare>
+				<Compare>9324</Compare>
+				<Compare>9325</Compare>
+			</Rule>
+			<Rule Operator="CLS" />
+		</Constraint>
+</Constraints></Iris>

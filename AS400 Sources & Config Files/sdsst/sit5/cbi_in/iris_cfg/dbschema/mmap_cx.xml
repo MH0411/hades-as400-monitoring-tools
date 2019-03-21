@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageMap Id="cx">
+
+	<Field Id="date_logd" Type="16" />
+	<Field Id="time_logd" Type="16" />
+	<Field Id="tims_logd" Type="16" />
+	<Field Id="remote_ip" Type="22" Length="45" />
+	<Field Id="remote_port" Type="16" />
+	<Field Id="ref_conn" Type="21" Length="12" />
+	<Field Id="ref_reqs" Type="16" />
+	<Field Id="cl_ip" Type="22" Length="45" />	
+	<Field Id="cl_port" Type="16" />
+	<Field Id="cl_ua" Type="22" Length="255" />
+	<Field Id="cl_tz" Type="22" Length="6" />
+	<Field Id="cl_gps" Type="22" Length="32" />
+	<Field Id="cl_uid" Type="22" Length="128" />
+	<Field Id="cl_dev" Type="22" Length="64" />
+	<Field Id="server_name" Type="22" Length="30" />
+
+</MessageMap>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    xmlns:tns="http://websqlservices.iris.silverglobe.com">
+    
+    <xs:element name="Iris">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="WebSQLServices"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="WebSQLServices">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="WebSQLService"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="WebSQLService">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="MessageMapName" type="xs:string"/>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Statement"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="AdditionalData"/>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="WebSQLEngines"/>
+            </xs:sequence>
+            
+            <xs:attributeGroup ref="WebSQLServiceAttribute"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Statement">
+        <xs:complexType mixed="true">
+            <xs:attribute name="Type" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="AdditionalData">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Field"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Field">
+        <xs:complexType>
+            <xs:attributeGroup ref="FieldAttribute"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="WebSQLEngines">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="WebSQLEngine"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="WebSQLEngine">
+        <xs:complexType>
+            <xs:attribute name="Name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:attributeGroup name="WebSQLServiceAttribute">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+        <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="FieldAttribute">
+        <xs:attribute name="Id" type="xs:string" use="required"/>
+        <xs:attribute name="Value" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+    
+</xs:schema>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IP address validation -->
+<Iris>
+	
+	<IPValidations>
+		
+  <!-- Parameters restricting IP address for Admin -->
+  <IPValidation Id="Admin" Enabled="false">
+
+   <IPv4>
+    <Allow Start="10.40.63.107" End="10.40.63.107" />
+
+   </IPv4>
+
+  </IPValidation>
+
+		<!-- Parameters restricting IP address -->
+		<IPValidation Id="Default" Enabled="false">
+			
+			<IPv4>
+    <!-- Payment Safe -->
+				<Allow Start="10.1.150.227" End="10.1.150.227" />
+
+    <!-- CTI and IVR -->
+				<Allow Start="10.40.33.49" End="10.40.33.49" />
+
+    <!-- CCDM -->
+				<Allow Start="10.1.150.78" End="10.1.150.78" />
+
+    <!-- ESCROW -->
+				<Allow Start="10.40.34.121" End="10.40.34.121" />
+
+    <!-- ICCS -->
+				<Allow Start="10.40.34.93" End="10.40.34.93" />
+			</IPv4>
+			
+		</IPValidation>
+
+	</IPValidations>
+	
+</Iris>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    xmlns:tns="http://webactionsendsms.iris.silverglobe.com">
+    
+    <xs:element name="Iris">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="ActionsSendSMS"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="ActionsSendSMS">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="ActionSendSMS"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="ActionSendSMS">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Template" type="xs:string"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Contact" />
+                <xs:element name="SubActionSendSMS" type="xs:string" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+            
+            <xs:attribute name="Name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Contact">
+        <xs:complexType>
+        	<xs:attribute name="Type" type="xs:string" use="required"/>
+        	<xs:attribute name="Source" type="xs:string" use="optional"/>
+        	<xs:attribute name="Value" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>

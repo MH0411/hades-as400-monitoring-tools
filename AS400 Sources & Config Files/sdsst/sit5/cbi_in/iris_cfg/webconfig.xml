@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Iris Server HTTP Configuration -->
+<Iris>
+
+	<!-- Server Admin -->
+	<Servers Name="Admin">
+		
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="true">
+			<!-- Port number to host service. -->
+			<Port>30521</Port>
+		</Server>
+		
+	</Servers>
+
+	<!-- Server 1 -->
+	<Servers Name="Server1">
+
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="true">
+			<!-- Port number to host service. -->
+			<Port>30522</Port>
+		</Server>
+
+	</Servers>
+	
+	<!-- Server 2 -->
+	<Servers Name="Server2">
+		
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="true">
+			<!-- Port number to host service. -->
+			<Port>30523</Port>
+		</Server>
+		
+	</Servers>
+	
+	<!-- Server 3 -->
+	<Servers Name="Server3">
+		
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="false">
+			<!-- Port number to host service. -->
+			<Port>30524</Port>
+		</Server>
+		
+	</Servers>
+	
+	<!-- Server 4 -->
+	<Servers Name="Server4">
+		
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="false">
+			<!-- Port number to host service. -->
+			<Port>30525</Port>
+		</Server>
+		
+	</Servers>
+	
+	<!-- Server 5 -->
+	<Servers Name="Server5">
+		
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="false">
+			<!-- Port number to host service. -->
+			<Port>30526</Port>
+		</Server>
+		
+	</Servers>
+
+	<!-- Server 6 -->
+	<Servers Name="Server6">
+		
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="true">
+			<!-- Port number to host service. -->
+			<Port>52206</Port>
+		</Server>
+		
+	</Servers>
+
+	<!-- Server 7 -->
+	<Servers Name="Server7">
+		
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="false">
+			<!-- Port number to host service. -->
+			<Port>52207</Port>
+		</Server>
+		
+	</Servers>
+
+	<!-- Server 8 -->
+	<Servers Name="Server8">
+		
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="false">
+			<!-- Port number to host service. -->
+			<Port>52208</Port>
+		</Server>
+		
+	</Servers>
+		
+	<!-- Server 9 -->
+	<Servers Name="Server9">
+		
+		<!-- Default HTTP server configuration -->
+		<Server Name="Web" Ip="all" SSL="false" Enabled="false">
+			<!-- Port number to host service. -->
+			<Port>52209</Port>
+		</Server>
+		
+	</Servers>
+
+	<!-- Parameters relating to performance tuning -->
+	<Performance>
+		<!-- Accept new connection from HTTP socket -->
+		<Accept ThreadCount="2" />
+		<!-- Read from HTTP socket -->
+		<Reader ThreadCount="30" />
+		<!-- Write to HTTP socket -->
+		<Writer ThreadCount="5" />
+		<!-- HTTP header parsers -->
+		<Parser ThreadCount="10" />
+		<!-- Application services -->
+		<Service ThreadCount="2" />
+		<!-- Number of clients to legacy system -->
+		<Endpoint ThreadCount="2" />
+	</Performance>
+	
+	<!-- Parameters relating to logging path -->
+	<Logging>
+		<!-- INFO, WARN and DEBUG logging directory -->
+		<Events Console="false" Path="iris_logs" />
+		<!-- Message logging directory -->
+		<Transaction Console="false" Path="iris_logs" />
+		<!-- Error logging directory -->
+		<Error Console="false" Path="iris_logs" />
+	</Logging>
+	
+	<!-- Parameters relating to database connection -->
+	<Database Enabled="true">
+		<!-- JDBC URL -->
+		<URL>jdbc:db2://B20A0D5V;naming=system;translate binary=true;libraries=CBSDATDPC5</URL>
+  <!-- JDBC Driver -->
+		<Driver>com.ibm.db2.jdbc.app.DB2Driver</Driver>
+		<!-- JAR File Path -->
+		<JarFilePath>/QIBM/ProdData/Java400/jt400ntv.jar</JarFilePath>
+		<!-- DB User -->
+		<User></User>
+		<!-- DB Password -->
+		<Password></Password>
+	</Database>
+	
+	<!-- Parameters relating to log files retention -->
+	<Housekeeping>
+		<!-- Append last log file after restart -->
+		<Continue>true</Continue>
+		<!-- Maximum size in bytes per log file -->
+		<MaximumSize>1048576</MaximumSize>
+		<!-- Number of maximum log files to keep -->
+		<MaximumLog>20</MaximumLog>
+	</Housekeeping>
+	
+	<!-- Parameters relating to security configuration -->
+	<Security>
+		<!-- Allow show stack trace when internal error happened -->
+		<ShowStackTrace>true</ShowStackTrace>
+		<!-- Make cookie mandatory -->
+		<AssignCookie>false</AssignCookie>
+	</Security>
+
+	<!-- Parameters relating to limits -->
+	<Limits>
+		<!-- Maximum POST size -->
+		<MaximumPostSize>2147483647</MaximumPostSize>
+	</Limits>
+
+</Iris>

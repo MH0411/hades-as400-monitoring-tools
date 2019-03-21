@@ -1,0 +1,35 @@
+<Alert>
+
+	<AS400>
+		<Ip>10.1.199.55</Ip>
+		<User></User>
+		<Password></Password>
+
+		<System>
+			<QueueRead>
+				<Path>/QSYS.LIB/MIKEMON.LIB/MOSYSDQ1.DTAQ</Path>
+			</QueueRead>
+		</System>
+	</AS400>
+
+	<Database Enabled = "true">
+		<Url>jdbc:db2://B20A0D5V;naming=system;translate binary=true;libraries=MIKEMON</Url>
+		<Driver>com.ibm.db2.jdbc.app.DB2Driver</Driver>
+		<Jar>/QIBM/ProdData/Java400/jt400ntv.jar</Jar>
+		<User></User>
+		<Password></Password>
+	</Database>
+
+	<Logging>
+		<OutputConsole>true</OutputConsole>
+		<MaximumSize>1048576</MaximumSize>
+		<MaximumGeneration>10</MaximumGeneration>
+		<Append>true</Append>
+	</Logging>
+	
+	<Businessdate>
+		<Schema>CBSDATDEP5</Schema>
+		<Table>DDPAR1</Table>
+		<Column>NEXTDT</Column>
+	</Businessdate>
+</Alert>

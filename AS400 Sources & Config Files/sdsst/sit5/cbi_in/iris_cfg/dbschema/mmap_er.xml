@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageMap Id="er">
+
+	<Field Id="date_logd" Type="16" />
+	<Field Id="time_logd" Type="16" />
+	<Field Id="tims_logd" Type="16" />
+	<Field Id="err_thd" Type="22" Length="255" />
+	<Field Id="err_msg" Type="22" Length="65535" />
+	<Field Id="err_trc" Type="22" Length="65535" />
+	<Field Id="err_ref" Type="22" Length="35" />
+	<Field Id="server_name" Type="22" Length="30" />
+
+</MessageMap>

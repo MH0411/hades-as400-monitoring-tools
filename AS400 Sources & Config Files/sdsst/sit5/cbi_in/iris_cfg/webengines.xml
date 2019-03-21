@@ -1,0 +1,2130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Web Engines Configuration -->
+<Iris>
+
+	<!-- Parameters relating to web service configurations -->
+	<WebEngines>
+
+		<!-- ========= HT ===================================================== -->
+
+		<!-- ABCS REST engine configuration -->
+		<WebEngine Name="HTREST" Type="REST" SubType="ABCS" Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/abcs</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>AB</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelJ</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message"/>
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header"/>
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body"/>
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody"/>
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA"/>
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO"/>
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037"/>
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE"/>
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES"/>
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP"/>
+					<Field Id="message/header/I13FMID" Value="ABCS"/>
+					<Field Id="message/header/I13SID" Value="*SDS"/>
+					<Field Id="message/header/I13DID" Value="HTLMON"/>
+					<Field Id="message/header/I13ACQN" Source="X-Reference"/>
+					<Field Id="message/header/I13TMNO" Source="X-Count"/>
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- ABCS SOAP engine configuration -->
+		<WebEngine Name="HTSOAP" Type="SOAP" SubType="ABCS" Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/abcs</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>AB</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelJ</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="ABCS" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="HTLMON" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- ========= CF ===================================================== -->
+
+		<!-- CIF MBASE REST engine configuration -->
+		<WebEngine Name="CFREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>CF</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelK</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSCFINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- CIF MBASE SOAP engine configuration -->
+		<WebEngine Name="CFSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>CF</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelK</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSCFINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- ========= CD ===================================================== -->
+		
+		<!-- CD MBASE REST engine configuration -->
+		<WebEngine Name="CDREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>CD</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelL</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSCDINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- CD MBASE SOAP engine configuration -->
+		<WebEngine Name="CDSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>CD</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelL</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSCDINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDNREC" Value="7" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- ========= DD ===================================================== -->
+
+		<!-- DD MBASE REST engine configuration -->
+		<WebEngine Name="DDREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>DD</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelL</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSDDINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- DD MBASE SOAP engine configuration -->
+		<WebEngine Name="DDSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>DD</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelL</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSDDINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDNREC" Value="7" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- ========= LN ===================================================== -->
+		
+		<!-- LN MBASE REST engine configuration -->
+		<WebEngine Name="LNREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>LN</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelM</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSLNINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- LN MBASE SOAP engine configuration -->
+		<WebEngine Name="LNSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>LN</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelM</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSLNINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDNREC" Value="7" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- ========= RM ===================================================== -->
+		
+		<!-- RM MBASE REST engine configuration -->
+		<WebEngine Name="RMREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>RM</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelN</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSRMINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- RM MBASE SOAP engine configuration -->
+		<WebEngine Name="RMSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>RM</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelN</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSRMINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDNREC" Value="0" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- RM ABCS REST engine configuration -->
+		<WebEngine Name="RTREST" Type="REST" SubType="ABCS"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/abcsrm</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>RT</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelN</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message"/>
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header"/>
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body"/>
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody"/>
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA"/>
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO"/>
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037"/>
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE"/>
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES"/>
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP"/>
+					<Field Id="message/header/I13FMID" Value="ABCS"/>
+					<Field Id="message/header/I13SID" Value="*SDS"/>
+					<Field Id="message/header/I13DID" Value="REMMON"/>
+					<Field Id="message/header/I13ACQN" Source="X-Reference"/>
+					<Field Id="message/header/I13TMNO" Source="X-Count"/>
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- RM MBASE SOAP engine configuration -->
+		<WebEngine Name="RTSOAP" Type="SOAP" SubType="ABCS"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/abcsrm</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>RT</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelN</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="ABCS" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="REMMON" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- ========= TF ===================================================== -->
+		
+		<!-- TF MBASE REST engine configuration -->
+		<WebEngine Name="TFREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>TF</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelO</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSTFINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- TF MBASE SOAP engine configuration -->
+		<WebEngine Name="TFSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>TF</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelO</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSTFINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDNREC" Value="7" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- ========= GL ===================================================== -->
+		
+		<!-- GL MBASE REST engine configuration -->
+		<WebEngine Name="GLREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>GL</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelP</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSGLINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- TF MBASE SOAP engine configuration -->
+		<WebEngine Name="GLSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/mbase</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>GL</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelP</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSGLINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/I13TMID" Value="D0443" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDNREC" Value="7" />
+					<Field Id="message/header/HDSRID" Value="BTS" />
+					<Field Id="message/header/HDSRID" Value="RBK" />
+					<Field Id="message/header/HDTMID" Value="D0443" />
+					<Field Id="message/header/HDBKNO" Value="41" />
+					<Field Id="message/header/HDBRNO" Value="1401" />
+					<Field Id="message/header/HDACCD" Value="I" />
+					<Field Id="message/header/HDTMOD" Value="R" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- ========= IFC ===================================================== -->
+		
+		<!-- ========= EBS ===================================================== -->
+		<!-- EBS REST engine configuration -->
+		<WebEngine Name="EBREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/ebs</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>EB</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelR</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="E13NREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="E13TRXC" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="E13MORE" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="E13SRCK" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSCFINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/E13PUID" Value="SILSDS" />
+					<Field Id="message/header/E13MORE" Value="N" />
+					<Field Id="message/header/E13SRCH" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- EBS SOAP engine configuration -->
+		<WebEngine Name="EBSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/ebs</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>EB</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelR</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="E13NREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="E13TRXC" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="E13MORE" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="E13SRCK" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/E13PUID" Value="SILSDS" />
+					<Field Id="message/header/E13MORE" Value="N" />
+					<Field Id="message/header/E13SRCH" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>		
+		
+		<!-- ========= HST ===================================================== -->
+
+		<!-- ========= 3rd Part Web Service ==================================== -->
+		<!-- 3rd party REST engine configuration -->
+		<WebEngine Name="ZVREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/thirdpartywb</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>ZV</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelV</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- 3rd party SOAP engine configuration -->
+		<WebEngine Name="ZVSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/thirdpartywb</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>ZV</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelV</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- 3rd party REST engine configuration -->
+		<WebEngine Name="ZWREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/thirdpartywb</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>ZW</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelW</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- 3rd party SOAP engine configuration -->
+		<WebEngine Name="ZWSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/thirdpartywb</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>ZW</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelW</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<WebEngine Name="ZXREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/thirdpartywb</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>ZX</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelX</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- 3rd party SOAP engine configuration -->
+		<WebEngine Name="ZXSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/thirdpartywb</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>ZX</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelX</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- 3rd party REST engine configuration -->
+		<WebEngine Name="ZYREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/thirdpartywb</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>ZY</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelY</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+		
+		<!-- 3rd party SOAP engine configuration -->
+		<WebEngine Name="ZYSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/thirdpartywb</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>ZY</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelY</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="HDNREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="HDTXCD" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="HDMREC" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="HDFILR" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+				
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/HDUSID" Value="SILSDS" />
+					<Field Id="message/header/HDMREC" Value="N" />
+					<Field Id="message/header/HDSMTD" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- ========= End of 3rd Part Web Service ============================= -->
+		
+		<!-- ========= AFS EBS 3rd Part Web Service ============================ -->
+		<!-- AFS EBS REST engine configuration -->
+		<WebEngine Name="AFREST" Type="REST" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/ebs</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>AF</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelF</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse>JSON</PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="E13NREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="E13TRXC" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="E13MORE" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="E13SRCK" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13DID" Value="MBSCFINQ" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/E13PUID" Value="SILSDS" />
+					<Field Id="message/header/E13MORE" Value="N" />
+					<Field Id="message/header/E13SRCH" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- AFS EBS SOAP engine configuration -->
+		<WebEngine Name="AFSOAP" Type="SOAP" SubType="MBASE"
+			Enabled="true">
+			<!-- Path to Phoenix configuration directory -->
+			<PhoenixPath>phoenix_cfg/ebs</PhoenixPath>
+			<!-- Phoenix Application Code -->
+			<PhoenixApplicationCode>AF</PhoenixApplicationCode>
+			<!-- End point destination -->
+			<Endpoint>ChannelF</Endpoint>
+			<!-- Preferred response either XML, JSON or TEXT not applicable for type 
+				SOAP -->
+			<PreferredResponse></PreferredResponse>
+			<!-- Alias usage allowed? -->
+			<AliasForbidden>false</AliasForbidden>
+
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<!-- Message root node -->
+				<Property Name="RootNode" Value="message" />
+				<!-- Message root-header node -->
+				<Property Name="HeaderNode" Value="header" />
+				<!-- Message root-body node -->
+				<Property Name="BodyNode" Value="body" />
+				<!-- Message root-body-sub body node -->
+				<Property Name="BodySubNode" Value="subBody" />
+				<!-- Field where message status can be found -->
+				<Property Name="MsgStatus" Value="I13MSTA" />
+				<!-- Field where number of occurrences can be found -->
+				<Property Name="AppOccurs" Value="E13NREC" />
+				<!-- Field where transaction code can be found -->
+				<Property Name="AppTrcd" Value="E13TRXC" />
+				<!-- Field where more record indicator can be found -->
+				<Property Name="AppMore" Value="E13MORE" />
+				<!-- Field where application search key can be found -->
+				<Property Name="AppKey" Value="E13SRCK" />
+				<!-- Field where host reference can be found -->
+				<Property Name="HostReference" Value="I13RRNO" />
+				<!-- Default code page -->
+				<Property Name="Codepage" Value="Cp037" />
+				<!-- Field where error code is returned in SOAP -->
+				<Property Name="SOAPErrorCode" Value="ERRCDE" />
+				<!-- Field where error description is returned in SOAP -->
+				<Property Name="SOAPErrorText" Value="ERRDES" />
+
+				<!-- Additional data to inject into Phoenix -->
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP" />
+					<Field Id="message/header/I13FMID" Value="MBASE" />
+					<Field Id="message/header/I13SID" Value="*SDS" />
+					<Field Id="message/header/I13ACQN" Source="X-Reference" />
+					<Field Id="message/header/I13TMNO" Source="X-Count" />
+					<Field Id="message/header/I13USER" Value="SILSDS" />
+					<Field Id="message/header/E13PUID" Value="SILSDS" />
+					<Field Id="message/header/E13MORE" Value="N" />
+					<Field Id="message/header/E13SRCH" Value="F" />
+				</AdditionalData>
+			</PhoenixProperties>
+
+			<!-- Parameters relating to use of compression in response -->
+			<Compression>
+				<!-- Minimum size in bytes before compression is used -->
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- ========= End of AFS EBS 3rd Part Web Service ===================== -->
+
+		<!-- ========= Workflow Web Service =================================== -->
+		<!-- Workflow SOAP engine configuration -->
+		<WebEngine Name="ZZSOAP" Type="SOAP" SubType="Workflows" Enabled="true">
+			<PhoenixPath></PhoenixPath>
+			<PhoenixApplicationCode></PhoenixApplicationCode>
+			<Endpoint></Endpoint>
+			<PreferredResponse>JSON</PreferredResponse>
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<Property Name="RootNode" Value="message"/>
+				<Property Name="HeaderNode" Value="header"/>
+				<Property Name="BodyNode" Value="body"/>
+				<Property Name="BodySubNode" Value="subBody"/>
+				<Property Name="MsgStatus" Value="I13MSTA"/>
+				<Property Name="HostReference" Value="I13RRNO"/>
+				<Property Name="Codepage" Value="Cp037"/>
+				<Property Name="SOAPErrorCode" Value="ERRCDE"/>
+				<Property Name="SOAPErrorText" Value="ERRDES"/>
+				
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP"/>
+					<Field Id="message/header/I13FMID" Value="ABCS"/>
+					<Field Id="message/header/I13SID" Value="*SDS"/>
+					<Field Id="message/header/I13DID" Value="HTLMON"/>
+					<Field Id="message/header/I13ACQN" Source="X-Reference"/>
+					<Field Id="message/header/I13TMNO" Source="X-Count"/>
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<Compression>
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- Workflow SOAP engine configuration -->
+		<WebEngine Name="ZZREST" Type="REST" SubType="Workflows" Enabled="true">
+			<PhoenixPath></PhoenixPath>
+			<PhoenixApplicationCode></PhoenixApplicationCode>
+			<Endpoint></Endpoint>
+			<PreferredResponse>JSON</PreferredResponse>
+			<AliasForbidden>false</AliasForbidden>
+			
+			<!-- Phoenix properties -->
+			<PhoenixProperties>
+				<Property Name="RootNode" Value="message"/>
+				<Property Name="HeaderNode" Value="header"/>
+				<Property Name="BodyNode" Value="body"/>
+				<Property Name="BodySubNode" Value="subBody"/>
+				<Property Name="MsgStatus" Value="I13MSTA"/>
+				<Property Name="HostReference" Value="I13RRNO"/>
+				<Property Name="Codepage" Value="Cp037"/>
+				<Property Name="SOAPErrorCode" Value="ERRCDE"/>
+				<Property Name="SOAPErrorText" Value="ERRDES"/>
+				
+				<AdditionalData>
+					<Field Id="message/header/I13HFMID" Value="*DSP"/>
+					<Field Id="message/header/I13FMID" Value="ABCS"/>
+					<Field Id="message/header/I13SID" Value="*SDS"/>
+					<Field Id="message/header/I13DID" Value="HTLMON"/>
+					<Field Id="message/header/I13ACQN" Source="X-Reference"/>
+					<Field Id="message/header/I13TMNO" Source="X-Count"/>
+				</AdditionalData>
+			</PhoenixProperties>
+			
+			<Compression>
+				<MinimumSize>16384</MinimumSize>
+			</Compression>
+		</WebEngine>
+
+		<!-- ========= End of Workflow Web Service ============================= -->
+	</WebEngines>
+
+</Iris>

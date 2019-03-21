@@ -1,0 +1,33 @@
+<Configs>
+	
+	<Mail Enabled = "true">
+		<SMTP>10.1.100.205</SMTP>
+		<Port>25</Port>
+  <Subject>DSPC Job Alert</Subject>
+		<Sender>DL_ITAS_CG@cbi.ae</Sender>
+		<User></User>
+		<Pass></Pass>
+	</Mail>
+	
+ <SMS Enabled = "false">
+  <User>cbi.smssvc@cbiuae.com</User>
+  <Pass></Pass>
+  <Url>http://10.40.34.70:8080/SMS_ENGINE/Services/SMSService?wsdl</Url>
+ </SMS>
+	
+ <TestFire Enabled = "true">
+  <Subsystem Name = "CBSDCOSBS5" Ip = "127.0.0.1">
+   <Instance Name = "ADMIN" Enabled = "true" Port = "30521" />
+   <Instance Name = "SERVER1" Enabled = "true" Port = "30522" />
+   <Instance Name = "SERVER2" Enabled = "true" Port = "30523" />
+   <Instance Name = "SERVER3" Enabled = "false" Port = "30524" />
+   <Instance Name = "SERVER4" Enabled = "false" Port = "30525" />
+   <Instance Name = "SERVER5" Enabled = "false" Port = "30526" />
+   <Instance Name = "SERVER6" Enabled = "false" Port = "52206" />
+   <Instance Name = "SERVER7" Enabled = "false" Port = "52207" />
+   <Instance name = "SERVER8" Enabled = "false" Port = "52208" />
+   <Instance name = "SERVER9" Enabled = "false" Port = "52209" />
+  </Subsystem>
+ </TestFire>
+
+</Configs>

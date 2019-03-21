@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    xmlns:tns="http://webrules.iris.silverglobe.com">
+    
+    <xs:element name="Iris">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Constraints"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Constraints">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Constraint"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Constraint">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Rule" />
+            </xs:sequence>
+            
+            <xs:attributeGroup ref="ConstraintAttributes"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Rule">
+        <xs:complexType>
+        	<xs:sequence>
+        		<xs:element minOccurs="0" maxOccurs="1" ref="Context" />
+        		<xs:element minOccurs="0" maxOccurs="unbounded" ref="Compare" />
+        	</xs:sequence>
+        
+        	<xs:attributeGroup ref="RuleAttributes"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Context">
+        <xs:complexType mixed="true">
+        	<xs:attributeGroup ref="ContextAttributes"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Compare" type="xs:string" />
+
+    <xs:attributeGroup name="ConstraintAttributes">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+        <xs:attribute name="ActionTrue" type="xs:string" use="optional"/>
+        <xs:attribute name="ActionFalse" type="xs:string" use="optional"/>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="ContextAttributes">
+        <xs:attribute name="StartPos" type="xs:int" use="optional"/>
+        <xs:attribute name="EndPos" type="xs:int" use="optional"/>
+        <xs:attribute name="DataType" type="xs:int" use="optional"/>
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="RuleAttributes">
+        <xs:attribute name="Operator" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+    
+</xs:schema>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    xmlns:tns="http://webconfig.iris.silverglobe.com">
+
+    <xs:element name="Iris">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Servers"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Performance"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Logging"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="Database"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Housekeeping"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Security"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Limits"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Database">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="URL" type="xs:string"/>
+                <xs:element name="Driver" type="xs:string"/>
+                <xs:element name="JarFilePath" type="xs:string"/>
+                <xs:element name="User" type="xs:string"/>
+                <xs:element name="Password" type="xs:string"/>
+            </xs:sequence>
+            
+            <xs:attributeGroup ref="DatabaseAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Servers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="Server"/>
+            </xs:sequence>
+
+            <xs:attributeGroup ref="ServersAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Server">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Port" type="xs:int" maxOccurs="unbounded"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="SSL"/>
+            </xs:sequence>
+
+            <xs:attributeGroup ref="ServerAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SSL">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="KeystorePath" type="xs:string"/>
+                <xs:element name="KeystorePassword" type="xs:string"/>
+                <xs:element name="Context" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Performance">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Accept"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Reader"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Writer"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Parser"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Service"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Endpoint"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:attributeGroup name="DatabaseAttribute">
+        <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="ServerAttribute">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+        <xs:attribute name="Ip" type="xs:string" use="required"/>
+        <xs:attribute name="SSL" type="xs:boolean" use="required"/>
+        <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="ServersAttribute">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+        <xs:attribute name="ExternalURL" type="xs:string" use="optional"/>
+    </xs:attributeGroup>
+
+    <xs:element name="Accept">
+        <xs:complexType>
+            <xs:attributeGroup ref="PerformanceAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Reader">
+        <xs:complexType>
+            <xs:attributeGroup ref="PerformanceAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Writer">
+        <xs:complexType>
+            <xs:attributeGroup ref="PerformanceAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Parser">
+        <xs:complexType>
+            <xs:attributeGroup ref="PerformanceAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Service">
+        <xs:complexType>
+            <xs:attributeGroup ref="PerformanceAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Endpoint">
+        <xs:complexType>
+            <xs:attributeGroup ref="PerformanceAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:attributeGroup name="PerformanceAttribute">
+        <xs:attribute name="ThreadCount" type="xs:int" use="required"/>
+    </xs:attributeGroup>
+
+    <xs:element name="Logging">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Events"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Transaction"/>
+                <xs:element minOccurs="1" maxOccurs="1" ref="Error"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Events">
+        <xs:complexType>
+            <xs:attributeGroup ref="LoggingAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Transaction">
+        <xs:complexType>
+            <xs:attributeGroup ref="LoggingAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Error">
+        <xs:complexType>
+            <xs:attributeGroup ref="LoggingAttribute"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:attributeGroup name="LoggingAttribute">
+        <xs:attribute name="Console" type="xs:boolean" use="required"/>
+        <xs:attribute name="Path" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+
+    <xs:element name="Housekeeping">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Continue" type="xs:boolean"/>
+                <xs:element name="MaximumSize" type="xs:int"/>
+                <xs:element name="MaximumLog" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Security">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="ShowStackTrace" type="xs:boolean"/>
+    			<xs:element name="AssignCookie" type="xs:boolean"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+    
+    <xs:element name="Limits">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="MaximumPostSize" type="xs:int"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+
+</xs:schema>

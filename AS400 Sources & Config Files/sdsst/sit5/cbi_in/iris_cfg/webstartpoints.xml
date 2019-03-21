@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Start points configuration -->
+<Iris>
+
+	<!-- Parameters relating to end point configurations -->
+	<Startpoints>
+
+		<!-- AS400 data queue configuration -->
+		<Startpoint Name="ChannelS"
+			Type="DTAQ" Enabled="true"
+			ChannelURL="" ChannelIdentTree="" ChannelMessageType="mbase"
+			ChannelCCSID="Cp037" ChannelTimeout="90000">
+			
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCSHSTAI.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+
+				<DTAQENQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DS000PEAXO.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+			</DTAQ>			
+		</Startpoint>
+
+		<!-- AS400 data queue configuration for Journal Event Uses-->
+		<!-- Avoid using $ symbol if running instance is less than 5 -->
+		<!-- 
+		<Startpoint Name="ChannelU"
+			Type="DTAQ" Enabled="true"
+			ChannelURL="" ChannelIdentTree="" ChannelMessageType="mbase"
+			ChannelCCSID="Cp037" ChannelTimeout="90000">
+			
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCSHUTAI.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+
+				<DTAQENQ Enabled="true">
+					<RemoteIp></RemoteIp>
+					<User></User>
+					<Password></Password>
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DS000PEAXO.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+			</DTAQ>			
+		</Startpoint>
+		-->
+		
+		<Startpoint Name="ChannelJ1"
+			Type="DTAQ" Enabled="true"
+			ChannelURL="" ChannelIdentTree="" ChannelMessageType="mbase"
+			ChannelCCSID="Cp037" ChannelTimeout="90000">
+			
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCJRNRRB01.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+
+				<DTAQENQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DS000PEAXO.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+			</DTAQ>			
+		</Startpoint>
+		
+		<Startpoint Name="ChannelJ2"
+			Type="DTAQ" Enabled="true"
+			ChannelURL="" ChannelIdentTree="" ChannelMessageType="mbase"
+			ChannelCCSID="Cp037" ChannelTimeout="90000">
+			
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCJRNRRB02.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+
+				<DTAQENQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DS000PEAXO.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+			</DTAQ>			
+		</Startpoint>
+		
+		<Startpoint Name="ChannelJ3"
+			Type="DTAQ" Enabled="true"
+			ChannelURL="" ChannelIdentTree="" ChannelMessageType="mbase"
+			ChannelCCSID="Cp037" ChannelTimeout="90000">
+			
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCJRNRRB03.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+
+				<DTAQENQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DS000PEAXO.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+			</DTAQ>			
+		</Startpoint>
+		
+		<Startpoint Name="ChannelJ4"
+			Type="DTAQ" Enabled="true"
+			ChannelURL="" ChannelIdentTree="" ChannelMessageType="mbase"
+			ChannelCCSID="Cp037" ChannelTimeout="90000">
+			
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCJRNRRB04.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+
+				<DTAQENQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DS000PEAXO.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+			</DTAQ>			
+		</Startpoint>
+		
+		<Startpoint Name="ChannelJ5"
+			Type="DTAQ" Enabled="true"
+			ChannelURL="" ChannelIdentTree="" ChannelMessageType="mbase"
+			ChannelCCSID="Cp037" ChannelTimeout="90000">
+			
+			<DTAQ>
+				<DTAQDEQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DCJRNRRB05.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQDEQ>
+
+				<DTAQENQ Enabled="true">
+					<!-- AS/400 IP address -->
+					<RemoteIp></RemoteIp>
+					<!-- AS/400 User ID -->
+					<User></User>
+					<!-- AS/400 Password ID -->
+					<Password></Password>
+					<!-- AS/400 queue name -->
+					<Queue>/QSYS.LIB/%LIBL%.LIB/DS000PEAXO.DTAQ</Queue>
+					<FailFast>false</FailFast>
+				</DTAQENQ>
+			</DTAQ>			
+		</Startpoint>
+
+	</Startpoints>
+
+</Iris>
+

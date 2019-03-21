@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageMap Id="kq">
+	
+	<Field Id="date_logd" Type="16" />
+	<Field Id="time_logd" Type="16" />
+	<Field Id="tims_logd" Type="16" />
+	<Field Id="remote_ip" Type="22" Length="45" />
+	<Field Id="remote_port" Type="16" />
+	<Field Id="ref_conn" Type="21" Length="12" />
+	<Field Id="ref_reqs" Type="16" />
+	<Field Id="ref_node" Type="16" />
+	<Field Id="entry_type" Type="21" Length="1" />
+	<Field Id="ph_type" Type="22" Length="10" />
+	<Field Id="ph_mmap" Type="22" Length="32" />
+	<Field Id="ph_webservice" Type="22" Length="255" />
+	<Field Id="ph_webservice_type" Type="21" Length="1" />
+	<Field Id="host_sid" Type="22" Length="10" />
+	<Field Id="host_did" Type="22" Length="10" />
+	<Field Id="host_txcd" Type="22" Length="10" />
+	<Field Id="trx_tlr" Type="22" Length="64" />
+	<Field Id="trx_cif" Type="11" Length="19" Decimal="0"/>
+	<Field Id="trx_act" Type="11" Length="19" Decimal="0"/>
+	<Field Id="trx_amt1" Type="11" Length="19" Decimal="0"/>
+	<Field Id="trx_amt2" Type="11" Length="19" Decimal="0"/>
+	<Field Id="trx_amt3" Type="11" Length="19" Decimal="0"/>
+	<Field Id="trx_cur1" Type="21" Length="3" />
+	<Field Id="trx_cur2" Type="21" Length="3" />
+	<Field Id="trx_cur3" Type="21" Length="3" />
+	<Field Id="trx_ref1" Type="22" Length="30" />
+	<Field Id="trx_ref2" Type="22" Length="30" />
+	<Field Id="trx_ref3" Type="22" Length="30" />
+	<Field Id="src_amt1" Type="22" Length="10" />
+	<Field Id="src_amt2" Type="22" Length="10" />
+	<Field Id="src_amt3" Type="22" Length="10" />
+	<Field Id="src_cur1" Type="22" Length="10" />
+	<Field Id="src_cur2" Type="22" Length="10" />
+	<Field Id="src_cur3" Type="22" Length="10" />
+	<Field Id="src_ref1" Type="22" Length="10" />
+	<Field Id="src_ref2" Type="22" Length="10" />
+	<Field Id="src_ref3" Type="22" Length="10" />
+	<Field Id="server_name" Type="22" Length="30" />
+	<Field Id="raw_data_in" Type="0" Length="65535" />
+	<Field Id="raw_data_ou" Type="0" Length="65535" />
+	
+</MessageMap>

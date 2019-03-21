@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    xmlns:tns="http://webmimes.iris.silverglobe.com">
+    
+    <xs:element name="Iris">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" ref="MIMES"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="MIMES">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="MIME"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="MIME">
+        <xs:complexType>            
+            <xs:attributeGroup ref="MIMEAttribute"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:attributeGroup name="MIMEAttribute">
+        <xs:attribute name="Extension" type="xs:string" use="required"/>
+        <xs:attribute name="Type" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+    
+</xs:schema>
